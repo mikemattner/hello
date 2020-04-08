@@ -1,4 +1,5 @@
-# hello
+# Hello – A Dashboard
+Building out a dashboard to mimic something like currently.
 
 ## Project setup
 ```

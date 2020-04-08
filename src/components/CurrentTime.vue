@@ -1,7 +1,9 @@
 <template>
   <div class="current-time">
     <div class="current-time__display">{{currentTime}}</div>
-    <div class="current-time__message">{{greeting}}, {{name}}.</div>
+    <div class="current-time__message">
+      {{greeting}}. Today is {{currentDate}}.
+    </div>
   </div>
 </template>
 
@@ -14,6 +16,7 @@ export default {
     return {
       currentTime: null,
       currentHour: null,
+      currentDate: null,
       greeting: 'Hello',
       messages: {
         morning: 'Good morning',
@@ -25,7 +28,10 @@ export default {
   },
   methods: {
     updateCurrentTime() {
-      this.currentTime = moment().format('h:mm');
+      this.currentTime = moment().format('h:mm:ss');
+    },
+    updateCurrentDate() {
+      this.currentDate = moment().format('MMMM Do YYYY');
     },
     setMessage() {
       this.currentHour = moment().format('H');
@@ -46,7 +52,8 @@ export default {
     },
   },
   created() {
-    this.currentTime = moment().format('h:mm');
+    this.currentTime = moment().format('h:mm:ss');
+    this.updateCurrentDate();
     setInterval(() => this.updateCurrentTime(), 1 * 1000);
     setInterval(() => this.setMessage(), 1 * 1000);
   },
@@ -62,6 +69,7 @@ export default {
   }
   &__message {
     font-size: 1.5rem;
+    line-height: 1.2;
   }
 }
 </style>

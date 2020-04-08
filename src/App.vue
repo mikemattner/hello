@@ -49,9 +49,8 @@ html {
   }
 }
 body {
-  // background-color: #484F60;
   background-image: linear-gradient(to right top,
-      #484F60, #3E738D);
+      #242E42, #404756);
   color: #fff;
   margin: 0;
   padding: 0;
@@ -66,14 +65,8 @@ body {
   align-items: center;
   height: 100vh;
   &.night {
-    // background-color: #484F60;
-    background-image: linear-gradient(to right top,
-      #484F60, #3E738D);
   }
   &.day {
-    // background-color: #6CB9C8;
-    background-image: linear-gradient(to right top,
-      #6CB9C8, #5DCCC9);
   }
 }
 </style>
