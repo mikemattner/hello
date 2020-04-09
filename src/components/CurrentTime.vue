@@ -35,7 +35,6 @@ export default {
     },
     setMessage() {
       this.currentHour = moment().format('H');
-
       switch (true) {
         case (this.currentHour < 12):
           this.greeting = this.messages.morning;
@@ -43,7 +42,7 @@ export default {
         case (this.currentHour < 17):
           this.greeting = this.messages.afternoon;
           break;
-        case (this.currentHour > 17):
+        case (this.currentHour >= 17):
           this.greeting = this.messages.evening;
           break;
         default:
@@ -63,9 +62,12 @@ export default {
 <style scoped lang="scss">
 .current-time {
   &__display {
-    font-size: 9rem;
+    font-size: 20vw;
     font-weight: 700;
     line-height: 1;
+    @media (min-width: 852px) {
+      font-size: 9rem;
+    }
   }
   &__message {
     font-size: 1.5rem;

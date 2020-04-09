@@ -136,6 +136,7 @@ export default {
     font-size: 0.675rem;
     display: flex;
     justify-content: center;
+    max-height: 12px;
     img {
       width: 15px;
       opacity: 0.45;
