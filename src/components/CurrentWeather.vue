@@ -2,6 +2,7 @@
   <div class="current-weather">
     <WeatherIcon
       :icon="this.forecast.weatherIcon"
+      :description="this.forecast.description"
     ></WeatherIcon>
     <Temperature
       :value="this.forecast.temperatureValue"
@@ -35,6 +36,6 @@ export default {
 .current-weather {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 </style>

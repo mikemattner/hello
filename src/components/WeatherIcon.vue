@@ -1,6 +1,8 @@
 <template>
   <section>
-    <img class="weather__icon" :src="icon" :alt="description" />
+    <div class="icon-container">
+      <img class="weather__icon" :src="icon" :alt="description" />
+    </div>
   </section>
 </template>
 
@@ -9,6 +11,10 @@ export default {
   name: 'Weather',
   props: {
     icon: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -23,7 +29,16 @@ section {
   align-items: center;
 }
 .weather__icon {
-  width: 60px;
+  width: 40px;
+}
+.icon-container {
+  width:60px;
+  height: 60px;
+  border-radius: 30px;
+  background-color: rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-right: 20px;
 }
 </style>
