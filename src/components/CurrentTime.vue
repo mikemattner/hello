@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     updateCurrentTime() {
-      this.currentTime = moment().format('h:mm:ss');
+      this.currentTime = moment().format('h:mm');
     },
     updateCurrentDate() {
       this.currentDate = moment().format('MMMM Do YYYY');
@@ -51,7 +51,7 @@ export default {
     },
   },
   created() {
-    this.currentTime = moment().format('h:mm:ss');
+    this.currentTime = moment().format('h:mm');
     this.updateCurrentDate();
     setInterval(() => this.updateCurrentTime(), 1 * 1000);
     setInterval(() => this.setMessage(), 1 * 1000);
@@ -62,15 +62,15 @@ export default {
 <style scoped lang="scss">
 .current-time {
   &__display {
-    font-size: 20vw;
+    font-size: 10vw;
     font-weight: 700;
     line-height: 1;
     @media (min-width: 852px) {
-      font-size: 9rem;
+      font-size: 6rem;
     }
   }
   &__message {
-    font-size: 1.5rem;
+    font-size: 1rem;
     line-height: 1.2;
   }
 }
