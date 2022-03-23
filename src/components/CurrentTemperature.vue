@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="current-temperature__location">
+    <div v-if="location" class="current-temperature__location">
       {{ location }}
     </div>
   </div>
@@ -34,23 +34,19 @@
 
 <script>
 export default {
-  name: 'CurrentWeather',
+  name: 'Temperature',
   props: {
     value: {
       type: Number,
-      required: true,
     },
     high: {
       type: Number,
-      required: true,
     },
     low: {
       type: Number,
-      required: true,
     },
     location: {
       type: String,
-      required: true,
     },
   },
   data() {

@@ -1,33 +1,67 @@
 <template>
   <div class="current-weather">
     <WeatherIcon
-      :icon="this.forecast.weatherIcon"
-      :description="this.forecast.description"
+      v-if="isInitialized"
+      :icon="weatherIcon"
+      :description="description"
     ></WeatherIcon>
-    <Temperature
-      :value="this.forecast.temperatureValue"
-      :high="this.forecast.temperatureHigh"
-      :low="this.forecast.temperatureLow"
-      :location="this.forecast.location"
-    ></Temperature>
+    <CurrentTemperature
+      v-if="isInitialized"
+      :value="temperatureValue"
+      :high="temperatureHigh"
+      :low="temperatureLow"
+      :location="location"
+    ></CurrentTemperature>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import Temperature from '@/components/Temperature.vue';
+import { onBeforeMount, defineComponent, reactive } from 'vue'
+import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
-import WeatherForecast from '../api/WeatherForecast';
+import { useWeatherStore } from '@/stores/weather';
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
   name: 'CurrentWeather',
   components: {
-    Temperature,
+    CurrentTemperature,
     WeatherIcon,
   },
   setup() {
+    const weatherStore = useWeatherStore();
+    const appId = import.meta.env.VITE_APP_ID;
+    
+    onBeforeMount(async () => {
+      if (navigator.onLine) {
+        navigator.geolocation.getCurrentPosition(async (position) =>
+          //  currentPosition = position.coords
+          await weatherStore.hydrateStore(appId, position.coords)
+        );
+      }
+    });
+
+    const { 
+      isInitialized,
+      description,
+      location, 
+      temperatureLow, 
+      temperatureHigh, 
+      temperatureValue,
+      weatherIcon, 
+      weatherData 
+    } = storeToRefs(weatherStore);
+
+
     return {
-      forecast: new WeatherForecast(),
+      isInitialized,
+      description,
+      location,
+      temperatureLow, 
+      temperatureHigh, 
+      temperatureValue,
+      weatherIcon,
+      weatherData,
     };
   },
 });

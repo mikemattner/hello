@@ -14,6 +14,7 @@ import CurrentWeather from '@/components/CurrentWeather.vue';
 import BaseCard from '@/components/BaseCard.vue';
 
 export default defineComponent({
+  name: 'HomeView',
   components: {
     CurrentTime,
     CurrentWeather,
