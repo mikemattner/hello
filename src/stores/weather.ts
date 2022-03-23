@@ -14,7 +14,7 @@ export const useWeatherStore = defineStore({
       country: '',
     },
     weatherIcon: '',
-  } as WeatherState),
+  }) as WeatherState,
   getters: {
     isInitialized: (state) => state.initialized,
     getTemperatureValue: (state) => { return Math.round(state.temperatureValue) },

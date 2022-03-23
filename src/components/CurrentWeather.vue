@@ -1,20 +1,15 @@
 <template>
   <div class="current-weather">
-    <template v-if="!isInitialized">
-      <CurrentWeatherSkeleton />
-    </template>
-    <template v-if="isInitialized">
-      <WeatherIcon
-        :icon="weatherIcon"
-        :description="getDescription"
-      ></WeatherIcon>
-      <CurrentTemperature
-        :temperature-value="getTemperatureValue"
-        :high="getTemperatureHigh"
-        :low="getTemperatureLow"
-        :location="getLocation"
-      ></CurrentTemperature>
-    </template>
+    <WeatherIcon
+      :icon="weatherIcon"
+      :description="getDescription"
+    ></WeatherIcon>
+    <CurrentTemperature
+      :temperature-value="getTemperatureValue"
+      :high="getTemperatureHigh"
+      :low="getTemperatureLow"
+      :location="getLocation"
+    ></CurrentTemperature>
   </div>
 </template>
 
@@ -24,14 +19,12 @@ import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
-import CurrentWeatherSkeleton from './CurrentWeatherSkeleton.vue';
 
 export default defineComponent({
   name: 'CurrentWeather',
   components: {
     CurrentTemperature,
     WeatherIcon,
-    CurrentWeatherSkeleton,
 },
   setup() {
     const weatherStore = useWeatherStore();
