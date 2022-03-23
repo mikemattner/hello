@@ -11,18 +11,19 @@
       </div>
       <div class="current-temperature__right">
         <div class="temperature__high">
-          <span>&#9650;</span><span>{{ scaleSymbol === 'C' ? high : fHigh }}</span
+          <span>&uarr;</span><span>{{ scaleSymbol === 'C' ? high : fHigh }}</span
           >&deg;
         </div>
         <div class="temperature__low">
-          <span>&#9660;</span>
+          <span>&darr;</span>
           <span>{{ scaleSymbol === 'C' ? low : fLow }}</span
           >&deg;
         </div>
       </div>
     </div>
-    <div v-if="location" class="current-temperature__location">
-      {{ location }}
+    <div class="current-temperature__location">
+      <div class="current-temperature__location-name">{{ location }}</div>
+      <div class="current-temperature__location-description">{{ description }}</div>
     </div>
   </div>
 </template>
@@ -46,6 +47,10 @@ export default defineComponent({
       required: true,
     },
     location: {
+      type: String,
+      required: true,
+    },
+    description: {
       type: String,
       required: true,
     },
@@ -97,7 +102,14 @@ export default defineComponent({
   line-height: 1;
   &__location {
     font-size: 0.675rem;
-    margin-top: 0;
+    margin-top: 0.25rem;
+    font-weight: 700;
+
+    &-description {
+      margin-top: 0.25rem;
+      text-transform: capitalize;
+      font-weight: 300;
+    }
   }
   .temperature-value-block {
     display: flex;
