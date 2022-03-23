@@ -1,25 +1,25 @@
 <template>
   <main class="home">
     <CurrentTime />
-    <Card>
+    <BaseCard>
       <CurrentWeather />
-    </Card>
+    </BaseCard>
   </main>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import CurrentTime from '@/components/CurrentTime.vue';
 import CurrentWeather from '@/components/CurrentWeather.vue';
-import Card from '@/components/Card.vue';
+import BaseCard from '@/components/BaseCard.vue';
 
-export default {
-  name: 'Home',
+export default defineComponent({
   components: {
     CurrentTime,
     CurrentWeather,
-    Card,
+    BaseCard,
   },
-};
+})
 </script>
 
 <style lang="scss">

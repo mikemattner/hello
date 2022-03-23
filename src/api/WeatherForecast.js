@@ -20,7 +20,7 @@ class WeatherForecast {
 
     this.location = ' ';
     this.description = 'Please connect to internet to fetch latest forecast :)';
-    this.weatherIcon = require('../assets/icons/weather/cloud.svg');
+    this.weatherIcon = '/icons/weather/cloud.svg';
 
     this.update();
   }
@@ -131,18 +131,18 @@ class WeatherForecast {
    */
   getWeatherIcon(id) {
     if (this.isThunderstorm(id)) {
-      return require('../assets/icons/weather/thunderstorm.svg');
+      return '/icons/weather/thunderstorm.svg';
     }
 
     if (this.isDrizzle(id) || this.isRain(id)) {
-      return require('../assets/icons/weather/rain.svg');
+      return '/icons/weather/rain.svg';
     }
 
     if (this.isSnow(id)) {
-      return require('../assets/icons/weather/snow.svg');
+      return '/icons/weather/snow.svg';
     }
 
-    return require('../assets/icons/weather/cloud.svg');
+    return '/icons/weather/cloud.svg';
   }
 
   /*

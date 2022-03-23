@@ -1,57 +1,33 @@
 {
-  "name": "Dashboard",
-  "version": "0.1.0",
-  "private": true,
+  "name": "vue-base",
+  "version": "0.0.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "capacitor-copy": "vue-cli-service capacitor-copy",
-    "capacitor-init": "vue-cli-service capacitor-init",
-    "capacitor-open": "vue-cli-service capacitor-open",
-    "capacitor-update": "vue-cli-service capacitor-update"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --port 5050",
+    "typecheck": "vue-tsc --noEmit",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@capacitor/cli": "^1.0.0-alpha.38",
-    "@capacitor/core": "^1.0.0-alpha.38",
-    "core-js": "^3.6.4",
-    "moment": "^2.24.0",
-    "register-service-worker": "^1.7.1",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.6",
-    "vuex": "^3.1.3"
+    "moment": "^2.29.1",
+    "pinia": "^2.0.11",
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.3.0",
-    "@vue/cli-plugin-eslint": "^4.3.0",
-    "@vue/cli-service": "^4.3.0",
-    "@vue/eslint-config-airbnb": "^5.0.2",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.26.3",
-    "sass-loader": "^8.0.2",
-    "vue-cli-plugin-pwa": "^1.0.0-alpha.1",
-    "vue-template-compiler": "^2.6.11"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "@vue/airbnb"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@types/node": "^16.11.25",
+    "@vitejs/plugin-vue": "^2.2.2",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^10.0.0",
+    "@vue/tsconfig": "^0.1.3",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "prettier": "^2.5.1",
+    "sass": "^1.49.9",
+    "sass-loader": "^12.6.0",
+    "typescript": "~4.5.5",
+    "vite": "^2.8.4",
+    "vue-tsc": "^0.31.4"
+  }
 }

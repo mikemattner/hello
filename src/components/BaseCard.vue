@@ -6,10 +6,12 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Card',
-};
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'BaseCard',
+});
 </script>
 
 <style scoped lang="scss">

@@ -6,8 +6,10 @@
   </section>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'Weather',
   props: {
     icon: {
@@ -19,7 +21,7 @@ export default {
       required: true,
     },
   },
-};
+});
 </script>
 
 <style lang="scss" scoped>

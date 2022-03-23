@@ -13,23 +13,24 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import Temperature from '@/components/Temperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
 import WeatherForecast from '../api/WeatherForecast';
 
-export default {
+export default defineComponent({
   name: 'CurrentWeather',
   components: {
     Temperature,
     WeatherIcon,
   },
-  data() {
+  setup() {
     return {
       forecast: new WeatherForecast(),
     };
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
