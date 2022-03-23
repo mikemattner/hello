@@ -4,9 +4,9 @@
 
 Building out a dashboard to mimic something like currently. Now updated to Vue 3 and Vite.
 
-[x] Update to Vue 3
-[x] Create models/services for grabbing weather data
-[ ] Create Netlify serverless function to grab weather data
+- [x] Update to Vue 3
+- [x] Create models/services for grabbing weather data
+- [ ] Create Netlify serverless function to grab weather data
 
 ## Recommended IDE Setup
 
