@@ -73,14 +73,14 @@ export default defineComponent({
   width: 100%;
   &__display {
     font-size: 10vw;
-    font-weight: 700;
+    font-weight: 900;
     line-height: 1;
     @media (min-width: 852px) {
       font-size: 6rem;
     }
   }
   &__message {
-    font-size: 1rem;
+    font-size: 1.5rem;
     line-height: 1.2;
   }
 }

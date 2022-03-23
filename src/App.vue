@@ -18,7 +18,10 @@ export default defineComponent({
         case (currentTime < '16'):
           period = 'day';
           break;
-        case (currentTime > '16'):
+        case (currentTime < '18'):
+          period = 'evening';
+          break;
+        case (currentTime >= '18'):
           period = 'night';
           break;
         default:
@@ -38,7 +41,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap');
 @import '@/assets/styles/open-weather-icons.scss';
 html {
   font-weight: 300;
@@ -50,20 +53,28 @@ html {
   }
 }
 body.night {
-  --background-image: linear-gradient(to right top, #233b57, #274f7d);
-  --color: #c9dbee;
-  --tooltip-bg: #244568;
-  --tooltip-color: #f3f6fc;
-  --card-bg: #233b57;
-  --card-shadow: rgba(35, 59, 87,0.25);
+  --background-image: linear-gradient(45deg, #031a36 0%, #031a36 50%, #12324d 100%);
+  --color: #dcebf6;
+  --tooltip-bg: #12324d;
+  --tooltip-color: #dcebf6;
+  --card-bg: #031a36;
+  --card-shadow: rgba(0, 0, 0, 0.25);
+}
+body.evening {
+  --background-image: linear-gradient(45deg, #19270c 0%, #19270c 50%, #3b562a 100%);
+  --color: #e6eedd;
+  --tooltip-bg: #19270c;
+  --tooltip-color: #e6eedd;
+  --card-bg: #2c3419;
+  --card-shadow: rgba(44, 52, 25, 0.25);
 }
 body.day {
-    --background-image: linear-gradient(to right top, #d5f8f8, #eefdfd);
-    --color: #1f505a;
-    --tooltip-bg: #1f505a;
-    --tooltip-color: #eefdfd;
-    --card-bg: #b0f1f1;
-    --card-shadow: rgba(31,80,90,0.25);
+  --background-image: linear-gradient(45deg, #b0f0f1 0%, #b0f0f1 50%, #eefdfd 100%);
+  --color: #1f505a;
+  --tooltip-bg: #1f505a;
+  --tooltip-color: #eefdfd;
+  --card-bg: #b0f1f1;
+  --card-shadow: rgba(31,80,90,0.25);
 }
 body {
   color: var(--color);

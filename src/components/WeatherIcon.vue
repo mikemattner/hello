@@ -72,7 +72,7 @@ export default defineComponent({
 
   &:hover {
     .icon-description {
-      transform: translate3d(0,10px, 0);
+      transform: translate3d(0, 10px, 0);
       transition: all 0.25s ease-in-out;
       opacity: 1;
     }

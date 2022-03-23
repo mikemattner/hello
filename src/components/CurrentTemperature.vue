@@ -120,7 +120,7 @@ export default defineComponent({
   }
   &__value {
     font-size: 2rem;
-    font-weight: 700;
+    font-weight: 900;
   }
   .temperature__scale {
     margin-top:0.125rem;
@@ -140,6 +140,7 @@ export default defineComponent({
   .temperature__low {
     margin: 0.125rem 0;
     font-size: 0.675rem;
+    font-weight: 700;
     display: flex;
     justify-content: center;
     max-height: 12px;
