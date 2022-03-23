@@ -1,6 +1,8 @@
-# vue-base
+# Hello – A Dashboard
 
-This template should help get you started developing with Vue 3 in Vite.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/98593b98-f4c9-4ed4-904a-8aa2886faf5e/deploy-status)](https://app.netlify.com/sites/loving-austin-7e5db8/deploys)
+
+Building out a dashboard to mimic something like currently. Now updated to Vue 3 and Vite.
 
 ## Recommended IDE Setup
 
