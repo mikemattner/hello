@@ -2,12 +2,12 @@
   <div class="current-weather">
     <WeatherIcon
       :icon="weatherIcon"
-      :description="getDescription"
     ></WeatherIcon>
     <CurrentTemperature
       :temperature-value="getTemperatureValue"
       :high="getTemperatureHigh"
       :low="getTemperatureLow"
+      :description="getDescription"
       :location="getLocation"
     ></CurrentTemperature>
   </div>

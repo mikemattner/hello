@@ -3,7 +3,6 @@
     <div class="icon-container">
       <span :class="['weather__icon', 'owi', `owi-${icon}`]"></span>
     </div>
-    <span class="icon-description">{{ description }}</span>
   </section>
 </template>
 
@@ -14,10 +13,6 @@ export default defineComponent({
   name: 'WeatherIcon',
   props: {
     icon: {
-      type: String,
-      required: true,
-    },
-    description: {
       type: String,
       required: true,
     },
