@@ -1,40 +1,40 @@
 <template>
-  <div id="app" :class="period">
-    <router-view/>
-  </div>
+  <main :class="['main-view', setPeriod]">
+    <RouterView />
+  </main>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
 import moment from 'moment';
 
-export default {
-  name: 'CurrentTime',
-  data() {
-    return {
-      currentTime: null,
-      period: null,
-    };
-  },
-  methods: {
-    setPeriod() {
-      this.currentTime = moment().format('H');
+export default defineComponent({
+  setup () {
+    const setPeriod = computed<string>(() => {
+      let period: string = '';
+      const currentTime: string = moment().format('H');
 
       switch (true) {
-        case (this.currentTime < 17):
-          this.period = 'day';
+        case (currentTime < '17'):
+          period = 'day';
           break;
-        case (this.currentTime > 17):
-          this.period = 'night';
+        case (currentTime > '17'):
+          period = 'night';
           break;
         default:
-          this.period = 'day';
+          period = 'day';
       }
-    },
-  },
-  created() {
-    setInterval(() => this.setPeriod(), 1 * 1000);
-  },
-};
+
+      return period;
+    });
+
+    document.body.classList.add(setPeriod.value);
+
+    return {
+      setPeriod,
+    }
+  }
+})
 </script>
 
 <style lang="scss">
@@ -49,24 +49,26 @@ html {
   }
 }
 body {
-  background-image: linear-gradient(to right top,
-      #242E42, #404756);
   color: #fff;
   margin: 0;
   padding: 0;
-}
-#app {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+}
+.main-view {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+
   &.night {
+    background-image: linear-gradient(to right top,
+      #242E42, #404756);
   }
   &.day {
+    background-image: linear-gradient(to right top,
+      #242E42, #404756);
   }
 }
 </style>

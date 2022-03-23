@@ -1,66 +1,76 @@
 <template>
   <div class="current-time">
-    <div class="current-time__display">{{currentTime}}</div>
+    <div class="current-time__display">{{ currentTime }}</div>
     <div class="current-time__message">
-      {{greeting}}. Today is {{currentDate}}.
+      {{ greeting }}. Today is {{ currentDate }}.
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
 import moment from 'moment';
+import type { Messages } from '@/types/types';
 
-export default {
+export default defineComponent({
   name: 'CurrentTime',
-  data() {
-    return {
-      currentTime: null,
-      currentHour: null,
-      currentDate: null,
-      greeting: 'Hello',
-      messages: {
+  setup() {
+    const currentTime = ref<string>(moment().format('h:mm'));
+    const currentHour = ref<string>(moment().format('H'));
+    const currentDate = ref<string>(moment().format('MMMM Do YYYY'));
+    const messages: Messages = {
         morning: 'Good morning',
         afternoon: 'Good afternoon',
         evening: 'Good evening',
-      },
-      name: 'Mike',
     };
-  },
-  methods: {
-    updateCurrentTime() {
-      this.currentTime = moment().format('h:mm');
-    },
-    updateCurrentDate() {
-      this.currentDate = moment().format('MMMM Do YYYY');
-    },
-    setMessage() {
-      this.currentHour = moment().format('H');
+
+    const greeting = computed<string>(() => {
+      const hour = parseInt(currentHour.value);
       switch (true) {
-        case (this.currentHour < 12):
-          this.greeting = this.messages.morning;
-          break;
-        case (this.currentHour < 17):
-          this.greeting = this.messages.afternoon;
-          break;
-        case (this.currentHour >= 17):
-          this.greeting = this.messages.evening;
-          break;
+        case (hour < 12):
+          return messages.morning;
+        case (hour < 17):
+          return messages.afternoon;
+        case (hour >= 17):
+          return messages.evening;
         default:
-          this.greeting = 'Hello';
+          return 'Hello';
       }
-    },
-  },
-  created() {
-    this.currentTime = moment().format('h:mm');
-    this.updateCurrentDate();
-    setInterval(() => this.updateCurrentTime(), 1 * 1000);
-    setInterval(() => this.setMessage(), 1 * 1000);
-  },
-};
+    });
+
+    const updateCurrentHour = () => {
+      currentHour.value = moment().format('H');
+    }
+
+    const updateCurrentTime = () => {
+      currentTime.value = moment().format('h:mm');
+    }
+
+    const updateCurrentDate = () => {
+      currentDate.value = moment().format('MMMM Do YYYY');
+    }
+
+    updateCurrentDate();
+    setInterval(() => updateCurrentTime(), 1 * 1000);
+    setInterval(() => updateCurrentHour(), 1 * 1000);
+
+    return {
+      currentDate,
+      currentTime,
+      greeting,
+    }
+  }
+});
 </script>
 
 <style scoped lang="scss">
 .current-time {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
   &__display {
     font-size: 10vw;
     font-weight: 700;

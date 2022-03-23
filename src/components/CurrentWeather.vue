@@ -1,35 +1,72 @@
 <template>
   <div class="current-weather">
-    <WeatherIcon
-      :icon="this.forecast.weatherIcon"
-      :description="this.forecast.description"
-    ></WeatherIcon>
-    <Temperature
-      :value="this.forecast.temperatureValue"
-      :high="this.forecast.temperatureHigh"
-      :low="this.forecast.temperatureLow"
-      :location="this.forecast.location"
-    ></Temperature>
+    <template v-if="!isInitialized">
+      <CurrentWeatherSkeleton />
+    </template>
+    <template v-if="isInitialized">
+      <WeatherIcon
+        :icon="weatherIcon"
+        :description="getDescription"
+      ></WeatherIcon>
+      <CurrentTemperature
+        :temperature-value="getTemperatureValue"
+        :high="getTemperatureHigh"
+        :low="getTemperatureLow"
+        :location="getLocation"
+      ></CurrentTemperature>
+    </template>
   </div>
 </template>
 
-<script>
-import Temperature from '@/components/Temperature.vue';
+<script lang="ts">
+import { onBeforeMount, defineComponent } from 'vue'
+import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
-import WeatherForecast from '../api/WeatherForecast';
+import { useWeatherStore } from '@/stores/weather';
+import { storeToRefs } from 'pinia';
+import CurrentWeatherSkeleton from './CurrentWeatherSkeleton.vue';
 
-export default {
+export default defineComponent({
   name: 'CurrentWeather',
   components: {
-    Temperature,
+    CurrentTemperature,
     WeatherIcon,
-  },
-  data() {
+    CurrentWeatherSkeleton,
+},
+  setup() {
+    const weatherStore = useWeatherStore();
+    const appId = import.meta.env.VITE_APP_ID;
+    
+    onBeforeMount(async () => {
+      if (navigator.onLine) {
+        navigator.geolocation.getCurrentPosition(async (position) =>
+          await weatherStore.hydrateStore(appId, position.coords)
+        );
+      }
+    });
+
+    const { 
+      isInitialized,
+      getDescription,
+      getLocation, 
+      getTemperatureLow, 
+      getTemperatureHigh, 
+      getTemperatureValue,
+      weatherIcon, 
+    } = storeToRefs(weatherStore);
+
+
     return {
-      forecast: new WeatherForecast(),
+      isInitialized,
+      getDescription,
+      getLocation, 
+      getTemperatureLow, 
+      getTemperatureHigh, 
+      getTemperatureValue,
+      weatherIcon,
     };
   },
-};
+});
 </script>
 
 <style scoped lang="scss">

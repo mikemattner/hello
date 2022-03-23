@@ -6,15 +6,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Card',
-};
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'BaseCard',
+});
 </script>
 
 <style scoped lang="scss">
 .card {
-  margin: 2rem auto;
+  margin: 2rem 0;
   border-radius: 4px;
   padding: 1rem;
   background-color: rgba(255,255,255,0.125);
