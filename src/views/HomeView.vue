@@ -1,7 +1,7 @@
 <template>
   <main class="home">
     <CurrentTime />
-    <BaseCard>
+    <BaseCard class="corner-weather">
       <CurrentWeather />
     </BaseCard>
   </main>
@@ -32,5 +32,12 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+
+  .corner-weather {
+    position: absolute;
+    margin: 0;
+    top: 2rem;
+    right: 2rem;
+  }
 }
 </style>

@@ -19,11 +19,8 @@ export default defineComponent({
   margin: 2rem 0;
   border-radius: 4px;
   padding: 1rem;
-  background-color: rgba(255,255,255,0.125);
-  box-shadow: 2px 2px 20px rgba(0,0,0,0.15);
+  background-color: var(--card-bg);
+  box-shadow: 2px 10px 20px var(--card-shadow);
   transition: all 0.25s ease-in-out;
-  &:hover {
-    box-shadow: 2px 10px 40px rgba(0,0,0,0.25);
-  }
 }
 </style>

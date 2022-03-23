@@ -13,7 +13,7 @@ export const useWeatherStore = defineStore({
       name: '',
       country: '',
     },
-    weatherId: 0,
+    weatherIcon: '',
   } as WeatherState),
   getters: {
     isInitialized: (state) => state.initialized,
@@ -27,23 +27,7 @@ export const useWeatherStore = defineStore({
       }
       return `${state.location.name}, ${state.location.country}`;
     },
-    weatherIcon: (state) =>  {
-      const id = state.weatherId;
-
-      if (id > 199 && id < 233) {
-        return '/icons/weather/thunderstorm.svg';
-      }
-  
-      if (id > 299 && id < 322 || id > 499 && id < 532) {
-        return '/icons/weather/rain.svg';
-      }
-  
-      if (id > 599 && id < 623) {
-        return '/icons/weather/snow.svg';
-      }
-  
-      return '/icons/weather/cloud.svg';
-    },
+    getWeatherIcon: (state) =>  { return state.weatherIcon; },
   },
   actions: {
     async getWeatherData(appId: string, coordinates: GeolocationCoordinates) {
@@ -55,7 +39,7 @@ export const useWeatherStore = defineStore({
         this.description = data.weather[0].description;
         this.location.name = data.name;
         this.location.country = data.sys.country;
-        this.weatherId = data.weather[0].id;
+        this.weatherIcon = data.weather[0].icon;
       } catch (error) {
         console.error(error);
       }
@@ -76,7 +60,7 @@ interface WeatherState {
   temperatureLow: number;
   description: string;
   location: Location;
-  weatherId: number;
+  weatherIcon: string;
 }
 
 interface Location {
