@@ -34,7 +34,7 @@ section {
   width: 40px;
 }
 .icon-container {
-  width:60px;
+  width: 60px;
   height: 60px;
   border-radius: 30px;
   background-color: rgba(0,0,0,0.1);

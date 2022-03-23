@@ -3,14 +3,14 @@
     <WeatherIcon
       v-if="isInitialized"
       :icon="weatherIcon"
-      :description="description"
+      :description="getDescription"
     ></WeatherIcon>
     <CurrentTemperature
       v-if="isInitialized"
-      :value="temperatureValue"
-      :high="temperatureHigh"
-      :low="temperatureLow"
-      :location="location"
+      :temperature-value="getTemperatureValue"
+      :high="getTemperatureHigh"
+      :low="getTemperatureLow"
+      :location="getLocation"
     ></CurrentTemperature>
   </div>
 </template>
@@ -43,25 +43,23 @@ export default defineComponent({
 
     const { 
       isInitialized,
-      description,
-      location, 
-      temperatureLow, 
-      temperatureHigh, 
-      temperatureValue,
+      getDescription,
+      getLocation, 
+      getTemperatureLow, 
+      getTemperatureHigh, 
+      getTemperatureValue,
       weatherIcon, 
-      weatherData 
     } = storeToRefs(weatherStore);
 
 
     return {
       isInitialized,
-      description,
-      location,
-      temperatureLow, 
-      temperatureHigh, 
-      temperatureValue,
+      getDescription,
+      getLocation, 
+      getTemperatureLow, 
+      getTemperatureHigh, 
+      getTemperatureValue,
       weatherIcon,
-      weatherData,
     };
   },
 });

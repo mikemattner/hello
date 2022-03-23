@@ -1,4 +1,3 @@
-import type WeatherData from '@/models/WeatherData';
 import WeatherService from '@/services/weatherService';
 import { defineStore } from 'pinia'
 
@@ -6,23 +5,30 @@ export const useWeatherStore = defineStore({
   id: 'weather',
   state: () => ({
     initialized: false,
-    data: {},
-  }) as WeatherState,
+    temperatureValue: 0,
+    temperatureHigh: 0,
+    temperatureLow: 0,
+    description: '',
+    location: {
+      name: '',
+      country: '',
+    },
+    weatherId: 0,
+  } as WeatherState),
   getters: {
     isInitialized: (state) => state.initialized,
-    weatherData: (state) => state.data,
-    temperatureValue: (state) => { return Math.round(state.data.main.temp) },
-    temperatureHigh: (state) => { return Math.round(state.data.main.temp_max) },
-    temperatureLow: (state) => { return Math.round(state.data.main.temp_min) },
-    description: (state) =>  { return state.data.weather[0].description },
-    location: (state) =>  {
-      if (state.data.name === null && state.data.sys.country === null) {
+    getTemperatureValue: (state) => { return Math.round(state.temperatureValue) },
+    getTemperatureHigh: (state) => { return Math.round(state.temperatureHigh) },
+    getTemperatureLow: (state) => { return Math.round(state.temperatureLow) },
+    getDescription: (state) =>  { return state.description },
+    getLocation: (state) =>  {
+      if (state.location.name === null && state.location.country === null) {
         return '';
       }
-      return `${state.data.name}, ${state.data.sys.country}`;
+      return `${state.location.name}, ${state.location.country}`;
     },
     weatherIcon: (state) =>  {
-      const id = state.data.weather[0].id;
+      const id = state.weatherId;
 
       if (id > 199 && id < 233) {
         return '/icons/weather/thunderstorm.svg';
@@ -42,7 +48,14 @@ export const useWeatherStore = defineStore({
   actions: {
     async getWeatherData(appId: string, coordinates: GeolocationCoordinates) {
       try {
-        this.data = await WeatherService.GetWeatherData(appId, coordinates);
+        const data = await WeatherService.GetWeatherData(appId, coordinates);
+        this.temperatureValue = data.main.temp;
+        this.temperatureHigh = data.main.temp_max;
+        this.temperatureLow = data.main.temp_min;
+        this.description = data.weather[0].description;
+        this.location.name = data.name;
+        this.location.country = data.sys.country;
+        this.weatherId = data.weather[0].id;
       } catch (error) {
         console.error(error);
       }
@@ -58,18 +71,15 @@ export const useWeatherStore = defineStore({
 
 interface WeatherState {
   initialized: boolean;
-  data: WeatherData;
+  temperatureValue: number;
+  temperatureHigh: number;
+  temperatureLow: number;
+  description: string;
+  location: Location;
+  weatherId: number;
 }
 
-// interface WeatherState {
-//   initialized: boolean;
-//   cloudiness: number;
-//   windSpeed: number;
-//   humidity: number;
-//   temperatureValue: number;
-//   temperatureHigh: number;
-//   temperatureLow: number;
-//   location: string;
-//   description: string;
-//   weatherIcon: string;
-// }
+interface Location {
+  name: string;
+  country: string;
+}

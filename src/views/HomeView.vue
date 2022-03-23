@@ -26,8 +26,11 @@ export default defineComponent({
 <style lang="scss">
 .home {
   display: flex;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 20px;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 </style>

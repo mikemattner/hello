@@ -28,6 +28,8 @@ export default defineComponent({
       return period;
     });
 
+    document.body.classList.add(setPeriod.value);
+
     return {
       setPeriod,
     }
@@ -55,7 +57,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 .main-view {
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;

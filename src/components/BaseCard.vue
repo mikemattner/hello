@@ -16,7 +16,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .card {
-  margin: 2rem auto;
+  margin: 2rem 0;
   border-radius: 4px;
   padding: 1rem;
   background-color: rgba(255,255,255,0.125);

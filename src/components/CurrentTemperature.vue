@@ -3,7 +3,7 @@
     <div class="temperature-value-block">
       <div class="current-temperature__left">
         <div class="current-temperature__value">
-          {{ (scaleSymbol === 'C')? value : fValue }}
+          {{ (scaleSymbol === 'C')? temperatureValue : fValue }}
         </div>
         <div class="temperature__scale">
           <a href="#" @click.prevent="toggleTemperature"
@@ -32,51 +32,65 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { computed, defineComponent, ref } from 'vue'
+
+export default defineComponent({
   name: 'Temperature',
   props: {
-    value: {
+    temperatureValue: {
       type: Number,
+      required: true,
     },
     high: {
       type: Number,
+      required: true,
     },
     low: {
       type: Number,
+      required: true,
     },
     location: {
       type: String,
+      required: true,
     },
   },
-  data() {
-    return {
-      scale: 'Fahrenheit',
-    };
-  },
-  computed: {
-    scaleSymbol() {
-      return this.scale.charAt(0);
-    },
-    fValue() {
-      return this.toFahrenheit(this.value);
-    },
-    fHigh() {
-      return this.toFahrenheit(this.high);
-    },
-    fLow() {
-      return this.toFahrenheit(this.low);
-    },
-  },
-  methods: {
-    toFahrenheit(value) {
+  setup(props) {
+    const scale = ref<string>('Fahrenheit');
+
+    const toFahrenheit = (value: number) => {
       return Math.floor(value * 1.8 + 32);
-    },
-    toggleTemperature() {
-      this.scale = this.scale === 'Fahrenheit' ? 'Celcius' : 'Fahrenheit';
-    },
+    };
+
+    const toggleTemperature = () => {
+      scale.value = scale.value === 'Fahrenheit' ? 'Celcius' : 'Fahrenheit';
+    };
+
+    const scaleSymbol = computed<string>(() => {
+      return scale.value.charAt(0);
+    });
+
+    const fValue = computed<number>(() => {
+      return toFahrenheit(props.temperatureValue);
+    });
+
+    const fHigh = computed<number>(() => {
+      return toFahrenheit(props.high);
+    });
+
+    const fLow = computed<number>(() => {
+      return toFahrenheit(props.low);
+    });
+  
+    return{
+      fValue,
+      fHigh,
+      fLow,
+      scaleSymbol,
+      toggleTemperature,
+    }
   },
-};
+});
 </script>
 
 <style scoped lang="scss">
