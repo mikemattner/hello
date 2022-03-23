@@ -1,8 +1,9 @@
 <template>
-  <section>
+  <section class="weather-icon-container">
     <div class="icon-container">
-      <img class="weather__icon" :src="icon" :alt="description" />
+      <span :class="['weather__icon', 'owi', `owi-${icon}`]"></span>
     </div>
+    <span class="icon-description">{{ description }}</span>
   </section>
 </template>
 
@@ -25,22 +26,56 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-section {
+.weather-icon-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.weather__icon {
-  width: 40px;
-}
-.icon-container {
-  width: 60px;
-  height: 60px;
-  border-radius: 30px;
-  background-color: rgba(0,0,0,0.1);
-  display: flex;
   justify-content: center;
-  align-items: center;
   margin-right: 20px;
+  position: relative;
+  z-index: 100;
+  .weather__icon {
+    width: 80px;
+    font-size: 2.25rem;
+  }
+  .icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    color: var(--tooltip-color);
+    background-color: var(--tooltip-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+  }
+  .icon-description {
+    text-transform: uppercase;
+    font-size: 0.5rem;
+    font-weight: 700;
+    padding: 5px;
+    margin-top: 0.25rem;
+    border-radius: 5px;
+    color: var(--tooltip-color);
+    background-color: var(--tooltip-bg);
+    box-shadow: 2px 10px 20px var(--card-shadow);
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.125s ease-in-out;
+    opacity: 0;
+    width: max-content;
+  }
+
+  &:hover {
+    .icon-description {
+      transform: translate3d(0,10px, 0);
+      transition: all 0.25s ease-in-out;
+      opacity: 1;
+    }
+  }
 }
 </style>

@@ -17,7 +17,7 @@ export default defineComponent({
   setup() {
     const currentTime = ref<string>(moment().format('h:mm'));
     const currentHour = ref<string>(moment().format('H'));
-    const currentDate = ref<string>(moment().format('MMMM Do YYYY'));
+    const currentDate = ref<string>(moment().format('MMMM Do, YYYY'));
     const messages: Messages = {
         morning: 'Good morning',
         afternoon: 'Good afternoon',
@@ -47,7 +47,7 @@ export default defineComponent({
     }
 
     const updateCurrentDate = () => {
-      currentDate.value = moment().format('MMMM Do YYYY');
+      currentDate.value = moment().format('MMMM, Do YYYY');
     }
 
     updateCurrentDate();

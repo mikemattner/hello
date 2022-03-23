@@ -49,10 +49,10 @@ export default defineComponent({
     align-items: center;
 }
 .icon-container {
-    width: 60px;
-    height: 60px;
-    border-radius: 30px;
-    background-color: rgba(255,255,255,0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: var(--tooltip-bg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,7 +68,7 @@ export default defineComponent({
         left: 0;
         bottom: 0;
         cursor: progress;
-        background: linear-gradient(0.25turn, transparent, rgba(255,255,255,0.125), transparent);
+        background: linear-gradient(0.25turn, transparent, var(--card-bg), transparent);
         background-repeat: no-repeat;
         background-position: -100px 0;
         animation: loading 1.5s infinite;
@@ -77,7 +77,7 @@ export default defineComponent({
 }
 
 .temp-block {
-    background-color: rgba(255,255,255,0.1);
+    background-color: var(--tooltip-bg);
     aspect-ratio: 1;
     overflow: hidden;
     position: relative;
@@ -90,7 +90,7 @@ export default defineComponent({
         left: 0;
         bottom: 0;
         cursor: progress;
-        background: linear-gradient(0.25turn, transparent, rgba(255,255,255,0.125), transparent);
+        background: linear-gradient(0.25turn, transparent, var(--card-bg), transparent);
         background-repeat: no-repeat;
         background-position: -100px 0;
         animation: loading 1.5s infinite;
@@ -106,7 +106,7 @@ export default defineComponent({
 
 .weather-data {
     height: 60px;
-    width: 100px;
+    width: 130px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -136,11 +136,11 @@ export default defineComponent({
         justify-content: center;
         align-items: flex-start;
         margin-right: 0.5rem;
-        width: 80px;
+        width: 100px;
         height: 60px;
 
         .temp-block {
-            width: 80px;
+            width: 100px;
             height: 60px;
         }
     }
@@ -152,19 +152,6 @@ export default defineComponent({
     &__value {
         font-size: 2rem;
         font-weight: 700;
-    }
-    .temperature__scale {
-        margin-top:0.125rem;
-        font-size: 1rem;
-        font-weight: 100;
-        a {
-        color: #fff;
-        text-decoration: none;
-        transition: all 0.25s ease-in-out;
-        &:hover {
-            color: rgba(255,255,255,0.5);
-        }
-        }
     }
     .temperature__high,
     .temperature__low {

@@ -5,23 +5,18 @@
         <div class="current-temperature__value">
           {{ (scaleSymbol === 'C')? temperatureValue : fValue }}
         </div>
-        <div class="temperature__scale">
-          <a href="#" @click.prevent="toggleTemperature"
-            >&deg;{{ scaleSymbol }}</a
-          >
+        <div class="temperature__scale" @click.prevent="toggleTemperature">
+          <span>&deg;{{ scaleSymbol }}</span>
         </div>
       </div>
       <div class="current-temperature__right">
         <div class="temperature__high">
-          <img src="../assets/icons/caret-up.svg" alt="high temperature" /><span>{{
-            scaleSymbol === 'C' ? high : fHigh
-          }}</span
+          <span>&#9650;</span><span>{{ scaleSymbol === 'C' ? high : fHigh }}</span
           >&deg;
         </div>
         <div class="temperature__low">
-          <img src="../assets/icons/caret-down.svg" alt="low temperature" /><span>{{
-            scaleSymbol === 'C' ? low : fLow
-          }}</span
+          <span>&#9660;</span>
+          <span>{{ scaleSymbol === 'C' ? low : fLow }}</span
           >&deg;
         </div>
       </div>
@@ -131,6 +126,7 @@ export default defineComponent({
     margin-top:0.125rem;
     font-size: 1rem;
     font-weight: 100;
+    cursor: pointer;
     a {
       color: #fff;
       text-decoration: none;
