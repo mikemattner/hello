@@ -15,13 +15,13 @@ export default defineComponent({
       const currentTime: string = moment().format('H');
 
       switch (true) {
-        case (currentTime < '16'):
+        case (parseInt(currentTime) < 16):
           period = 'day';
           break;
-        case (currentTime < '18'):
+        case (parseInt(currentTime) < 18):
           period = 'evening';
           break;
-        case (currentTime >= '18'):
+        case (parseInt(currentTime) >= 18):
           period = 'night';
           break;
         default:
