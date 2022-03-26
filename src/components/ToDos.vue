@@ -2,7 +2,7 @@
   <div class="todo-list-container">
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
-        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you doing today?" />
+        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
         <BaseButton @clicked="addTodo()" class="add-todo-button"> Add <CloseIcon /> </BaseButton>
       </form>
     </div>
@@ -37,7 +37,7 @@ export default defineComponent({
       todosData = JSON.parse(localToDos);
     }
     const todos = ref(todosData);
-    function addTodo() {
+    const addTodo = () => {
       if (newTodo.value) {
         todos.value.push({
           done: false,
@@ -46,19 +46,19 @@ export default defineComponent({
         newTodo.value = '';
       }
       saveData();
-    }
-    function doneTodo(todo: ToDo) {
+    };
+    const doneTodo = (todo: ToDo) => {
       todo.done = !todo.done;
       saveData();
-    }
-    function removeTodo(index: number) {
+    };
+    const removeTodo = (index: number) => {
       todos.value.splice(index, 1);
       saveData();
-    }
-    function saveData() {
+    };
+    const saveData = () => {
       const storageData = JSON.stringify(todos.value);
       localStorage.setItem('mike-todos', storageData);
-    }
+    };
     return {
       todos,
       newTodo,
