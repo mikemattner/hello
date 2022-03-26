@@ -1,11 +1,12 @@
 <template>
   <main class="home">
-    <CurrentTime />
     <Transition name="fade" mode="out-in">
       <BaseCard v-if="isInitialized" class="corner-weather">
         <CurrentWeather />
       </BaseCard>
     </Transition>
+    <CurrentTime />
+    <ToDos />
   </main>
 </template>
 
@@ -16,6 +17,7 @@ import CurrentWeather from '@/components/CurrentWeather.vue';
 import BaseCard from '@/components/BaseCard.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
+import ToDos from '../components/ToDos.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -23,6 +25,7 @@ export default defineComponent({
     CurrentTime,
     CurrentWeather,
     BaseCard,
+    ToDos,
   },
   setup() {
     const weatherStore = useWeatherStore();
@@ -51,14 +54,14 @@ export default defineComponent({
 .home {
   display: flex;
   width: 100%;
-  max-width: 800px;
   margin: 0 20px;
+  padding-top: 10rem;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
   .corner-weather {
-    @media (min-width: 600px) {
+    @media (min-width: 1200px) {
       position: absolute;
       margin: 0;
       top: 2rem;

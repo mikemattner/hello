@@ -22,5 +22,9 @@ export default defineComponent({
   background-color: var(--card-bg);
   box-shadow: 2px 10px 20px var(--card-shadow);
   transition: all 0.25s ease-in-out;
+
+  &--body {
+    width: 100%;
+  }
 }
 </style>
