@@ -2,11 +2,13 @@
   <div class="todo-list__item">
     <div :class="['todo-list__item-content', { done: todo.done }]" @click="finishTodo()">
       <div class="checkmark"></div>
-      <div>{{ todo.content }}</div>
+      <div class="todo-content">{{ todo.content }}</div>
     </div>
-    <BaseButton @clicked="removeTodo()">
-      <CloseIcon />
-    </BaseButton>
+    <div class="todo-done">
+      <BaseButton @clicked="removeTodo()">
+        <CloseIcon />
+      </BaseButton>
+    </div>
   </div>
 </template>
 
@@ -48,8 +50,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 10px;
-  padding: 1rem;
   border-radius: 4px;
   background-color: var(--card-bg);
   margin: 0.375rem 0;
@@ -59,11 +59,17 @@ export default defineComponent({
     border-bottom: none;
   }
 
+  .todo-done {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   &-content {
     display: flex;
     align-items: center;
     transition: all 0.25s ease-in-out;
-
+    flex-grow: 1;
+    padding: 1rem;
     .checkmark {
       height: 25px;
       width: 25px;
@@ -99,24 +105,30 @@ export default defineComponent({
       }
     }
 
-    &:after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 50%;
-      right: 50%;
-      height: 2px;
-      background-color: rgba(#dcebf6, 0.5);
-      opacity: 0;
-      transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    .todo-content {
+      position: relative;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 50%;
+        right: 50%;
+        height: 2px;
+        background-color: rgba(#dcebf6, 0.5);
+        opacity: 0;
+        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      }
     }
 
     &.done {
-      &:after {
-        opacity: 1;
-        left: 36px;
-        right: -4px;
+      .todo-content {
+        &:after {
+          opacity: 1;
+          left: -4px;
+          right: -4px;
+        }
       }
 
       .checkmark {
