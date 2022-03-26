@@ -1,8 +1,6 @@
 <template>
   <div class="current-weather">
-    <WeatherIcon
-      :icon="weatherIcon"
-    ></WeatherIcon>
+    <WeatherIcon :icon="weatherIcon" @click="updateWeather()"></WeatherIcon>
     <CurrentTemperature
       :temperature-value="getTemperatureValue"
       :high="getTemperatureHigh"
@@ -14,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { onBeforeMount, defineComponent } from 'vue'
+import { onBeforeMount, defineComponent } from 'vue';
 import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
 import { useWeatherStore } from '@/stores/weather';
@@ -25,38 +23,38 @@ export default defineComponent({
   components: {
     CurrentTemperature,
     WeatherIcon,
-},
+  },
   setup() {
     const weatherStore = useWeatherStore();
     const appId = import.meta.env.VITE_APP_ID;
-    
-    onBeforeMount(async () => {
-      if (navigator.onLine) {
-        navigator.geolocation.getCurrentPosition(async (position) =>
-          await weatherStore.hydrateStore(appId, position.coords)
-        );
-      }
-    });
 
-    const { 
+    const {
       isInitialized,
       getDescription,
-      getLocation, 
-      getTemperatureLow, 
-      getTemperatureHigh, 
+      getLocation,
+      getTemperatureLow,
+      getTemperatureHigh,
       getTemperatureValue,
-      weatherIcon, 
+      weatherIcon,
     } = storeToRefs(weatherStore);
 
+    const updateWeather = async () => {
+      if (navigator.onLine) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => await weatherStore.hydrateStore(appId, position.coords),
+        );
+      }
+    };
 
     return {
       isInitialized,
       getDescription,
-      getLocation, 
-      getTemperatureLow, 
-      getTemperatureHigh, 
+      getLocation,
+      getTemperatureLow,
+      getTemperatureHigh,
       getTemperatureValue,
       weatherIcon,
+      updateWeather,
     };
   },
 });

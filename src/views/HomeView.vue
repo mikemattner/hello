@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from 'vue'
+import { defineComponent, onBeforeMount } from 'vue';
 import CurrentTime from '@/components/CurrentTime.vue';
 import CurrentWeather from '@/components/CurrentWeather.vue';
 import BaseCard from '@/components/BaseCard.vue';
@@ -30,38 +30,39 @@ export default defineComponent({
   setup() {
     const weatherStore = useWeatherStore();
     const appId = import.meta.env.VITE_APP_ID;
-    
+
     onBeforeMount(async () => {
       if (navigator.onLine) {
-        navigator.geolocation.getCurrentPosition(async (position) =>
-          await weatherStore.hydrateStore(appId, position.coords)
+        navigator.geolocation.getCurrentPosition(
+          async (position) => await weatherStore.hydrateStore(appId, position.coords),
         );
       }
     });
 
-    const { 
-      isInitialized,
-    } = storeToRefs(weatherStore);
+    const { isInitialized } = storeToRefs(weatherStore);
 
     return {
-      isInitialized
-    }
-  }
-})
+      isInitialized,
+    };
+  },
+});
 </script>
 
 <style lang="scss">
 .home {
-  display: flex;
   width: 100%;
-  margin: 0 20px;
-  padding-top: 10rem;
+  padding-top: 2rem;
+  display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
+  @media (min-width: 1300px) {
+    padding-top: 6rem;
+  }
+
   .corner-weather {
-    @media (min-width: 1200px) {
+    @media (min-width: 1300px) {
       position: absolute;
       margin: 0;
       top: 2rem;

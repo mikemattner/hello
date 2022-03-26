@@ -45,10 +45,8 @@ export const useWeatherStore = defineStore({
       }
     },
     async hydrateStore(appId: string, coordinates: GeolocationCoordinates) {
-      if (!this.initialized) {
-        await this.getWeatherData(appId, coordinates);
-        this.initialized = true;
-      }
+      await this.getWeatherData(appId, coordinates);
+      this.initialized = true;
     },
   }
 })

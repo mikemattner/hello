@@ -5,12 +5,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue';
 import moment from 'moment';
 
 export default defineComponent({
   name: 'DashboardApp',
-})
+});
 </script>
 
 <style lang="scss">
@@ -28,8 +28,9 @@ export default defineComponent({
 }
 
 html {
+  height: 100%;
   font-weight: 300;
-  font-size: calc(16px + 0.5vw);
+  font-size: calc(14px + 0.5vw);
   line-height: 1.65;
   letter-spacing: 0.0125rem;
   @media (min-width: 1600px) {
@@ -37,19 +38,22 @@ html {
   }
 }
 body {
+  background-image: var(--background-image);
+  background-repeat: no-repeat;
+  height: 100%;
   color: var(--color);
   margin: 0;
   padding: 0;
-  background-image: var(--background-image);
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 .main-view {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  padding: 0 20px;
+  // min-height: 100vh;
+  // min-height: -webkit-fill-available;
 }
 </style>
