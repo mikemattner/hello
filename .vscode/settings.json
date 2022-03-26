@@ -1,0 +1,28 @@
+{
+    "cssvar.files": [
+      "./src/assets/styles/custom-properties.scss",
+    ],
+    // you can also add support for autocomplete in other file extensions
+    "cssvar.extensions": [
+      "css",
+      "scss",
+      "html",
+      "jsx",
+      "tsx",
+      "vue",
+      "ts"
+    ],
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "[vue]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.enable": true,
+    "eslint.validate": [
+      "typescript",
+      "vue"
+    ],
+    "editor.tabSize": 2,
+  }
