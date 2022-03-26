@@ -1,5 +1,5 @@
 <template>
-  <div class="input-text-field">
+  <div :class="classes">
     <label class="input-text-field__label" :for="id">{{ label }}</label>
     <input
       autocomplete="off"
@@ -37,6 +37,14 @@ export default defineComponent({
     },
   },
   setup(props, { emit }) {
+    const classes = computed(() => {
+      return [
+        'input-text-field',
+        {
+          'input-text-field--populated': !!props.modelValue,
+        },
+      ];
+    });
     const events = computed(() => {
       return {
         input: (event: any) => {
@@ -52,6 +60,7 @@ export default defineComponent({
     });
 
     return {
+      classes,
       events,
     };
   },
@@ -69,11 +78,13 @@ export default defineComponent({
 
   &__label {
     padding-bottom: 0.125rem;
-    opacity: 0.5;
+    padding-left: 0.5rem;
+    opacity: 1;
     transition: all 0.25s ease-in-out;
     position: absolute;
     left: 0;
     width: 100%;
+    font-weight: 700;
   }
 
   &__input {
@@ -99,17 +110,23 @@ export default defineComponent({
   }
 
   &:focus-within {
-    .input-text-field__label,
     .input-text-field__input {
       opacity: 1;
     }
-
     .input-text-field__label {
-      left: 0;
       transform: translateY(-100%);
       font-size: 0.675rem;
-      font-weight: 700;
+      opacity: 0.5;
     }
+  }
+  &--populated > .input-text-field__label {
+    transform: translateY(-100%);
+    font-size: 0.675rem;
+    opacity: 0.5;
+  }
+
+  &--populated > .input-text-field__input {
+    opacity: 1;
   }
 }
 </style>

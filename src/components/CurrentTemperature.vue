@@ -23,13 +23,14 @@
     </div>
     <div class="current-temperature__location">
       <div class="current-temperature__location-name">{{ location }}</div>
-      <div class="current-temperature__location-description">{{ description }}</div>
+      <div v-if="!sm" class="current-temperature__location-description">{{ description }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
+import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'Temperature',
@@ -56,6 +57,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { sm } = useBreakpoints();
+
     const scale = ref<string>('Fahrenheit');
 
     const toFahrenheit = (value: number) => {
@@ -88,6 +91,7 @@ export default defineComponent({
       fLow,
       scaleSymbol,
       toggleTemperature,
+      sm,
     };
   },
 });

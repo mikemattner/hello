@@ -1,22 +1,23 @@
 <template>
   <div class="current-weather">
-    <WeatherIcon :icon="weatherIcon" @click="updateWeather()"></WeatherIcon>
+    <WeatherIcon v-if="!sm" :icon="weatherIcon" @click="updateWeather()" />
     <CurrentTemperature
       :temperature-value="getTemperatureValue"
       :high="getTemperatureHigh"
       :low="getTemperatureLow"
       :description="getDescription"
       :location="getLocation"
-    ></CurrentTemperature>
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { onBeforeMount, defineComponent } from 'vue';
+import { defineComponent } from 'vue';
 import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
+import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'CurrentWeather',
@@ -25,6 +26,7 @@ export default defineComponent({
     WeatherIcon,
   },
   setup() {
+    const { sm } = useBreakpoints();
     const weatherStore = useWeatherStore();
     const appId = import.meta.env.VITE_APP_ID;
 
@@ -55,6 +57,7 @@ export default defineComponent({
       getTemperatureValue,
       weatherIcon,
       updateWeather,
+      sm,
     };
   },
 });

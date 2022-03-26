@@ -69,6 +69,12 @@ export default defineComponent({
   flex-direction: column;
   text-align: center;
   width: 100%;
+  @media (max-width: 1299px) {
+    padding-top: 2rem;
+  }
+  @media (min-width: 1300px) {
+    padding-top: 4rem;
+  }
   &__display {
     font-size: 4rem;
     font-weight: 900;

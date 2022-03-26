@@ -155,7 +155,8 @@ export default defineComponent({
             height: 13px;
             border: solid var(--input-bg-color);
             border-width: 0 1px 1px 0;
-            transform: rotate(45deg);
+            transform: rotate(45deg) scale(0.5);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
           }
         }
 
@@ -172,8 +173,8 @@ export default defineComponent({
           position: absolute;
           top: 50%;
           transform: translateY(-50%);
-          left: 36px;
-          right: 100%;
+          left: 50%;
+          right: 50%;
           height: 2px;
           background-color: var(--color);
           opacity: 0;
@@ -183,6 +184,7 @@ export default defineComponent({
         &.done {
           &:after {
             opacity: 1;
+            left: 36px;
             right: -4px;
           }
 
@@ -190,6 +192,7 @@ export default defineComponent({
             opacity: 1;
             &:after {
               opacity: 1;
+              transform: rotate(45deg) scale(1);
             }
           }
         }

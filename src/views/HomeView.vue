@@ -51,17 +51,16 @@ export default defineComponent({
 <style lang="scss">
 .home {
   width: 100%;
-  padding-top: 2rem;
+  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
-  @media (min-width: 1300px) {
-    padding-top: 6rem;
-  }
-
   .corner-weather {
+    :deep(.card) {
+      margin-top: 0;
+    }
     @media (min-width: 1300px) {
       position: absolute;
       margin: 0;
