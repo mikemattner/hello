@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'WeatherIcon',
@@ -29,6 +29,12 @@ export default defineComponent({
   margin-right: 20px;
   position: relative;
   z-index: 100;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  &:hover {
+    transform: scale(1.1);
+  }
   .weather__icon {
     width: 80px;
     font-size: 2.25rem;

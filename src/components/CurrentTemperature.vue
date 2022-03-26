@@ -3,7 +3,7 @@
     <div class="temperature-value-block">
       <div class="current-temperature__left">
         <div class="current-temperature__value">
-          {{ (scaleSymbol === 'C')? temperatureValue : fValue }}
+          {{ scaleSymbol === 'C' ? temperatureValue : fValue }}
         </div>
         <div class="temperature__scale" @click.prevent="toggleTemperature">
           <span>&deg;{{ scaleSymbol }}</span>
@@ -23,13 +23,14 @@
     </div>
     <div class="current-temperature__location">
       <div class="current-temperature__location-name">{{ location }}</div>
-      <div class="current-temperature__location-description">{{ description }}</div>
+      <div v-if="!sm" class="current-temperature__location-description">{{ description }}</div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue';
+import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'Temperature',
@@ -56,6 +57,8 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { sm } = useBreakpoints();
+
     const scale = ref<string>('Fahrenheit');
 
     const toFahrenheit = (value: number) => {
@@ -81,14 +84,15 @@ export default defineComponent({
     const fLow = computed<number>(() => {
       return toFahrenheit(props.low);
     });
-  
-    return{
+
+    return {
       fValue,
       fHigh,
       fLow,
       scaleSymbol,
       toggleTemperature,
-    }
+      sm,
+    };
   },
 });
 </script>
@@ -139,7 +143,7 @@ export default defineComponent({
     font-weight: 900;
   }
   .temperature__scale {
-    margin-top:0.125rem;
+    margin-top: 0.125rem;
     font-size: 1rem;
     font-weight: 100;
     cursor: pointer;
@@ -148,7 +152,7 @@ export default defineComponent({
       text-decoration: none;
       transition: all 0.25s ease-in-out;
       &:hover {
-        color: rgba(255,255,255,0.5);
+        color: rgba(255, 255, 255, 0.5);
       }
     }
   }
