@@ -110,6 +110,10 @@ export default defineComponent({
       text-transform: capitalize;
       font-weight: 300;
     }
+
+    &-name {
+      font-weight: 700;
+    }
   }
   .temperature-value-block {
     display: flex;

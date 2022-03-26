@@ -3,3 +3,8 @@ export interface Messages {
     afternoon: string;
     evening: string;
 }
+
+export interface ToDo {
+    done: boolean;
+    content: string;
+}

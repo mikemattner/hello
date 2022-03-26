@@ -72,7 +72,7 @@ export default defineComponent({
   text-align: center;
   width: 100%;
   &__display {
-    font-size: 10vw;
+    font-size: 4rem;
     font-weight: 900;
     line-height: 1;
     @media (min-width: 852px) {
