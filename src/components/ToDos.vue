@@ -3,7 +3,7 @@
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
         <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
-        <BaseButton @clicked="addTodo()" primary> Add <CloseIcon /> </BaseButton>
+        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>Add Todo</BaseButton>
       </form>
     </div>
     <TransitionGroup name="list" class="todo-list" tag="div">

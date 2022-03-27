@@ -71,6 +71,7 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
     padding: 1rem;
+    line-height: 1.5;
 
     .checkmark {
       height: 25px;
@@ -81,6 +82,7 @@ export default defineComponent({
       margin-right: 15px;
       opacity: 0.5;
       transition: all 0.25s ease-in-out;
+      flex: 0 0 25px;
 
       &:after {
         content: '';
@@ -111,28 +113,30 @@ export default defineComponent({
     .todo-content {
       position: relative;
 
-      &:after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 50%;
-        right: 50%;
-        height: 2px;
-        background-color: var(--contrast-color);
-        z-index: 3;
-        opacity: 0;
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
+      // &:after {
+      //   content: '';
+      //   position: absolute;
+      //   top: 50%;
+      //   transform: translateY(-50%);
+      //   left: 50%;
+      //   right: 50%;
+      //   height: 2px;
+      //   background-color: var(--contrast-color);
+      //   z-index: 3;
+      //   opacity: 0;
+      //   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      // }
     }
 
     &.done {
       .todo-content {
-        &:after {
-          opacity: 1;
-          left: -2px;
-          right: -2px;
-        }
+        text-decoration-line: line-through;
+        text-decoration-color: var(--contrast-color);
+        // &:after {
+        //   opacity: 1;
+        //   left: -2px;
+        //   right: -2px;
+        // }
       }
 
       .checkmark {
