@@ -1,5 +1,5 @@
 <template>
-  <button class="button" @click="$emit('clicked')">
+  <button :class="classes" @click="$emit('clicked')">
     <span class="button--content">
       <slot />
     </span>
@@ -7,10 +7,29 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'BaseButton',
+  props: {
+    primary: {
+      type: Boolean,
+    },
+  },
+  setup(props) {
+    const classes = computed(() => {
+      return [
+        'button',
+        {
+          button__primary: props.primary,
+        },
+      ];
+    });
+
+    return {
+      classes,
+    };
+  },
 });
 </script>
 
@@ -32,11 +51,13 @@ export default defineComponent({
 
   &:hover {
     background-color: rgba(#dcebf6, 0.125);
+    border-color: var(--contrast-color);
     box-shadow: unset;
     cursor: pointer;
   }
   &:focus {
     background-color: rgba(#dcebf6, 0.125);
+    border-color: var(--contrast-color);
     box-shadow: unset;
   }
 
@@ -48,6 +69,24 @@ export default defineComponent({
     gap: 10px;
     font-size: 0.75rem;
     font-weight: 900;
+  }
+
+  :deep(svg) {
+    fill: var(--contrast-color);
+  }
+
+  &__primary {
+    background-color: var(--contrast-color);
+    color: var(--card-bg);
+    box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0);
+
+    :deep(svg) {
+      fill: var(--card-bg);
+    }
+    &:hover {
+      box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0.25);
+      background-color: var(--contrast-color);
+    }
   }
 }
 </style>

@@ -79,6 +79,7 @@ export default defineComponent({
     font-size: 4rem;
     font-weight: 900;
     line-height: 1;
+    color: var(--contrast-color);
     @media (min-width: 852px) {
       font-size: 4rem;
     }

@@ -3,15 +3,15 @@
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
         <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button"> Add <CloseIcon /> </BaseButton>
+        <BaseButton @clicked="addTodo()" primary> Add <CloseIcon /> </BaseButton>
       </form>
     </div>
     <TransitionGroup name="list" class="todo-list" tag="div">
       <ToDoItem
-        v-for="(todo, index) in todos"
-        :key="`todo-${index}`"
+        v-for="(todo, index) in getTodos"
+        :key="todo.content"
         :todo="todo"
-        @done="doneTodo(todo)"
+        @done="doneTodo(index)"
         @remove="removeTodo(index)"
       />
     </TransitionGroup>
@@ -19,53 +19,43 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import type { ToDo } from '@/types/types';
+import { computed, defineComponent, ref } from 'vue';
 import BaseCard from './BaseCard.vue';
 import CloseIcon from './CloseIcon.vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import ToDoItem from './ToDoItem.vue';
+import { useTodoStore } from '@/stores/todos';
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
     const newTodo = ref('');
-    const localToDos = localStorage.getItem('mike-todos');
-    let todosData: ToDo[] = [];
-    if (localToDos) {
-      todosData = JSON.parse(localToDos);
-    }
-    const todos = ref(todosData);
+    const todoStore = useTodoStore();
+    const { getTodos } = storeToRefs(todoStore);
+
     const addTodo = () => {
       if (newTodo.value) {
-        todos.value.push({
-          done: false,
-          content: newTodo.value,
-        });
+        todoStore.addTodo(newTodo.value);
         newTodo.value = '';
       }
-      saveData();
     };
-    const doneTodo = (todo: ToDo) => {
-      todo.done = !todo.done;
-      saveData();
+
+    const doneTodo = (index: number) => {
+      todoStore.doneTodo(index);
     };
+
     const removeTodo = (index: number) => {
-      todos.value.splice(index, 1);
-      saveData();
+      todoStore.removeTodo(index);
     };
-    const saveData = () => {
-      const storageData = JSON.stringify(todos.value);
-      localStorage.setItem('mike-todos', storageData);
-    };
+
     return {
-      todos,
       newTodo,
       addTodo,
       doneTodo,
       removeTodo,
-      saveData,
+      getTodos,
     };
   },
   components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem },
@@ -90,7 +80,7 @@ export default defineComponent({
 
   .todo-form {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     gap: 10px;
 
@@ -111,14 +101,12 @@ export default defineComponent({
     width: 100%;
     position: relative;
     flex-grow: 1;
-    padding-bottom: 4rem;
   }
 }
 .list-move,
 .list-enter-active,
 .list-leave-active {
-  //   transition: all 0.5s ease;
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .list-enter-from,
