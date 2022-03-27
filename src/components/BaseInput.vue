@@ -73,7 +73,6 @@ export default defineComponent({
   flex-direction: column;
   align-items: stretch;
   justify-content: flex-start;
-  padding-bottom: 0.5rem;
   position: relative;
 
   &__label {

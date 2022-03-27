@@ -18,7 +18,6 @@ export default defineComponent({
 svg {
   width: 15px;
   height: 15px;
-  fill: #dcebf6;
   transition: all 0.25s ease-in-out;
 }
 </style>

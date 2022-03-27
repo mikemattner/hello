@@ -54,6 +54,7 @@ export default defineComponent({
   background-color: var(--card-bg);
   margin: 0.375rem 0;
   width: 100%;
+  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
   &:last-child {
     border-bottom: none;
@@ -70,12 +71,13 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
     padding: 1rem;
+
     .checkmark {
       height: 25px;
       width: 25px;
       flex-grow: 0;
       border: 1px solid var(--input-bg-color);
-      border-radius: 50%;
+      border-radius: 4px;
       margin-right: 15px;
       opacity: 0.5;
       transition: all 0.25s ease-in-out;
@@ -89,8 +91,8 @@ export default defineComponent({
         top: 4px;
         width: 6px;
         height: 13px;
-        border: solid var(--input-color);
-        border-width: 0 1px 1px 0;
+        border: solid var(--card-bg);
+        border-width: 0 2px 2px 0;
         transform: rotate(45deg) scale(0.5);
         transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
@@ -102,6 +104,7 @@ export default defineComponent({
       .checkmark {
         opacity: 1;
         background-color: var(--tooltip-bg);
+        border-color: var(--contrast-color);
       }
     }
 
@@ -116,7 +119,8 @@ export default defineComponent({
         left: 50%;
         right: 50%;
         height: 2px;
-        background-color: rgba(#dcebf6, 0.5);
+        background-color: var(--contrast-color);
+        z-index: 3;
         opacity: 0;
         transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
       }
@@ -126,14 +130,15 @@ export default defineComponent({
       .todo-content {
         &:after {
           opacity: 1;
-          left: -4px;
-          right: -4px;
+          left: -2px;
+          right: -2px;
         }
       }
 
       .checkmark {
         opacity: 1;
-        background-color: var(--color);
+        background-color: var(--contrast-color);
+        border-color: var(--contrast-color);
         &:after {
           opacity: 1;
           transform: rotate(45deg) scale(1);
