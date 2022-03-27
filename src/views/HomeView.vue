@@ -66,6 +66,7 @@ export default defineComponent({
       margin: 0;
       top: 2rem;
       right: 2rem;
+      z-index: 10;
     }
   }
 }
