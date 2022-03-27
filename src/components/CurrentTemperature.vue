@@ -5,7 +5,7 @@
         <div class="current-temperature__value">
           {{ scaleSymbol === 'C' ? temperatureValue : fValue }}
         </div>
-        <div class="temperature__scale" @click.prevent="toggleTemperature">
+        <div class="temperature__scale" @click="toggleTemperature">
           <span>&deg;{{ scaleSymbol }}</span>
         </div>
       </div>
