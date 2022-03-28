@@ -82,8 +82,11 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     position: absolute;
     left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     width: 100%;
     font-weight: 700;
+    font-size: 0.75rem;
   }
 
   &__input {
@@ -113,12 +116,14 @@ export default defineComponent({
       opacity: 1;
     }
     .input-text-field__label {
+      top: 0;
       transform: translateY(-100%);
       font-size: 0.675rem;
       opacity: 0.5;
     }
   }
   &--populated > .input-text-field__label {
+    top: 0;
     transform: translateY(-100%);
     font-size: 0.675rem;
     opacity: 0.5;

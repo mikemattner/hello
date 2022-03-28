@@ -1,11 +1,15 @@
 <template>
   <main class="home">
-    <Transition name="fade" mode="out-in">
-      <BaseCard v-if="isInitialized" class="corner-weather">
-        <CurrentWeather />
-      </BaseCard>
-    </Transition>
-    <CurrentTime />
+    <header class="home-header">
+      <div class="corner-weather">
+        <Transition name="fade" mode="out-in">
+          <BaseCard v-if="isInitialized">
+            <CurrentWeather />
+          </BaseCard>
+        </Transition>
+      </div>
+      <CurrentTime class="current-time" />
+    </header>
     <ToDos />
   </main>
 </template>
@@ -57,16 +61,35 @@ export default defineComponent({
   justify-content: flex-start;
   align-items: center;
 
-  .corner-weather {
-    :deep(.card) {
-      margin-top: 0;
-    }
+  &-header {
     @media (min-width: 1300px) {
-      position: absolute;
-      margin: 0;
-      top: 2rem;
-      right: 2rem;
-      z-index: 10;
+      display: grid;
+      grid-template-columns:
+        [empty] 1fr
+        [time] 1fr
+        [weather] 1fr;
+      gap: 20px;
+    }
+  }
+
+  .current-time {
+    grid-area: time;
+  }
+
+  .corner-weather {
+    grid-area: weather;
+    min-height: 117px;
+    .card {
+      margin-top: 0;
+      margin-bottom: 0;
+      max-width: max-content;
+      @media (max-width: 1299px) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      @media (min-width: 1300px) {
+        margin-left: auto;
+      }
     }
   }
 }

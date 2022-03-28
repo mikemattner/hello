@@ -23,7 +23,7 @@
     </div>
     <div class="current-temperature__location">
       <div class="current-temperature__location-name">{{ location }}</div>
-      <div v-if="!sm" class="current-temperature__location-description">{{ description }}</div>
+      <div class="current-temperature__location-description">{{ description }}</div>
     </div>
   </div>
 </template>
@@ -108,6 +108,10 @@ export default defineComponent({
     font-size: 0.675rem;
     margin-top: 0.25rem;
     font-weight: 700;
+
+    @media (max-width: 730px) {
+      text-align: center;
+    }
 
     &-description {
       margin-top: 0.25rem;
