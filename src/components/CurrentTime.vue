@@ -77,11 +77,11 @@ export default defineComponent({
     padding-top: 1rem;
   }
   &__display {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 900;
     line-height: 1;
     @media (min-width: 852px) {
-      font-size: 4rem;
+      font-size: 3rem;
     }
   }
   &__message {

@@ -1,18 +1,13 @@
 <template>
   <div class="current-weather">
-    <Transition name="fadeweather" mode="out-in">
-      <WeatherIcon v-if="isInitialized" :icon="weatherIcon" @click="updateWeather()" />
-    </Transition>
-    <Transition name="fadeweather" mode="out-in">
-      <CurrentTemperature
-        v-if="isInitialized"
-        :temperature-value="getTemperatureValue"
-        :high="getTemperatureHigh"
-        :low="getTemperatureLow"
-        :description="getDescription"
-        :location="getLocation"
-      />
-    </Transition>
+    <WeatherIcon :icon="weatherIcon" @click="updateWeather()" />
+    <CurrentTemperature
+      :temperature-value="getTemperatureValue"
+      :high="getTemperatureHigh"
+      :low="getTemperatureLow"
+      :description="getDescription"
+      :location="getLocation"
+    />
   </div>
 </template>
 
@@ -22,7 +17,6 @@ import CurrentTemperature from '@/components/CurrentTemperature.vue';
 import WeatherIcon from '@/components/WeatherIcon.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
-import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'CurrentWeather',
@@ -31,19 +25,11 @@ export default defineComponent({
     WeatherIcon,
   },
   setup() {
-    const { sm } = useBreakpoints();
     const weatherStore = useWeatherStore();
     const appId = import.meta.env.VITE_APP_ID;
 
-    const {
-      isInitialized,
-      getDescription,
-      getLocation,
-      getTemperatureLow,
-      getTemperatureHigh,
-      getTemperatureValue,
-      weatherIcon,
-    } = storeToRefs(weatherStore);
+    const { getDescription, getLocation, getTemperatureLow, getTemperatureHigh, getTemperatureValue, weatherIcon } =
+      storeToRefs(weatherStore);
 
     const updateWeather = async () => {
       if (navigator.onLine) {
@@ -54,7 +40,6 @@ export default defineComponent({
     };
 
     return {
-      isInitialized,
       getDescription,
       getLocation,
       getTemperatureLow,
@@ -62,7 +47,6 @@ export default defineComponent({
       getTemperatureValue,
       weatherIcon,
       updateWeather,
-      sm,
     };
   },
 });
@@ -72,15 +56,7 @@ export default defineComponent({
 .current-weather {
   display: flex;
   justify-content: center;
-  align-items: center;
-}
-.fadeweather-enter-active,
-.fadeweather-leave-active {
-  transition: opacity 200ms ease;
-}
-
-.fadeweather-enter-from,
-.fadeweather-leave-to {
-  opacity: 0;
+  align-items: stretch;
+  width: 100%;
 }
 </style>
