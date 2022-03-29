@@ -3,60 +3,66 @@
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
         <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>Add Todo</BaseButton>
+        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+          Add Task <span class="material-icons-outlined"> add </span>
+        </BaseButton>
       </form>
     </div>
-    <Transition name="fade">
-      <section class="todo-list-todos">
-        <template v-if="sm">
+    <section class="todo-list-todos">
+      <template v-if="sm">
+        <h4 class="headings">
+          <span class="content">Tasks</span> <span class="count">{{ getTodos.length }}</span>
+        </h4>
+        <Transition name="fadestay">
+          <div v-if="getTodos.length < 1" class="empty-todo">🤔</div>
+        </Transition>
+        <TransitionGroup name="list" class="todo-list" tag="div">
+          <ToDoItem
+            v-for="(todo, index) in getTodos"
+            :key="todo.content"
+            :todo="todo"
+            @done="doneTodo(todo)"
+            @remove="removeTodo(todo)"
+          />
+        </TransitionGroup>
+      </template>
+      <template v-if="!sm">
+        <div>
+          <h4 class="headings">
+            <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
+          </h4>
+          <Transition name="fadestay">
+            <div v-if="notCompletedTodos.length < 1" class="empty-todo">🤔</div>
+          </Transition>
           <TransitionGroup name="list" class="todo-list" tag="div">
             <ToDoItem
-              v-for="(todo, index) in getTodos"
+              v-for="(todo, index) in notCompletedTodos"
               :key="todo.content"
               :todo="todo"
               @done="doneTodo(todo)"
               @remove="removeTodo(todo)"
             />
           </TransitionGroup>
-        </template>
-        <template v-if="!sm">
-          <div>
-            <h4 class="headings">
-              <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
-            </h4>
-            <Transition name="fade">
-              <div v-if="notCompletedTodos.length < 1" class="empty-todo">🤔</div>
-            </Transition>
-            <TransitionGroup name="list" class="todo-list" tag="div">
-              <ToDoItem
-                v-for="(todo, index) in notCompletedTodos"
-                :key="todo.content"
-                :todo="todo"
-                @done="doneTodo(todo)"
-                @remove="removeTodo(todo)"
-              />
-            </TransitionGroup>
-          </div>
-          <div>
-            <h4 class="headings">
-              <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
-            </h4>
-            <Transition name="fade">
-              <div v-if="completedTodos.length < 1" class="empty-todo">😱</div>
-            </Transition>
-            <TransitionGroup name="list" class="todo-list" tag="div">
-              <ToDoItem
-                v-for="(todo, index) in completedTodos"
-                :key="todo.content"
-                :todo="todo"
-                @done="doneTodo(todo)"
-                @remove="removeTodo(todo)"
-              />
-            </TransitionGroup>
-          </div>
-        </template>
-      </section>
-    </Transition>
+        </div>
+        <div>
+          <h4 class="headings">
+            <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
+          </h4>
+          <Transition name="fadestay">
+            <div v-if="completedTodos.length < 1" class="empty-todo">😱</div>
+          </Transition>
+          <TransitionGroup name="list" class="todo-list" tag="div">
+            <ToDoItem
+              v-for="(todo, index) in completedTodos"
+              :key="todo.content"
+              :todo="todo"
+              @done="doneTodo(todo)"
+              @remove="removeTodo(todo)"
+            />
+          </TransitionGroup>
+        </div>
+      </template>
+    </section>
   </div>
 </template>
 
@@ -120,7 +126,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .todo-list-container {
-  margin-top: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,6 +134,13 @@ export default defineComponent({
   width: 100%;
   max-width: 1200px;
   padding-bottom: 60px;
+
+  @media (max-width: 1299px) {
+    margin-top: 2rem;
+  }
+  @media (min-width: 1300px) {
+    margin-top: 3rem;
+  }
 
   .todo-form-container {
     width: 100%;

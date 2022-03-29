@@ -7,7 +7,7 @@
     <Transition name="fade">
       <div class="todo-done" v-if="todo.done">
         <BaseButton @clicked="removeTodo()">
-          <CloseIcon />
+          <span class="material-icons-outlined"> delete_outline </span>
         </BaseButton>
       </div>
     </Transition>

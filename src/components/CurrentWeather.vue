@@ -1,13 +1,18 @@
 <template>
   <div class="current-weather">
-    <WeatherIcon v-if="!sm" :icon="weatherIcon" @click="updateWeather()" />
-    <CurrentTemperature
-      :temperature-value="getTemperatureValue"
-      :high="getTemperatureHigh"
-      :low="getTemperatureLow"
-      :description="getDescription"
-      :location="getLocation"
-    />
+    <Transition name="fadeweather" mode="out-in">
+      <WeatherIcon v-if="isInitialized" :icon="weatherIcon" @click="updateWeather()" />
+    </Transition>
+    <Transition name="fadeweather" mode="out-in">
+      <CurrentTemperature
+        v-if="isInitialized"
+        :temperature-value="getTemperatureValue"
+        :high="getTemperatureHigh"
+        :low="getTemperatureLow"
+        :description="getDescription"
+        :location="getLocation"
+      />
+    </Transition>
   </div>
 </template>
 
@@ -68,5 +73,14 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.fadeweather-enter-active,
+.fadeweather-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.fadeweather-enter-from,
+.fadeweather-leave-to {
+  opacity: 0;
 }
 </style>
