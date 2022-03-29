@@ -79,7 +79,7 @@ export default defineComponent({
     padding-bottom: 0.125rem;
     padding-left: 0.5rem;
     opacity: 1;
-    transition: all 0.25s ease-in-out;
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: absolute;
     left: 0;
     top: 50%;
