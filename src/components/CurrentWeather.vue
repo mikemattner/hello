@@ -26,16 +26,13 @@ export default defineComponent({
   },
   setup() {
     const weatherStore = useWeatherStore();
-    const appId = import.meta.env.VITE_APP_ID;
 
     const { getDescription, getLocation, getTemperatureLow, getTemperatureHigh, getTemperatureValue, weatherIcon } =
       storeToRefs(weatherStore);
 
     const updateWeather = async () => {
       if (navigator.onLine) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => await weatherStore.hydrateStore(appId, position.coords),
-        );
+        navigator.geolocation.getCurrentPosition(async (position) => await weatherStore.hydrateStore(position.coords));
       }
     };
 
