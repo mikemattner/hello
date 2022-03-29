@@ -2,7 +2,7 @@
   <main class="home">
     <header class="home-header">
       <div class="corner-weather">
-        <Transition name="fade" mode="out-in">
+        <Transition name="fadeweather" mode="out-in">
           <BaseCard v-if="isInitialized">
             <CurrentWeather />
           </BaseCard>
@@ -96,10 +96,21 @@ export default defineComponent({
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 200ms ease;
+  position: absolute;
 }
 
 .fade-enter-from,
 .fade-leave-to {
+  opacity: 0;
+}
+
+.fadeweather-enter-active,
+.fadeweather-leave-active {
+  transition: opacity 200ms ease;
+}
+
+.fadeweather-enter-from,
+.fadeweather-leave-to {
   opacity: 0;
 }
 </style>

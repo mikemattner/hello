@@ -7,7 +7,7 @@
       </form>
     </div>
     <Transition name="fade">
-      <section class="todo-list-todos" v-if="getTodos.length > 0">
+      <section class="todo-list-todos">
         <template v-if="sm">
           <TransitionGroup name="list" class="todo-list" tag="div">
             <ToDoItem
@@ -21,7 +21,12 @@
         </template>
         <template v-if="!sm">
           <div>
-            <h4 class="headings">Upcoming</h4>
+            <h4 class="headings">
+              <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
+            </h4>
+            <Transition name="fade">
+              <div v-if="notCompletedTodos.length < 1" class="empty-todo">🤔</div>
+            </Transition>
             <TransitionGroup name="list" class="todo-list" tag="div">
               <ToDoItem
                 v-for="(todo, index) in notCompletedTodos"
@@ -33,7 +38,12 @@
             </TransitionGroup>
           </div>
           <div>
-            <h4 class="headings">Done</h4>
+            <h4 class="headings">
+              <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
+            </h4>
+            <Transition name="fade">
+              <div v-if="completedTodos.length < 1" class="empty-todo">😱</div>
+            </Transition>
             <TransitionGroup name="list" class="todo-list" tag="div">
               <ToDoItem
                 v-for="(todo, index) in completedTodos"
@@ -159,12 +169,43 @@ export default defineComponent({
     @media (min-width: 730px) {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 40px;
     }
     .headings {
       font-size: 0.75rem;
-      font-weight: 900;
       margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 0.5rem;
+
+      .content {
+        font-weight: 900;
+      }
+
+      .count {
+        font-size: 0.625rem;
+        width: 30px;
+        height: 30px;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background-color: var(--card-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        color: var(--contrast-color);
+      }
+    }
+
+    .empty-todo {
+      padding: 1rem;
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      border-radius: 4px;
+      font-size: 1.5rem;
+      line-height: 0.5;
+      width: 100%;
     }
   }
 }
