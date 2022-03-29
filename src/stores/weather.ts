@@ -1,3 +1,4 @@
+import type { WeatherState } from '@/types/types';
 import WeatherService from '@/services/weatherService';
 import { defineStore } from 'pinia'
 
@@ -30,7 +31,8 @@ export const useWeatherStore = defineStore({
     getWeatherIcon: (state) =>  { return state.weatherIcon; },
   },
   actions: {
-    async getWeatherData(appId: string, coordinates: GeolocationCoordinates) {
+    async getWeatherData(coordinates: GeolocationCoordinates) {
+      const appId = import.meta.env.VITE_APP_ID;
       try {
         const data = await WeatherService.GetWeatherData(appId, coordinates);
         this.temperatureValue = data.main.temp;
@@ -44,25 +46,10 @@ export const useWeatherStore = defineStore({
         console.error(error);
       }
     },
-    async hydrateStore(appId: string, coordinates: GeolocationCoordinates) {
+    async hydrateStore(coordinates: GeolocationCoordinates) {
       this.initialized = false;
-      await this.getWeatherData(appId, coordinates);
+      await this.getWeatherData(coordinates);
       this.initialized = true;
     },
   }
 })
-
-interface WeatherState {
-  initialized: boolean;
-  temperatureValue: number;
-  temperatureHigh: number;
-  temperatureLow: number;
-  description: string;
-  location: Location;
-  weatherIcon: string;
-}
-
-interface Location {
-  name: string;
-  country: string;
-}

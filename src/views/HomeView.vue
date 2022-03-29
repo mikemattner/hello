@@ -3,10 +3,10 @@
     <header class="home-header">
       <div class="corner-weather">
         <BaseCard>
-          <Transition name="fadeweather" mode="out-in">
+          <TransitionGroup name="fadeweather" mode="out-in">
             <BaseLoader v-if="!isInitialized" />
             <CurrentWeather v-else />
-          </Transition>
+          </TransitionGroup>
         </BaseCard>
       </div>
       <CurrentTime class="current-time" />
@@ -36,13 +36,10 @@ export default defineComponent({
   },
   setup() {
     const weatherStore = useWeatherStore();
-    const appId = import.meta.env.VITE_APP_ID;
 
     onBeforeMount(async () => {
       if (navigator.onLine) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => await weatherStore.hydrateStore(appId, position.coords),
-        );
+        navigator.geolocation.getCurrentPosition(async (position) => await weatherStore.hydrateStore(position.coords));
       }
     });
 
@@ -88,8 +85,9 @@ export default defineComponent({
       width: 272px;
       height: 124px;
       display: flex;
-      align-items: stretch;
+      align-items: center;
       justify-content: center;
+      overflow: hidden;
       @media (max-width: 1299px) {
         margin-left: auto;
         margin-right: auto;
@@ -125,14 +123,20 @@ export default defineComponent({
 .fadestay-leave-to {
   opacity: 0;
 }
+
+.fadeweather-move,
 .fadeweather-enter-active,
 .fadeweather-leave-active {
-  transition: opacity 200ms ease;
-  position: absolute;
+  transition: all 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .fadeweather-enter-from,
 .fadeweather-leave-to {
   opacity: 0;
+  transform: translateY(-30px);
+}
+
+.fadeweather-leave-active {
+  position: absolute;
 }
 </style>

@@ -1,4 +1,4 @@
-import type { ToDo } from '@/types/types';
+import type { ToDo, TodoState } from '@/types/types';
 import { defineStore } from 'pinia'
 
 export const useTodoStore = defineStore({
@@ -30,7 +30,3 @@ export const useTodoStore = defineStore({
     key: 'dashboard-todos',
   },
 })
-
-interface TodoState {
-  todos: ToDo[];
-}
