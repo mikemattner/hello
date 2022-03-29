@@ -45,7 +45,7 @@ export default defineComponent({
     };
 
     const updateCurrentDate = () => {
-      currentDate.value = moment().format('MMMM, Do YYYY');
+      currentDate.value = moment().format('MMMM Do, YYYY');
     };
 
     updateCurrentDate();
@@ -85,7 +85,7 @@ export default defineComponent({
     }
   }
   &__message {
-    font-size: 1.25rem;
+    font-size: 1rem;
     line-height: 1.2;
   }
 }

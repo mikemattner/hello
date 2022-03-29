@@ -1,5 +1,5 @@
 <template>
-  <button :class="classes" @click="$emit('clicked')">
+  <button :class="classes" v-bind="{ ...attributes }" @click="$emit('clicked')">
     <span class="button--content">
       <slot />
     </span>
@@ -14,19 +14,32 @@ export default defineComponent({
   props: {
     primary: {
       type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
+    const attributes = computed(() => {
+      return {
+        disabled: props.disabled,
+      };
+    });
+
     const classes = computed(() => {
       return [
         'button',
         {
           button__primary: props.primary,
+          button__disabled: props.disabled,
         },
       ];
     });
 
     return {
+      attributes,
       classes,
     };
   },
@@ -41,24 +54,29 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: all 0.25s ease-in-out;
   overflow: hidden;
   border: none;
   background-color: unset;
   padding: 0.5rem;
   color: var(--color);
   border: 1px solid rgba(#dcebf6, 0.125);
+  transition: all 0.25s ease-in-out;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: rgba(#dcebf6, 0.125);
     border-color: var(--contrast-color);
-    box-shadow: unset;
     cursor: pointer;
   }
   &:focus {
-    background-color: rgba(#dcebf6, 0.125);
-    border-color: var(--contrast-color);
-    box-shadow: unset;
+    outline: 0;
+    box-shadow: var(--button-focus-shadow);
+  }
+
+  &--disabled,
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.25;
+    pointer-events: none;
   }
 
   &--content {
@@ -83,10 +101,13 @@ export default defineComponent({
     :deep(svg) {
       fill: var(--card-bg);
     }
-    &:hover,
-    &:focus {
+    &:hover:not(:disabled) {
       box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0.25);
       background-color: var(--contrast-color);
+    }
+    &:focus {
+      outline: 0;
+      box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0), var(--button-focus-shadow);
     }
   }
 }

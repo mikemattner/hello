@@ -6,6 +6,7 @@ export const useWeatherStore = defineStore({
   id: 'weather',
   state: () => ({
     initialized: false,
+    error: false,
     temperatureValue: 0,
     temperatureHigh: 0,
     temperatureLow: 0,
@@ -18,6 +19,7 @@ export const useWeatherStore = defineStore({
   }) as WeatherState,
   getters: {
     isInitialized: (state) => state.initialized,
+    isError: (state) => state.error,
     getTemperatureValue: (state) => { return Math.round(state.temperatureValue) },
     getTemperatureHigh: (state) => { return Math.round(state.temperatureHigh) },
     getTemperatureLow: (state) => { return Math.round(state.temperatureLow) },
@@ -43,7 +45,7 @@ export const useWeatherStore = defineStore({
         this.location.country = data.sys.country;
         this.weatherIcon = data.weather[0].icon;
       } catch (error) {
-        console.error(error);
+        this.error = true;
       }
     },
     async hydrateStore(coordinates: GeolocationCoordinates) {
