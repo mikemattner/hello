@@ -1,13 +1,14 @@
 export interface Messages {
-    morning: string;
     afternoon: string;
     evening: string;
+    morning: string;
 }
 
 export interface ToDo {
-    key?: number;
-    done: boolean;
     content: string;
+    date: string;
+    done: boolean;
+    key: number;
 }
 
 interface TodoState {

@@ -7,19 +7,23 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
-import moment from 'moment';
 import type { Messages } from '@/types/types';
+import { useDateFormat, useNow } from '@vueuse/core';
 
 export default defineComponent({
   name: 'CurrentTime',
   setup() {
-    const currentTime = ref<string>(moment().format('h:mm'));
-    const currentHour = ref<string>(moment().format('H'));
-    const currentDate = ref<string>(moment().format('MMMM Do, YYYY'));
+    const timeFormat = ref<string>('h:mm');
+    const dateFormat = ref<string>('MM/DD/YYYY');
+    const hourFormat = ref<string>('H');
+    const currentTime = useDateFormat(useNow(), timeFormat);
+    const currentDate = useDateFormat(useNow(), dateFormat);
+    const currentHour = useDateFormat(useNow(), hourFormat);
+
     const messages: Messages = {
-      morning: 'Good morning',
       afternoon: 'Good afternoon',
       evening: 'Good evening',
+      morning: 'Good morning',
     };
 
     const greeting = computed<string>(() => {
@@ -35,22 +39,6 @@ export default defineComponent({
           return 'Hello';
       }
     });
-
-    const updateCurrentHour = () => {
-      currentHour.value = moment().format('H');
-    };
-
-    const updateCurrentTime = () => {
-      currentTime.value = moment().format('h:mm');
-    };
-
-    const updateCurrentDate = () => {
-      currentDate.value = moment().format('MMMM Do, YYYY');
-    };
-
-    updateCurrentDate();
-    setInterval(() => updateCurrentTime(), 1 * 1000);
-    setInterval(() => updateCurrentHour(), 1 * 1000);
 
     return {
       currentDate,
@@ -77,11 +65,13 @@ export default defineComponent({
     padding-top: 1rem;
   }
   &__display {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 900;
     line-height: 1;
+    margin-top: 1rem;
     @media (min-width: 852px) {
       font-size: 3rem;
+      margin-top: 0;
     }
   }
   &__message {

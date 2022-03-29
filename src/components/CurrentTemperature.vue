@@ -109,10 +109,6 @@ export default defineComponent({
     margin-top: 0.25rem;
     font-weight: 700;
 
-    @media (max-width: 730px) {
-      text-align: center;
-    }
-
     &-description {
       margin-top: 0.25rem;
       text-transform: capitalize;
