@@ -12,7 +12,7 @@ export const useTodoStore = defineStore({
   actions: {
     addTodo(newTodo: string) {
       this.todos.unshift({
-        index: this.todos.length + 1,
+        key: this.todos.length + 1,
         done: false,
         content: newTodo,
       });

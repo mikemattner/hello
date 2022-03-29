@@ -5,7 +5,7 @@ export interface Messages {
 }
 
 export interface ToDo {
-    index?: number;
+    key?: number;
     done: boolean;
     content: string;
 }
