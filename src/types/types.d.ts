@@ -16,6 +16,7 @@ interface TodoState {
 
 interface WeatherState {
     initialized: boolean;
+    error: boolean;
     temperatureValue: number;
     temperatureHigh: number;
     temperatureLow: number;

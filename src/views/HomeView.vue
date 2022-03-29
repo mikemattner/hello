@@ -5,7 +5,11 @@
         <BaseCard>
           <TransitionGroup name="fadeweather" mode="out-in">
             <BaseLoader v-if="!isInitialized" />
-            <CurrentWeather v-else />
+            <div v-if="isError && isInitialized" class="error-state">
+              <span class="material-icons-outlined"> error_outline </span>
+              <p>Something went wrong!</p>
+            </div>
+            <CurrentWeather v-if="isInitialized && !isError" />
           </TransitionGroup>
         </BaseCard>
       </div>
@@ -43,10 +47,11 @@ export default defineComponent({
       }
     });
 
-    const { isInitialized } = storeToRefs(weatherStore);
+    const { isInitialized, isError } = storeToRefs(weatherStore);
 
     return {
       isInitialized,
+      isError,
     };
   },
 });
@@ -75,6 +80,14 @@ export default defineComponent({
 
   .current-time {
     grid-area: time;
+  }
+
+  .error-state {
+    text-align: center;
+    color: var(--contrast-color);
+    p {
+      font-size: 0.75rem;
+    }
   }
 
   .corner-weather {

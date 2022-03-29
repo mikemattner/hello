@@ -2,9 +2,9 @@
   <div class="todo-list-container">
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
-        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
-          Add <span class="material-icons-outlined"> add </span>
+        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+        <BaseButton @clicked="addTodo()" class="add-todo-button" primary :disabled="!filledTodo">
+          <span class="material-icons-outlined bold"> add_circle </span>
         </BaseButton>
       </form>
     </div>
@@ -14,7 +14,10 @@
           <span class="content">Tasks</span> <span class="count">{{ getTodos.length }}</span>
         </h4>
         <Transition name="fadestay">
-          <div v-if="getTodos.length < 1" class="empty-todo">🤔</div>
+          <div v-if="getTodos.length < 1" class="empty-todo">
+            <p class="empty-emoji">🥳</p>
+            <p>You finished it all!</p>
+          </div>
         </Transition>
         <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
@@ -32,7 +35,10 @@
             <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
           </h4>
           <Transition name="fadestay">
-            <div v-if="notCompletedTodos.length < 1" class="empty-todo">🤔</div>
+            <div v-if="notCompletedTodos.length < 1" class="empty-todo">
+              <p class="empty-emoji">🥳</p>
+              <p>You finished it all!</p>
+            </div>
           </Transition>
           <TransitionGroup name="list" class="todo-list" tag="div">
             <ToDoItem
@@ -49,7 +55,16 @@
             <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
           </h4>
           <Transition name="fadestay">
-            <div v-if="completedTodos.length < 1" class="empty-todo">😱</div>
+            <div v-if="completedTodos.length < 1" class="empty-todo">
+              <template v-if="getTodos.length < 1">
+                <p class="empty-emoji">😱</p>
+                <p>Whoa, all done!</p>
+              </template>
+              <template v-else>
+                <p class="empty-emoji">🙌</p>
+                <p>You&rsquo;ve got this!</p>
+              </template>
+            </div>
           </Transition>
           <TransitionGroup name="list" class="todo-list" tag="div">
             <ToDoItem
@@ -94,6 +109,13 @@ export default defineComponent({
       return getTodos.value.filter((i) => i.done === true);
     });
 
+    const filledTodo = computed<boolean>(() => {
+      if (newTodo.value) {
+        return true;
+      }
+      return false;
+    });
+
     const addTodo = () => {
       if (newTodo.value) {
         todoStore.addTodo(newTodo.value);
@@ -111,6 +133,7 @@ export default defineComponent({
 
     return {
       newTodo,
+      filledTodo,
       addTodo,
       doneTodo,
       removeTodo,
@@ -160,8 +183,8 @@ export default defineComponent({
     .add-todo-button {
       flex-grow: 0;
 
-      svg {
-        transform: rotate(45deg);
+      .bold {
+        font-size: 1.25rem;
       }
     }
 
@@ -215,9 +238,13 @@ export default defineComponent({
       padding: 1rem;
       border: 1px dashed rgba(255, 255, 255, 0.25);
       border-radius: 4px;
-      font-size: 1.5rem;
-      line-height: 0.5;
+      font-size: 0.75rem;
       width: 100%;
+      text-align: center;
+
+      .empty-emoji {
+        font-size: 1.75rem;
+      }
     }
   }
 }
