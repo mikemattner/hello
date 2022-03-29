@@ -12,14 +12,17 @@ export const useTodoStore = defineStore({
   actions: {
     addTodo(newTodo: string) {
       this.todos.unshift({
+        index: this.todos.length + 1,
         done: false,
         content: newTodo,
       });
     },
-    removeTodo(index: number) {
+    removeTodo(todo: ToDo) {
+      const index = this.todos.indexOf(todo);
       this.todos.splice(index, 1);
     },
-    doneTodo(index: number) {
+    doneTodo(todo: ToDo) {
+      const index = this.todos.indexOf(todo);
       this.todos[index].done = !this.todos[index].done;
     },
   },

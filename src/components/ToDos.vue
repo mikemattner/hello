@@ -6,15 +6,47 @@
         <BaseButton @clicked="addTodo()" class="add-todo-button" primary>Add Todo</BaseButton>
       </form>
     </div>
-    <TransitionGroup name="list" class="todo-list" tag="div">
-      <ToDoItem
-        v-for="(todo, index) in getTodos"
-        :key="todo.content"
-        :todo="todo"
-        @done="doneTodo(index)"
-        @remove="removeTodo(index)"
-      />
-    </TransitionGroup>
+    <Transition name="fade">
+      <section class="todo-list-todos" v-if="getTodos.length > 0">
+        <template v-if="sm">
+          <TransitionGroup name="list" class="todo-list" tag="div">
+            <ToDoItem
+              v-for="(todo, index) in getTodos"
+              :key="todo.content"
+              :todo="todo"
+              @done="doneTodo(todo)"
+              @remove="removeTodo(todo)"
+            />
+          </TransitionGroup>
+        </template>
+        <template v-if="!sm">
+          <div>
+            <h4 class="headings">Upcoming</h4>
+            <TransitionGroup name="list" class="todo-list" tag="div">
+              <ToDoItem
+                v-for="(todo, index) in notCompletedTodos"
+                :key="todo.content"
+                :todo="todo"
+                @done="doneTodo(todo)"
+                @remove="removeTodo(todo)"
+              />
+            </TransitionGroup>
+          </div>
+          <div>
+            <h4 class="headings">Done</h4>
+            <TransitionGroup name="list" class="todo-list" tag="div">
+              <ToDoItem
+                v-for="(todo, index) in completedTodos"
+                :key="todo.content"
+                :todo="todo"
+                @done="doneTodo(todo)"
+                @remove="removeTodo(todo)"
+              />
+            </TransitionGroup>
+          </div>
+        </template>
+      </section>
+    </Transition>
   </div>
 </template>
 
@@ -27,13 +59,24 @@ import BaseInput from './BaseInput.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
+import type { ToDo } from '@/types/types';
+import useBreakpoints from '@/composables/useBreakpoints';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
+    const { sm } = useBreakpoints();
     const newTodo = ref('');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
+
+    const notCompletedTodos = computed<ToDo[]>(() => {
+      return getTodos.value.filter((i) => i.done === false);
+    });
+
+    const completedTodos = computed<ToDo[]>(() => {
+      return getTodos.value.filter((i) => i.done === true);
+    });
 
     const addTodo = () => {
       if (newTodo.value) {
@@ -42,12 +85,12 @@ export default defineComponent({
       }
     };
 
-    const doneTodo = (index: number) => {
-      todoStore.doneTodo(index);
+    const doneTodo = (todo: ToDo) => {
+      todoStore.doneTodo(todo);
     };
 
-    const removeTodo = (index: number) => {
-      todoStore.removeTodo(index);
+    const removeTodo = (todo: ToDo) => {
+      todoStore.removeTodo(todo);
     };
 
     return {
@@ -56,6 +99,9 @@ export default defineComponent({
       doneTodo,
       removeTodo,
       getTodos,
+      notCompletedTodos,
+      completedTodos,
+      sm,
     };
   },
   components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem },
@@ -71,11 +117,16 @@ export default defineComponent({
   flex-grow: 1;
   gap: 10px;
   width: 100%;
-  max-width: 600px;
+  max-width: 1200px;
   padding-bottom: 60px;
 
   .todo-form-container {
     width: 100%;
+    max-width: 600px;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1rem;
+    border-radius: 4px;
+    background-color: var(--input-color);
   }
 
   .todo-form {
@@ -101,6 +152,20 @@ export default defineComponent({
     width: 100%;
     position: relative;
     flex-grow: 1;
+  }
+
+  .todo-list-todos {
+    width: 100%;
+    @media (min-width: 730px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .headings {
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
   }
 }
 .list-move,
