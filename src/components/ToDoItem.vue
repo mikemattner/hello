@@ -4,11 +4,13 @@
       <div class="checkmark"></div>
       <div class="todo-content">{{ todo.content }}</div>
     </div>
-    <div class="todo-done">
-      <BaseButton @clicked="removeTodo()">
-        <CloseIcon />
-      </BaseButton>
-    </div>
+    <Transition name="fade">
+      <div class="todo-done" v-if="todo.done">
+        <BaseButton @clicked="removeTodo()">
+          <CloseIcon />
+        </BaseButton>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -47,9 +49,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .todo-list__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
   border-radius: 4px;
   background-color: var(--card-bg);
   margin: 0.375rem 0;
@@ -61,7 +62,10 @@ export default defineComponent({
   }
 
   .todo-done {
-    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.1);
   }
 

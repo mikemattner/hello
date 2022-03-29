@@ -117,14 +117,14 @@ export default defineComponent({
     }
     .input-text-field__label {
       top: 0;
-      transform: translateY(-100%);
+      transform: translateY(-70%);
       font-size: 0.675rem;
       opacity: 0.5;
     }
   }
   &--populated > .input-text-field__label {
     top: 0;
-    transform: translateY(-100%);
+    transform: translateY(-70%);
     font-size: 0.675rem;
     opacity: 0.5;
   }

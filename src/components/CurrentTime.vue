@@ -69,11 +69,12 @@ export default defineComponent({
   flex-direction: column;
   text-align: center;
   width: 100%;
+  padding-bottom: 1rem;
   @media (max-width: 1299px) {
-    padding-top: 2rem;
+    padding-top: 1rem;
   }
   @media (min-width: 1300px) {
-    padding-top: 4rem;
+    padding-top: 1rem;
   }
   &__display {
     font-size: 4rem;
