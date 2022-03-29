@@ -4,7 +4,7 @@
       <form @submit.prevent="addTodo()" class="todo-form">
         <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="What are you working on today?" />
         <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
-          Add Task <span class="material-icons-outlined"> add </span>
+          Add <span class="material-icons-outlined"> add </span>
         </BaseButton>
       </form>
     </div>

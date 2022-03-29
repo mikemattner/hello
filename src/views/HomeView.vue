@@ -3,7 +3,10 @@
     <header class="home-header">
       <div class="corner-weather">
         <BaseCard>
-          <CurrentWeather />
+          <Transition name="fadeweather" mode="out-in">
+            <BaseLoader v-if="!isInitialized" />
+            <CurrentWeather v-else />
+          </Transition>
         </BaseCard>
       </div>
       <CurrentTime class="current-time" />
@@ -20,6 +23,7 @@ import BaseCard from '@/components/BaseCard.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
 import ToDos from '../components/ToDos.vue';
+import BaseLoader from '@/components/BaseLoader.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -28,6 +32,7 @@ export default defineComponent({
     CurrentWeather,
     BaseCard,
     ToDos,
+    BaseLoader,
   },
   setup() {
     const weatherStore = useWeatherStore();
@@ -53,18 +58,19 @@ export default defineComponent({
 <style lang="scss">
 .home {
   width: 100%;
-  padding-top: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
 
   &-header {
+    width: 100%;
+    padding-bottom: 1rem;
     @media (min-width: 1300px) {
       display: grid;
       grid-template-columns:
         [empty] 1fr
-        [time] 1fr
+        [time] 2fr
         [weather] 1fr;
       gap: 20px;
     }
@@ -76,17 +82,25 @@ export default defineComponent({
 
   .corner-weather {
     grid-area: weather;
-    min-height: 117px;
     .card {
       margin-top: 0;
       margin-bottom: 0;
-      max-width: max-content;
+      width: 272px;
+      height: 124px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
       @media (max-width: 1299px) {
         margin-left: auto;
         margin-right: auto;
       }
       @media (min-width: 1300px) {
         margin-left: auto;
+      }
+      .card--body {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
       }
     }
   }
@@ -109,6 +123,16 @@ export default defineComponent({
 
 .fadestay-enter-from,
 .fadestay-leave-to {
+  opacity: 0;
+}
+.fadeweather-enter-active,
+.fadeweather-leave-active {
+  transition: opacity 200ms ease;
+  position: absolute;
+}
+
+.fadeweather-enter-from,
+.fadeweather-leave-to {
   opacity: 0;
 }
 </style>
