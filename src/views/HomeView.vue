@@ -101,6 +101,10 @@ export default defineComponent({
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      @media (max-width: 500px) {
+        width: 100%;
+        border-radius: 0 0 4px 4px;
+      }
       @media (max-width: 1299px) {
         margin-left: auto;
         margin-right: auto;

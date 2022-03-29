@@ -2,7 +2,12 @@
   <div class="todo-list__item">
     <div :class="['todo-list__item-content', { done: todo.done }]" @click="finishTodo()">
       <div class="checkmark"></div>
-      <div class="todo-content">{{ todo.content }}</div>
+      <div class="todo-content">
+        <div class="todo-content__label">{{ todo.content }}</div>
+        <div class="todo-content__time">
+          Added to list <strong>{{ timeAgo }}</strong>
+        </div>
+      </div>
     </div>
     <Transition name="fade">
       <div class="todo-done" v-if="todo.done">
@@ -20,6 +25,7 @@ import { defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CloseIcon from './CloseIcon.vue';
+import { useTimeAgo } from '@vueuse/core';
 
 export default defineComponent({
   components: {
@@ -39,9 +45,11 @@ export default defineComponent({
     const finishTodo = () => {
       emit('done');
     };
+    const timeAgo = useTimeAgo(props.todo.date);
     return {
       finishTodo,
       removeTodo,
+      timeAgo,
     };
   },
 });
@@ -76,7 +84,6 @@ export default defineComponent({
     flex-grow: 1;
     padding: 1rem;
     line-height: 1.5;
-
     .checkmark {
       height: 25px;
       width: 25px;
@@ -116,6 +123,11 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
+
+      &__time {
+        font-size: 0.5rem;
+        line-height: 1;
+      }
     }
 
     &.done {

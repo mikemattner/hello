@@ -159,10 +159,10 @@ export default defineComponent({
   padding-bottom: 60px;
 
   @media (max-width: 1299px) {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
   @media (min-width: 1300px) {
-    margin-top: 3rem;
+    margin-top: 1rem;
   }
 
   .todo-form-container {
