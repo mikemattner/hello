@@ -2,12 +2,16 @@ import WeatherData from '@/models/WeatherData';
 import axios from 'axios';
 
 export default class WeatherService {
+  // private static api = axios.create({
+  //   baseURL: 'https://api.openweathermap.org/data/2.5',
+  // });
+
   private static api = axios.create({
-    baseURL: 'https://api.openweathermap.org/data/2.5',
+    baseURL: '/api/weather',
   });
 
-  public static GetWeatherData(appId: string, coordinates: GeolocationCoordinates): Promise<WeatherData> {
-    return this.api.get(`/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&appid=${appId}&units=metric`).then((response) => {
+  public static GetWeatherData(coordinates: GeolocationCoordinates): Promise<WeatherData> {
+    return this.api.get(`?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}`).then((response) => {
       return new WeatherData(response.data);
     });
   }

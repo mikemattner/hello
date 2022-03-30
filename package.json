@@ -9,8 +9,11 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@netlify/functions": "^1.0.0",
     "@vueuse/core": "^8.2.0",
     "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "node-fetch": "^3.2.3",
     "pinia": "^2.0.11",
     "pinia-plugin-persistedstate": "^1.5.1",
     "vue": "^3.2.31",

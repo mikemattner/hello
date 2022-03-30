@@ -34,9 +34,8 @@ export const useWeatherStore = defineStore({
   },
   actions: {
     async getWeatherData(coordinates: GeolocationCoordinates) {
-      const appId = import.meta.env.VITE_APP_ID;
       try {
-        const data = await WeatherService.GetWeatherData(appId, coordinates);
+        const data = await WeatherService.GetWeatherData(coordinates);
         this.temperatureValue = data.main.temp;
         this.temperatureHigh = data.main.temp_max;
         this.temperatureLow = data.main.temp_min;
