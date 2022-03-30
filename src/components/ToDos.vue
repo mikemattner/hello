@@ -9,74 +9,58 @@
       </form>
     </div>
     <section class="todo-list-todos">
-      <template v-if="sm">
+      <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">Tasks</span> <span class="count">{{ getTodos.length }}</span>
+          <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
         </h4>
         <Transition name="fadestay">
-          <div v-if="getTodos.length < 1" class="empty-todo">
-            <p class="empty-emoji">🥳</p>
-            <p>You finished it all!</p>
+          <div v-if="notCompletedTodos.length < 1" class="empty-todo">
+            <template v-if="getTodos.length < 1">
+              <p class="empty-emoji">🌮</p>
+              <p>Add tasks, earn tacos.</p>
+            </template>
+            <template v-else>
+              <p class="empty-emoji">🥳</p>
+              <p>You finished it all!</p>
+            </template>
           </div>
         </Transition>
         <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
-            v-for="(todo, index) in getTodos"
+            v-for="(todo, index) in notCompletedTodos"
             :key="todo.content"
             :todo="todo"
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
         </TransitionGroup>
-      </template>
-      <template v-if="!sm">
-        <div>
-          <h4 class="headings">
-            <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
-          </h4>
-          <Transition name="fadestay">
-            <div v-if="notCompletedTodos.length < 1" class="empty-todo">
-              <p class="empty-emoji">🥳</p>
-              <p>You finished it all!</p>
-            </div>
-          </Transition>
-          <TransitionGroup name="list" class="todo-list" tag="div">
-            <ToDoItem
-              v-for="(todo, index) in notCompletedTodos"
-              :key="todo.content"
-              :todo="todo"
-              @done="doneTodo(todo)"
-              @remove="removeTodo(todo)"
-            />
-          </TransitionGroup>
-        </div>
-        <div>
-          <h4 class="headings">
-            <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
-          </h4>
-          <Transition name="fadestay">
-            <div v-if="completedTodos.length < 1" class="empty-todo">
-              <template v-if="getTodos.length < 1">
-                <p class="empty-emoji">😱</p>
-                <p>Whoa, all done!</p>
-              </template>
-              <template v-else>
-                <p class="empty-emoji">🙌</p>
-                <p>You&rsquo;ve got this!</p>
-              </template>
-            </div>
-          </Transition>
-          <TransitionGroup name="list" class="todo-list" tag="div">
-            <ToDoItem
-              v-for="(todo, index) in completedTodos"
-              :key="todo.content"
-              :todo="todo"
-              @done="doneTodo(todo)"
-              @remove="removeTodo(todo)"
-            />
-          </TransitionGroup>
-        </div>
-      </template>
+      </div>
+      <div class="todo-list-todos__col">
+        <h4 class="headings">
+          <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
+        </h4>
+        <Transition name="fadestay">
+          <div v-if="completedTodos.length < 1" class="empty-todo">
+            <template v-if="getTodos.length < 1">
+              <p class="empty-emoji">😱</p>
+              <p>Whoa, nothing to do!</p>
+            </template>
+            <template v-else>
+              <p class="empty-emoji">🙌</p>
+              <p>You&rsquo;ve got this!</p>
+            </template>
+          </div>
+        </Transition>
+        <TransitionGroup name="list" class="todo-list" tag="div">
+          <ToDoItem
+            v-for="(todo, index) in completedTodos"
+            :key="todo.content"
+            :todo="todo"
+            @done="doneTodo(todo)"
+            @remove="removeTodo(todo)"
+          />
+        </TransitionGroup>
+      </div>
     </section>
   </div>
 </template>
@@ -193,11 +177,21 @@ export default defineComponent({
 
   .todo-list-todos {
     width: 100%;
-    @media (min-width: 730px) {
+    @media (min-width: 1023px) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 40px;
     }
+
+    &__col {
+      @media (max-width: 1022px) {
+        margin-top: 1.25rem;
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
     .headings {
       font-size: 0.75rem;
       margin-bottom: 1rem;

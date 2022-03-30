@@ -167,7 +167,10 @@ export default defineComponent({
       .todo-content {
         &__label {
           text-decoration-line: line-through;
+          text-decoration-style: wavy;
           text-decoration-color: var(--contrast-color);
+          text-decoration-thickness: 1px;
+          color: rgba(255, 255, 255, 0.5);
         }
       }
 
