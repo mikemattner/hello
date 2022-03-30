@@ -69,7 +69,7 @@ export default defineComponent({
   grid-template-columns: 1fr auto;
   border-radius: 4px;
   background-color: var(--card-bg);
-  margin: 0.375rem 0;
+  margin: 0.5rem 0;
   width: 100%;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   overflow: hidden;

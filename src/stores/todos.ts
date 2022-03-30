@@ -11,7 +11,7 @@ export const useTodoStore = defineStore({
   },
   actions: {
     addTodo(newTodo: string) {
-      this.todos.unshift({
+      this.todos.push({
         key: this.todos.length + 1,
         date: new Date().toString(),
         done: false,

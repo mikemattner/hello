@@ -7,14 +7,8 @@
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="notCompletedTodos.length < 1" class="empty-todo">
-            <template v-if="getTodos.length < 1">
-              <p class="empty-emoji">🌮</p>
-              <p>Add tasks, earn tacos.</p>
-            </template>
-            <template v-else>
-              <p class="empty-emoji">🥳</p>
-              <p>You finished it all!</p>
-            </template>
+            <p class="empty-emoji">🥳</p>
+            <p>You finished it all!</p>
           </div>
           <ToDoItem
             v-for="(todo, index) in notCompletedTodos"
@@ -139,11 +133,9 @@ export default defineComponent({
 
   .todo-form-container {
     width: 100%;
-    max-width: 600px;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
     padding: 1.5rem 1rem;
     border-radius: 4px;
+    margin: 0.5rem 0;
     background-color: var(--input-color);
   }
 
@@ -152,7 +144,6 @@ export default defineComponent({
     align-items: stretch;
     justify-content: center;
     gap: 10px;
-
     .add-todo-button {
       flex-grow: 0;
 
