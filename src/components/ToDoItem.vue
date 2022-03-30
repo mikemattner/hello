@@ -10,9 +10,7 @@
       <div class="checkmark"></div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
-        <div class="todo-content__time">
-          Added <strong>{{ dateSet }}</strong>
-        </div>
+        <div class="todo-content__time">Added {{ dateSet }} - {{ timeAgo }}</div>
       </div>
     </div>
     <div :class="['todo-done', { done: todo.done }]">
@@ -53,11 +51,13 @@ export default defineComponent({
 
     const dateFormat = ref<string>('MM/DD/YYYY');
     const dateSet = useDateFormat(props.todo.date, dateFormat);
+    const timeAgo = useTimeAgo(props.todo.date);
 
     return {
       finishTodo,
       removeTodo,
       dateSet,
+      timeAgo,
     };
   },
 });
