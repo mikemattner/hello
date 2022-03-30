@@ -2,12 +2,43 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/98593b98-f4c9-4ed4-904a-8aa2886faf5e/deploy-status)](https://app.netlify.com/sites/loving-austin-7e5db8/deploys)
 
-Building out a dashboard to mimic something like currently. Now updated to Vue 3 and Vite.
+Building out a dashboard to mimic something like Currently. Now updated to Vue 3 and Vite. Deploys to Netlify and
+uses Netlify serverless functions. Setup your own API Key for [OpenWeather](https://openweathermap.org/api) data.
 
 - [x] Update to Vue 3
 - [x] Create models/services for grabbing weather data
 - [x] Add Todos!!!
-- [ ] Create Netlify serverless function to grab weather data
+- [x] Create Netlify serverless function to grab weather data
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### For Weather Data
+
+```sh
+npm run dev
+```
+
+### Type-Check, Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
 
 ## Recommended IDE Setup
 
@@ -27,27 +58,3 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
 ## Customize configuration
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
