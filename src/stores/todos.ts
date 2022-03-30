@@ -10,12 +10,13 @@ export const useTodoStore = defineStore({
     getTodos: (state) => state.todos,
   },
   actions: {
-    addTodo(newTodo: string) {
+    addTodo(newTodo: string, due: Date) {
       this.todos.push({
         key: this.todos.length + 1,
+        content: newTodo,
         date: new Date().toString(),
         done: false,
-        content: newTodo,
+        due: due.toString(),
       });
     },
     removeTodo(todo: ToDo) {

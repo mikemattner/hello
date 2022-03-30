@@ -10,7 +10,11 @@
       <div class="checkmark"></div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
-        <div class="todo-content__time">Added {{ dateSet }} - {{ timeAgo }}</div>
+        <div class="todo-content__time">
+          <span class="material-icons-outlined"> event </span>
+          <strong>{{ dateSet }}</strong>
+          <span class="time-ago">{{ timeAgo }}</span>
+        </div>
       </div>
     </div>
     <div :class="['todo-done', { done: todo.done }]">
@@ -28,6 +32,7 @@ import type { PropType } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CloseIcon from './CloseIcon.vue';
 import { useDateFormat, useTimeAgo } from '@vueuse/core';
+import { format } from 'date-fns';
 
 export default defineComponent({
   components: {
@@ -49,9 +54,9 @@ export default defineComponent({
       emit('done');
     };
 
-    const dateFormat = ref<string>('MM/DD/YYYY');
-    const dateSet = useDateFormat(props.todo.date, dateFormat);
-    const timeAgo = useTimeAgo(props.todo.date);
+    const dateFormat = ref<string>('MMM d, y');
+    const dateSet = format(new Date(props.todo.due), dateFormat.value);
+    const timeAgo = useTimeAgo(props.todo.due);
 
     return {
       finishTodo,
@@ -157,6 +162,21 @@ export default defineComponent({
         margin-top: 0.375rem;
         font-size: 0.5rem;
         line-height: 1;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        strong {
+          font-weight: 700;
+        }
+
+        .material-icons-outlined {
+          font-size: 0.675rem;
+        }
+
+        .time-ago {
+          text-transform: capitalize;
+        }
       }
       &__label {
         font-weight: 700;

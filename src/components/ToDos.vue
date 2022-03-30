@@ -6,10 +6,6 @@
           <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
-          <div v-if="notCompletedTodos.length < 1" class="empty-todo">
-            <p class="empty-emoji">🥳</p>
-            <p>You finished it all!</p>
-          </div>
           <ToDoItem
             v-for="(todo, index) in notCompletedTodos"
             :key="todo.content"
@@ -20,6 +16,10 @@
           <div class="todo-form-container" key="todo-form">
             <form @submit.prevent="addTodo()" class="todo-form">
               <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+              <div class="date-picker-wrapper">
+                <span class="material-icons-outlined bold"> event </span>
+                <Datepicker class="todo-date-picker" v-model="dueDate" inputFormat="MMM d, y" tabindex="0" />
+              </div>
               <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
                 <span class="material-icons-outlined bold"> add_circle </span>
               </BaseButton>
@@ -34,8 +34,8 @@
         <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="completedTodos.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
-              <p class="empty-emoji">😱</p>
-              <p>Whoa, nothing to do!</p>
+              <p class="empty-emoji">🥳</p>
+              <p>You finished it all!</p>
             </template>
             <template v-else>
               <p class="empty-emoji">🙌</p>
@@ -66,6 +66,7 @@ import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
 import useBreakpoints from '@/composables/useBreakpoints';
+import Datepicker from 'vue3-datepicker';
 
 export default defineComponent({
   name: 'ToDos',
@@ -74,6 +75,7 @@ export default defineComponent({
     const newTodo = ref('');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
+    const dueDate = ref<Date>(new Date());
 
     const notCompletedTodos = computed<ToDo[]>(() => {
       return getTodos.value.filter((i) => i.done === false);
@@ -85,8 +87,9 @@ export default defineComponent({
 
     const addTodo = () => {
       if (newTodo.value) {
-        todoStore.addTodo(newTodo.value);
+        todoStore.addTodo(newTodo.value, dueDate.value);
         newTodo.value = '';
+        dueDate.value = new Date();
       }
     };
 
@@ -107,9 +110,10 @@ export default defineComponent({
       notCompletedTodos,
       completedTodos,
       sm,
+      dueDate,
     };
   },
-  components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem },
+  components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem, Datepicker },
 });
 </script>
 
@@ -133,10 +137,10 @@ export default defineComponent({
 
   .todo-form-container {
     width: 100%;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
     border-radius: 4px;
     margin: 0.5rem 0;
-    background-color: var(--input-color);
+    background-color: var(--card-bg);
   }
 
   .todo-form {
@@ -144,16 +148,66 @@ export default defineComponent({
     align-items: stretch;
     justify-content: center;
     gap: 10px;
+
     .add-todo-button {
       flex-grow: 0;
 
       .bold {
-        font-size: 1.25rem;
+        position: relative;
+        top: 1px;
       }
     }
 
     .input-text-field {
       flex-grow: 1;
+    }
+
+    .date-picker-wrapper {
+      width: 150px;
+      position: relative;
+      .material-icons-outlined {
+        opacity: 0.5;
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        transition: all 0.25s ease-in-out;
+      }
+      &:focus-within {
+        .material-icons-outlined {
+          opacity: 1;
+        }
+      }
+    }
+
+    :deep(.todo-date-picker) {
+      border: 1px solid var(--input-bg-color);
+      border-radius: 4px;
+      background: none;
+      color: var(--color);
+      font-weight: 300;
+      font-size: 0.75rem;
+      padding: 0.5rem;
+      -webkit-appearance: none;
+      outline: none;
+      transition: all 0.25s ease-in-out;
+      opacity: 0.5;
+      width: 150px;
+      text-align: right;
+
+      &:hover {
+        border-color: var(--input-focus);
+        opacity: 1;
+      }
+      &:focus {
+        border-color: var(--input-focus);
+        opacity: 1;
+      }
+      &:populated {
+        border-color: var(--input-focus);
+        opacity: 1;
+      }
     }
   }
 
