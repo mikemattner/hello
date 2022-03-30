@@ -1,19 +1,11 @@
 <template>
   <div class="todo-list-container">
-    <div class="todo-form-container">
-      <form @submit.prevent="addTodo()" class="todo-form">
-        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
-          <span class="material-icons-outlined bold"> add_circle </span>
-        </BaseButton>
-      </form>
-    </div>
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <h4 class="headings">
           <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
         </h4>
-        <Transition name="fadestay">
+        <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="notCompletedTodos.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
               <p class="empty-emoji">🌮</p>
@@ -24,8 +16,6 @@
               <p>You finished it all!</p>
             </template>
           </div>
-        </Transition>
-        <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
             v-for="(todo, index) in notCompletedTodos"
             :key="todo.content"
@@ -33,13 +23,21 @@
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
+          <div class="todo-form-container" key="todo-form">
+            <form @submit.prevent="addTodo()" class="todo-form">
+              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+              <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+                <span class="material-icons-outlined bold"> add_circle </span>
+              </BaseButton>
+            </form>
+          </div>
         </TransitionGroup>
       </div>
       <div class="todo-list-todos__col">
         <h4 class="headings">
           <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
         </h4>
-        <Transition name="fadestay">
+        <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="completedTodos.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
               <p class="empty-emoji">😱</p>
@@ -50,8 +48,6 @@
               <p>You&rsquo;ve got this!</p>
             </template>
           </div>
-        </Transition>
-        <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
             v-for="(todo, index) in completedTodos"
             :key="todo.content"
@@ -144,6 +140,7 @@ export default defineComponent({
   .todo-form-container {
     width: 100%;
     max-width: 600px;
+    margin-top: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem 1rem;
     border-radius: 4px;

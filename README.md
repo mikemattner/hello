@@ -22,11 +22,11 @@ npm install
 npm run dev
 ```
 
-### For Weather Data
-Run the below command (requires Netlify CLI) to start up the serverless function.
+### For Netlify Function Testing with Hot-Reload Development
+Make sure you set up your .env file locally (see .env.example)
 
 ```sh
-netlify dev
+npm run serve
 ```
 
 ### Type-Check, Compile and Minify for Production

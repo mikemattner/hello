@@ -2,6 +2,7 @@
   "name": "vue-base",
   "version": "0.0.0",
   "scripts": {
+    "serve": "netlify dev",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
