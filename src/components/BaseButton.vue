@@ -49,7 +49,6 @@ export default defineComponent({
 <style scoped lang="scss">
 .button {
   border-radius: 4px;
-  padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +56,7 @@ export default defineComponent({
   overflow: hidden;
   border: none;
   background-color: unset;
-  padding: 0.5rem;
+  padding: 0.25rem 0.5rem;
   color: var(--color);
   border: 1px solid rgba(#dcebf6, 0.125);
   transition: all 0.25s ease-in-out;

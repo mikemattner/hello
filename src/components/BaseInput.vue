@@ -76,7 +76,6 @@ export default defineComponent({
   position: relative;
 
   &__label {
-    padding-bottom: 0.125rem;
     padding-left: 0.5rem;
     opacity: 1;
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -91,17 +90,18 @@ export default defineComponent({
 
   &__input {
     border: none;
-    border-bottom: 2px solid var(--input-bg-color);
-    border-radius: 0;
+    border: 1px solid var(--input-bg-color);
+    border-radius: 4px;
     background: none;
     color: var(--color);
     font-weight: 300;
-    font-size: 1rem;
+    font-size: 0.75rem;
     padding: 0.5rem;
     -webkit-appearance: none;
     outline: none;
     transition: all 0.25s ease-in-out;
     opacity: 0.5;
+    margin: 0;
 
     &:hover {
       border-color: var(--input-focus);
@@ -116,17 +116,17 @@ export default defineComponent({
       opacity: 1;
     }
     .input-text-field__label {
-      top: 0;
-      transform: translateY(-70%);
-      font-size: 0.675rem;
-      opacity: 0.5;
+      // top: 0;
+      // transform: translateY(-70%);
+      // font-size: 0.675rem;
+      opacity: 0;
     }
   }
   &--populated > .input-text-field__label {
-    top: 0;
-    transform: translateY(-70%);
-    font-size: 0.675rem;
-    opacity: 0.5;
+    // top: 0;
+    // transform: translateY(-70%);
+    // font-size: 0.675rem;
+    opacity: 0;
   }
 
   &--populated > .input-text-field__input {

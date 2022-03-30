@@ -9,15 +9,16 @@
 import { computed, defineComponent, ref } from 'vue';
 import type { Messages } from '@/types/types';
 import { useDateFormat, useNow } from '@vueuse/core';
+import { format } from 'date-fns';
 
 export default defineComponent({
   name: 'CurrentTime',
   setup() {
     const timeFormat = ref<string>('h:mm');
-    const dateFormat = ref<string>('MM/DD/YYYY');
+    const dateFormat = ref<string>('MMM d, y');
     const hourFormat = ref<string>('H');
     const currentTime = useDateFormat(useNow(), timeFormat);
-    const currentDate = useDateFormat(useNow(), dateFormat);
+    const currentDate = format(useNow().value, dateFormat.value);
     const currentHour = useDateFormat(useNow(), hourFormat);
 
     const messages: Messages = {
