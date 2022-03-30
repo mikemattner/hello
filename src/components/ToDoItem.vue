@@ -108,7 +108,7 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
     padding: 1rem;
-    line-height: 1.5;
+    line-height: 1.4;
 
     &:focus {
       box-shadow: var(--inner-focus-shadow);
@@ -153,10 +153,13 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
-
       &__time {
+        margin-top: 0.375rem;
         font-size: 0.5rem;
         line-height: 1;
+      }
+      &__label {
+        font-weight: 700;
       }
     }
 
