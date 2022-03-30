@@ -5,7 +5,7 @@
         <h4 class="headings">
           <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
         </h4>
-        <Transition name="fadestay">
+        <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="notCompletedTodos.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
               <p class="empty-emoji">🌮</p>
@@ -16,8 +16,6 @@
               <p>You finished it all!</p>
             </template>
           </div>
-        </Transition>
-        <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
             v-for="(todo, index) in notCompletedTodos"
             :key="todo.content"
@@ -39,7 +37,7 @@
         <h4 class="headings">
           <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
         </h4>
-        <Transition name="fadestay">
+        <TransitionGroup name="list" class="todo-list" tag="div">
           <div v-if="completedTodos.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
               <p class="empty-emoji">😱</p>
@@ -50,8 +48,6 @@
               <p>You&rsquo;ve got this!</p>
             </template>
           </div>
-        </Transition>
-        <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
             v-for="(todo, index) in completedTodos"
             :key="todo.content"
