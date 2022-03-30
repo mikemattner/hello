@@ -1,13 +1,5 @@
 <template>
   <div class="todo-list-container">
-    <div class="todo-form-container">
-      <form @submit.prevent="addTodo()" class="todo-form">
-        <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
-          <span class="material-icons-outlined bold"> add_circle </span>
-        </BaseButton>
-      </form>
-    </div>
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <h4 class="headings">
@@ -33,6 +25,14 @@
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
+          <div class="todo-form-container" key="todo-form">
+            <form @submit.prevent="addTodo()" class="todo-form">
+              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+              <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+                <span class="material-icons-outlined bold"> add_circle </span>
+              </BaseButton>
+            </form>
+          </div>
         </TransitionGroup>
       </div>
       <div class="todo-list-todos__col">
@@ -144,6 +144,7 @@ export default defineComponent({
   .todo-form-container {
     width: 100%;
     max-width: 600px;
+    margin-top: 1rem;
     margin-bottom: 2rem;
     padding: 1.5rem 1rem;
     border-radius: 4px;

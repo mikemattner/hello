@@ -7,7 +7,7 @@
             <BaseLoader v-if="!isInitialized" />
             <div v-if="isError && isInitialized" class="error-state">
               <span class="material-icons-outlined"> error_outline </span>
-              <p>Something went wrong!</p>
+              <p>Couldn&rsquo;t load weather!</p>
             </div>
             <CurrentWeather v-if="isInitialized && !isError" />
           </TransitionGroup>
