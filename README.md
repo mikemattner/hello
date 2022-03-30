@@ -23,9 +23,10 @@ npm run dev
 ```
 
 ### For Weather Data
+Run the below command (requires Netlify CLI) to start up the serverless function.
 
 ```sh
-npm run dev
+netlify dev
 ```
 
 ### Type-Check, Compile and Minify for Production
