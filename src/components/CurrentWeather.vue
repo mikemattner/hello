@@ -1,6 +1,12 @@
 <template>
   <div class="current-weather">
-    <WeatherIcon :icon="weatherIcon" @click="updateWeather()" />
+    <WeatherIcon
+      :icon="weatherIcon"
+      @keyup.enter="updateWeather()"
+      @keyup.space="updateWeather()"
+      @click="updateWeather()"
+      tabindex="0"
+    />
     <CurrentTemperature
       :temperature-value="getTemperatureValue"
       :high="getTemperatureHigh"
