@@ -3,7 +3,7 @@
     <div class="todo-form-container">
       <form @submit.prevent="addTodo()" class="todo-form">
         <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-        <BaseButton @clicked="addTodo()" class="add-todo-button" primary :disabled="!filledTodo">
+        <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
           <span class="material-icons-outlined bold"> add_circle </span>
         </BaseButton>
       </form>
@@ -109,13 +109,6 @@ export default defineComponent({
       return getTodos.value.filter((i) => i.done === true);
     });
 
-    const filledTodo = computed<boolean>(() => {
-      if (newTodo.value) {
-        return true;
-      }
-      return false;
-    });
-
     const addTodo = () => {
       if (newTodo.value) {
         todoStore.addTodo(newTodo.value);
@@ -133,7 +126,6 @@ export default defineComponent({
 
     return {
       newTodo,
-      filledTodo,
       addTodo,
       doneTodo,
       removeTodo,

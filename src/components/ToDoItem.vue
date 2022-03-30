@@ -1,31 +1,35 @@
 <template>
   <div class="todo-list__item">
-    <div :class="['todo-list__item-content', { done: todo.done }]" @click="finishTodo()">
+    <div
+      :class="['todo-list__item-content', { done: todo.done }]"
+      @keyup.enter="finishTodo()"
+      @keyup.space="finishTodo()"
+      @click="finishTodo()"
+      tabindex="0"
+    >
       <div class="checkmark"></div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
         <div class="todo-content__time">
-          Added to list <strong>{{ timeAgo }}</strong>
+          Added <strong>{{ dateSet }}</strong>
         </div>
       </div>
     </div>
-    <Transition name="fade">
-      <div class="todo-done" v-if="todo.done">
-        <BaseButton @clicked="removeTodo()">
-          <span class="material-icons-outlined"> delete_outline </span>
-        </BaseButton>
-      </div>
-    </Transition>
+    <div :class="['todo-done', { done: todo.done }]">
+      <BaseButton @clicked="removeTodo()">
+        <span class="material-icons-outlined"> delete_outline </span>
+      </BaseButton>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import type { ToDo } from '@/types/types';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import type { PropType } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CloseIcon from './CloseIcon.vue';
-import { useTimeAgo } from '@vueuse/core';
+import { useDateFormat, useTimeAgo } from '@vueuse/core';
 
 export default defineComponent({
   components: {
@@ -42,14 +46,18 @@ export default defineComponent({
     const removeTodo = () => {
       emit('remove');
     };
+
     const finishTodo = () => {
       emit('done');
     };
-    const timeAgo = useTimeAgo(props.todo.date);
+
+    const dateFormat = ref<string>('MM/DD/YYYY');
+    const dateSet = useDateFormat(props.todo.date, dateFormat);
+
     return {
       finishTodo,
       removeTodo,
-      timeAgo,
+      dateSet,
     };
   },
 });
@@ -64,10 +72,7 @@ export default defineComponent({
   margin: 0.375rem 0;
   width: 100%;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  &:last-child {
-    border-bottom: none;
-  }
+  overflow: hidden;
 
   .todo-done {
     display: flex;
@@ -75,6 +80,26 @@ export default defineComponent({
     justify-content: center;
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.1);
+
+    @media (min-width: 730px) {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    &.done {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  &:hover,
+  &:focus,
+  &:focus-within {
+    .todo-done {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   &-content {
@@ -83,7 +108,12 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
     padding: 1rem;
-    line-height: 1.5;
+    line-height: 1.4;
+
+    &:focus {
+      box-shadow: var(--inner-focus-shadow);
+    }
+
     .checkmark {
       height: 25px;
       width: 25px;
@@ -123,17 +153,22 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
-
       &__time {
+        margin-top: 0.375rem;
         font-size: 0.5rem;
         line-height: 1;
+      }
+      &__label {
+        font-weight: 700;
       }
     }
 
     &.done {
       .todo-content {
-        text-decoration-line: line-through;
-        text-decoration-color: var(--contrast-color);
+        &__label {
+          text-decoration-line: line-through;
+          text-decoration-color: var(--contrast-color);
+        }
       }
 
       .checkmark {
