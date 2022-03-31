@@ -13,26 +13,33 @@
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
-          <div class="todo-form-container" key="todo-form">
+          <div class="todo-form-container" key="todo-form" ref="form">
             <TransitionGroup name="fadestay" class="todo-list" tag="div">
-              <form v-if="addTodoForm" @submit.prevent="addTodo()" class="todo-form" ref="form">
-                <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-                <div class="date-picker-wrapper">
-                  <span class="material-icons-outlined bold"> event </span>
-                  <Datepicker
-                    class="todo-date-picker"
-                    v-model="dueDate"
-                    input-format="MMM d, y"
-                    starting-view="day"
-                    tabindex="0"
-                    :style="calendarStyle"
-                  />
-                </div>
-                <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+              <form v-if="addTodoForm" @submit.prevent="addTodo()" @keyup.enter="addTodo()" class="todo-form">
+                <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" ref="taskInput" />
+                <v-date-picker
+                  class="todo-date-picker"
+                  :min-date="new Date()"
+                  v-model="dueDate"
+                  mode="dateTime"
+                  color="gray"
+                  is-dark
+                >
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <BaseInput
+                      id="date-picker"
+                      name="date"
+                      label="Due Date"
+                      :model-value="inputValue"
+                      v-on="inputEvents"
+                    />
+                  </template>
+                </v-date-picker>
+                <BaseButton type="submit" class="add-todo-button" primary>
                   <span class="material-icons-outlined bold"> add_circle </span>
                 </BaseButton>
               </form>
-              <div v-else class="empty-todo empty-form" @click="openForm()">
+              <div v-else class="empty-todo empty-form" tabindex="0" @click="openForm()" @keyup.enter="openForm()">
                 <span class="material-icons-outlined bold"> add_circle </span>
               </div>
             </TransitionGroup>
@@ -77,19 +84,17 @@ import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
-import useBreakpoints from '@/composables/useBreakpoints';
-import Datepicker from 'vue3-datepicker';
 import { onClickOutside } from '@vueuse/core';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
-    const { sm } = useBreakpoints();
     const newTodo = ref('');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
     const dueDate = ref<Date>(new Date());
     const addTodoForm = ref<boolean>(false);
+    const taskInput = ref();
 
     const notCompletedTodos = computed<ToDo[]>(() => {
       return getTodos.value.filter((i) => i.done === false);
@@ -121,27 +126,11 @@ export default defineComponent({
     };
 
     const form = ref();
-    onClickOutside(form, (event) => (addTodoForm.value = !addTodoForm.value));
-
-    const calendarStyle = {
-      '--vdp-bg-color': '#031a36',
-      '--vdp-text-color': '#dcebf6',
-      '--vdp-box-shadow': '0 4px 10px 0 rgba(128, 144, 160, 0.1), 0 0 1px 0 rgba(128, 144, 160, 0.81)',
-      '--vdp-border-radius': '4px',
-      '--vdp-heading-size': '2.5em',
-      '--vdp-heading-weight': 'bold',
-      '--vdp-heading-hover-color': '#12324d',
-      '--vdp-arrow-color': 'currentColor',
-      '--vdp-elem-color': 'currentColor',
-      '--vdp-disabled-color': '#12324d',
-      '--vdp-hover-color': '#031a36',
-      '--vdp-hover-bg-color': '#62ecbc',
-      '--vdp-selected-color': '#031a36',
-      '--vdp-selected-bg-color': '#62ecbc',
-      '--vdp-elem-font-size': '0.8em',
-      '--vdp-elem-border-radius': '4px',
-      '--vdp-divider-color': '#12324d',
-    };
+    onClickOutside(form, (event) => {
+      if (addTodoForm.value) {
+        addTodoForm.value = !addTodoForm.value;
+      }
+    });
 
     return {
       newTodo,
@@ -151,15 +140,14 @@ export default defineComponent({
       getTodos,
       notCompletedTodos,
       completedTodos,
-      sm,
       dueDate,
-      calendarStyle,
       addTodoForm,
       openForm,
       form,
+      taskInput,
     };
   },
-  components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem, Datepicker },
+  components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem },
 });
 </script>
 
@@ -183,8 +171,8 @@ export default defineComponent({
 
   .todo-form-container {
     width: 100%;
-    height: 83px;
-    padding: 1rem;
+    height: 94px;
+    padding: 1.25rem 1rem;
     border-radius: 4px;
     margin: 0.5rem 0;
     background-color: var(--card-bg);
@@ -211,62 +199,12 @@ export default defineComponent({
       flex-grow: 1;
     }
 
-    .date-picker-wrapper {
-      max-width: 150px;
-      position: relative;
-
-      :deep(.v3dp__popout) {
-        bottom: -1rem;
-        right: 0;
-      }
-      .material-icons-outlined {
-        opacity: 0.5;
-        position: absolute;
-        top: 50%;
-        left: 10px;
-        transform: translateY(-50%);
-        font-size: 1rem;
-        transition: all 0.25s ease-in-out;
-
-        @media (max-width: 530px) {
-          display: none;
-        }
-      }
-      &:focus-within {
-        .material-icons-outlined {
-          opacity: 1;
-        }
-      }
+    .todo-date-picker {
+      max-width: 200px;
     }
 
-    :deep(.todo-date-picker) {
-      border: 1px solid var(--input-bg-color);
-      border-radius: 4px;
-      background: none;
-      color: var(--color);
-      font-weight: 300;
-      font-size: 0.75rem;
-      padding: 0.5rem;
-      -webkit-appearance: none;
-      outline: none;
-      transition: all 0.25s ease-in-out;
-      opacity: 0.5;
-      width: 100%;
-      max-width: 150px;
-      text-align: right;
-
-      &:hover {
-        border-color: var(--input-focus);
-        opacity: 1;
-      }
-      &:focus {
-        border-color: var(--input-focus);
-        opacity: 1;
-      }
-      &:populated {
-        border-color: var(--input-focus);
-        opacity: 1;
-      }
+    :deep(.vc-popover-content) {
+      background-color: var(--card-bg);
     }
   }
 
@@ -340,6 +278,12 @@ export default defineComponent({
       &.empty-form {
         cursor: pointer;
         padding: 0.375rem 1rem;
+        transition: all 0.25s ease-in-out;
+
+        &:focus {
+          outline: 0;
+          box-shadow: var(--inner-focus-shadow);
+        }
       }
     }
   }

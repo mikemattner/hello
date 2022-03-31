@@ -10,10 +10,14 @@
       <div class="checkmark"></div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
-        <div class="todo-content__time">
+        <div v-if="!todo.done" class="todo-content__time">
           <span class="material-icons-outlined"> event </span>
           <strong>{{ dateSet }}</strong>
           <span class="time-ago">{{ timeAgo }}</span>
+        </div>
+        <div v-else class="todo-content__time">
+          <span class="material-icons-outlined"> task_alt </span>
+          <strong>Completed</strong>
         </div>
       </div>
     </div>
@@ -159,6 +163,7 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
+      font-size: 0.875rem;
       &__time {
         margin-top: 0.375rem;
         font-size: 0.5rem;
