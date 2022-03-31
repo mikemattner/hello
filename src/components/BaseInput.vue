@@ -90,8 +90,8 @@ export default defineComponent({
 
   &__input {
     border: none;
-    border: 1px solid var(--input-bg-color);
-    border-radius: 4px;
+    border-bottom: 1px solid var(--input-bg-color);
+    border-radius: 0;
     background: none;
     color: var(--color);
     font-weight: 300;
@@ -116,17 +116,15 @@ export default defineComponent({
       opacity: 1;
     }
     .input-text-field__label {
-      // top: 0;
-      // transform: translateY(-70%);
-      // font-size: 0.675rem;
-      opacity: 0;
+      top: 0;
+      transform: translateY(-70%);
+      font-size: 0.675rem;
     }
   }
   &--populated > .input-text-field__label {
-    // top: 0;
-    // transform: translateY(-70%);
-    // font-size: 0.675rem;
-    opacity: 0;
+    top: 0;
+    transform: translateY(-70%);
+    font-size: 0.675rem;
   }
 
   &--populated > .input-text-field__input {
