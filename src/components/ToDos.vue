@@ -18,7 +18,14 @@
               <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
               <div class="date-picker-wrapper">
                 <span class="material-icons-outlined bold"> event </span>
-                <Datepicker class="todo-date-picker" v-model="dueDate" inputFormat="MMM d, y" tabindex="0" />
+                <Datepicker
+                  class="todo-date-picker"
+                  v-model="dueDate"
+                  input-format="MMM d, y"
+                  starting-view="day"
+                  tabindex="0"
+                  :style="calendarStyle"
+                />
               </div>
               <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
                 <span class="material-icons-outlined bold"> add_circle </span>
@@ -101,6 +108,26 @@ export default defineComponent({
       todoStore.removeTodo(todo);
     };
 
+    const calendarStyle = {
+      '--vdp-bg-color': '#031a36',
+      '--vdp-text-color': '#dcebf6',
+      '--vdp-box-shadow': '0 4px 10px 0 rgba(128, 144, 160, 0.1), 0 0 1px 0 rgba(128, 144, 160, 0.81)',
+      '--vdp-border-radius': '4px',
+      '--vdp-heading-size': '2.5em',
+      '--vdp-heading-weight': 'bold',
+      '--vdp-heading-hover-color': '#12324d',
+      '--vdp-arrow-color': 'currentColor',
+      '--vdp-elem-color': 'currentColor',
+      '--vdp-disabled-color': '#12324d',
+      '--vdp-hover-color': '#031a36',
+      '--vdp-hover-bg-color': '#62ecbc',
+      '--vdp-selected-color': '#031a36',
+      '--vdp-selected-bg-color': '#62ecbc',
+      '--vdp-elem-font-size': '0.8em',
+      '--vdp-elem-border-radius': '4px',
+      '--vdp-divider-color': '#12324d',
+    };
+
     return {
       newTodo,
       addTodo,
@@ -111,6 +138,7 @@ export default defineComponent({
       completedTodos,
       sm,
       dueDate,
+      calendarStyle,
     };
   },
   components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem, Datepicker },
@@ -163,7 +191,7 @@ export default defineComponent({
     }
 
     .date-picker-wrapper {
-      width: 150px;
+      max-width: 150px;
       position: relative;
       .material-icons-outlined {
         opacity: 0.5;
@@ -173,6 +201,10 @@ export default defineComponent({
         transform: translateY(-50%);
         font-size: 1rem;
         transition: all 0.25s ease-in-out;
+
+        @media (max-width: 530px) {
+          display: none;
+        }
       }
       &:focus-within {
         .material-icons-outlined {
@@ -193,7 +225,8 @@ export default defineComponent({
       outline: none;
       transition: all 0.25s ease-in-out;
       opacity: 0.5;
-      width: 150px;
+      width: 100%;
+      max-width: 150px;
       text-align: right;
 
       &:hover {
