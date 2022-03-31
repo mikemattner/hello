@@ -188,6 +188,7 @@ export default defineComponent({
     margin: 0.5rem 0;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
+    overflow: hidden;
   }
 
   .todo-form {
