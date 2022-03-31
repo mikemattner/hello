@@ -7,7 +7,9 @@
       @click="finishTodo()"
       tabindex="0"
     >
-      <div class="checkmark"></div>
+      <div class="checkmark-surround">
+        <div class="checkmark"></div>
+      </div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
         <div v-if="!todo.done" class="todo-content__time">
@@ -84,6 +86,14 @@ export default defineComponent({
   overflow: hidden;
   box-shadow: 2px 10px 20px var(--card-shadow);
 
+  .checkmark-surround {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
   .todo-done {
     display: flex;
     align-items: center;
@@ -114,10 +124,9 @@ export default defineComponent({
 
   &-content {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
-    padding: 1rem;
     line-height: 1.4;
 
     &:focus {
@@ -130,7 +139,6 @@ export default defineComponent({
       flex-grow: 0;
       border: 1px solid var(--input-bg-color);
       border-radius: 4px;
-      margin-right: 15px;
       opacity: 0.5;
       transition: all 0.25s ease-in-out;
       flex: 0 0 25px;
@@ -164,6 +172,8 @@ export default defineComponent({
     .todo-content {
       position: relative;
       font-size: 0.875rem;
+      padding: 1rem;
+
       &__time {
         margin-top: 0.375rem;
         font-size: 0.5rem;

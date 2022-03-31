@@ -132,7 +132,7 @@ export default defineComponent({
 
 .fadestay-enter-active,
 .fadestay-leave-active {
-  transition: opacity 200ms ease;
+  transition: opacity 100ms ease;
   position: absolute;
 }
 

@@ -14,7 +14,7 @@
             @remove="removeTodo(todo)"
           />
           <div class="todo-form-container" key="todo-form" ref="form">
-            <TransitionGroup name="fadestay" class="todo-list" tag="div">
+            <TransitionGroup name="fadestay" class="full-height" tag="div">
               <form v-if="addTodoForm" @submit.prevent="addTodo()" @keyup.enter="addTodo()" class="todo-form">
                 <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" ref="taskInput" />
                 <v-date-picker
@@ -39,8 +39,10 @@
                   <span class="material-icons-outlined bold"> add_circle </span>
                 </BaseButton>
               </form>
-              <div v-else class="empty-todo empty-form" tabindex="0" @click="openForm()" @keyup.enter="openForm()">
-                <span class="material-icons-outlined bold"> add_circle </span>
+              <div v-else class="empty-form">
+                <BaseButton @click="openForm()" primary>
+                  Add a task <span class="material-icons-outlined bold"> add_circle </span>
+                </BaseButton>
               </div>
             </TransitionGroup>
           </div>
@@ -171,12 +173,19 @@ export default defineComponent({
 
   .todo-form-container {
     width: 100%;
-    height: 94px;
+    min-height: 94px;
     padding: 1.25rem 1rem;
     border-radius: 4px;
     margin: 0.5rem 0;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
+
+    .full-height {
+      height: 42px;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+    }
   }
 
   .todo-form {
@@ -274,17 +283,15 @@ export default defineComponent({
       .empty-emoji {
         font-size: 1.75rem;
       }
-
-      &.empty-form {
-        cursor: pointer;
-        padding: 0.375rem 1rem;
-        transition: all 0.25s ease-in-out;
-
-        &:focus {
-          outline: 0;
-          box-shadow: var(--inner-focus-shadow);
-        }
-      }
+    }
+    .empty-form {
+      cursor: pointer;
+      transition: all 0.25s ease-in-out;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      width: 100%;
+      height: 42px;
     }
   }
 }
