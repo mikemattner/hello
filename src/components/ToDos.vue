@@ -21,7 +21,7 @@
               key="todo-form"
               class="todo-form"
             >
-              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" ref="taskInput" />
+              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Task name" ref="taskInput" />
               <v-date-picker
                 class="todo-date-picker"
                 :min-date="new Date()"
