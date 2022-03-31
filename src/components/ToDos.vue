@@ -14,23 +14,28 @@
             @remove="removeTodo(todo)"
           />
           <div class="todo-form-container" key="todo-form">
-            <form @submit.prevent="addTodo()" class="todo-form">
-              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-              <div class="date-picker-wrapper">
-                <span class="material-icons-outlined bold"> event </span>
-                <Datepicker
-                  class="todo-date-picker"
-                  v-model="dueDate"
-                  input-format="MMM d, y"
-                  starting-view="day"
-                  tabindex="0"
-                  :style="calendarStyle"
-                />
-              </div>
-              <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+            <TransitionGroup name="list" class="todo-list" tag="div">
+              <form v-if="addTodoForm" @submit.prevent="addTodo()" class="todo-form" ref="form">
+                <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+                <div class="date-picker-wrapper">
+                  <span class="material-icons-outlined bold"> event </span>
+                  <Datepicker
+                    class="todo-date-picker"
+                    v-model="dueDate"
+                    input-format="MMM d, y"
+                    starting-view="day"
+                    tabindex="0"
+                    :style="calendarStyle"
+                  />
+                </div>
+                <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+                  <span class="material-icons-outlined bold"> add_circle </span>
+                </BaseButton>
+              </form>
+              <div v-else class="empty-todo empty-form" @click="openForm()">
                 <span class="material-icons-outlined bold"> add_circle </span>
-              </BaseButton>
-            </form>
+              </div>
+            </TransitionGroup>
           </div>
         </TransitionGroup>
       </div>
@@ -74,6 +79,7 @@ import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
 import useBreakpoints from '@/composables/useBreakpoints';
 import Datepicker from 'vue3-datepicker';
+import { onClickOutside } from '@vueuse/core';
 
 export default defineComponent({
   name: 'ToDos',
@@ -83,6 +89,7 @@ export default defineComponent({
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
     const dueDate = ref<Date>(new Date());
+    const addTodoForm = ref<boolean>(false);
 
     const notCompletedTodos = computed<ToDo[]>(() => {
       return getTodos.value.filter((i) => i.done === false);
@@ -97,6 +104,7 @@ export default defineComponent({
         todoStore.addTodo(newTodo.value, dueDate.value);
         newTodo.value = '';
         dueDate.value = new Date();
+        addTodoForm.value = !addTodoForm.value;
       }
     };
 
@@ -107,6 +115,13 @@ export default defineComponent({
     const removeTodo = (todo: ToDo) => {
       todoStore.removeTodo(todo);
     };
+
+    const openForm = () => {
+      addTodoForm.value = !addTodoForm.value;
+    };
+
+    const form = ref();
+    onClickOutside(form, (event) => (addTodoForm.value = !addTodoForm.value));
 
     const calendarStyle = {
       '--vdp-bg-color': '#031a36',
@@ -139,6 +154,9 @@ export default defineComponent({
       sm,
       dueDate,
       calendarStyle,
+      addTodoForm,
+      openForm,
+      form,
     };
   },
   components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem, Datepicker },
@@ -169,6 +187,7 @@ export default defineComponent({
     border-radius: 4px;
     margin: 0.5rem 0;
     background-color: var(--card-bg);
+    box-shadow: 2px 10px 20px var(--card-shadow);
   }
 
   .todo-form {
@@ -176,6 +195,7 @@ export default defineComponent({
     align-items: stretch;
     justify-content: center;
     gap: 10px;
+    width: 100%;
 
     .add-todo-button {
       flex-grow: 0;
@@ -193,6 +213,11 @@ export default defineComponent({
     .date-picker-wrapper {
       max-width: 150px;
       position: relative;
+
+      :deep(.v3dp__popout) {
+        bottom: -1rem;
+        right: 0;
+      }
       .material-icons-outlined {
         opacity: 0.5;
         position: absolute;
@@ -296,15 +321,23 @@ export default defineComponent({
     }
 
     .empty-todo {
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       border: 1px dashed rgba(255, 255, 255, 0.25);
       border-radius: 4px;
       font-size: 0.75rem;
       width: 100%;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
       .empty-emoji {
         font-size: 1.75rem;
+      }
+
+      &.empty-form {
+        cursor: pointer;
       }
     }
   }
