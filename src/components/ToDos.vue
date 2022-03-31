@@ -13,38 +13,42 @@
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
-          <div class="todo-form-container" key="todo-form" ref="form">
-            <TransitionGroup name="fadestay" class="full-height" tag="div">
-              <form v-if="addTodoForm" @submit.prevent="addTodo()" @keyup.enter="addTodo()" class="todo-form">
-                <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" ref="taskInput" />
-                <v-date-picker
-                  class="todo-date-picker"
-                  :min-date="new Date()"
-                  v-model="dueDate"
-                  mode="dateTime"
-                  color="gray"
-                  is-dark
-                >
-                  <template v-slot="{ inputValue, inputEvents }">
-                    <BaseInput
-                      id="date-picker"
-                      name="date"
-                      label="Due Date"
-                      :model-value="inputValue"
-                      v-on="inputEvents"
-                    />
-                  </template>
-                </v-date-picker>
-                <BaseButton type="submit" class="add-todo-button" primary>
-                  <span class="material-icons-outlined bold"> add_circle </span>
-                </BaseButton>
-              </form>
-              <div v-else class="empty-form">
-                <BaseButton @click="openForm()" primary>
-                  Add a task <span class="material-icons-outlined bold"> add_circle </span>
-                </BaseButton>
-              </div>
-            </TransitionGroup>
+          <div class="todo-form-container" key="todo-form-surround" ref="form">
+            <form
+              v-if="addTodoForm"
+              @submit.prevent="addTodo()"
+              @keyup.enter="addTodo()"
+              key="todo-form"
+              class="todo-form"
+            >
+              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Task name" ref="taskInput" />
+              <v-date-picker
+                class="todo-date-picker"
+                :min-date="new Date()"
+                v-model="dueDate"
+                mode="dateTime"
+                color="gray"
+                is-dark
+              >
+                <template v-slot="{ inputValue, inputEvents }">
+                  <BaseInput
+                    id="date-picker"
+                    name="date"
+                    label="Due Date"
+                    :model-value="inputValue"
+                    v-on="inputEvents"
+                  />
+                </template>
+              </v-date-picker>
+              <BaseButton type="submit" class="add-todo-button" primary>
+                <span class="material-icons-outlined bold"> add_circle </span>
+              </BaseButton>
+            </form>
+            <div v-else class="empty-form" key="todo-form-empty">
+              <BaseButton @click="openForm()" primary>
+                Add a task <span class="material-icons-outlined bold"> add_circle </span>
+              </BaseButton>
+            </div>
           </div>
         </TransitionGroup>
       </div>
