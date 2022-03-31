@@ -13,9 +13,15 @@
             @done="doneTodo(todo)"
             @remove="removeTodo(todo)"
           />
-          <div class="todo-form-container" key="todo-form" ref="form">
-            <TransitionGroup name="fadestay" class="full-height" tag="div">
-              <form v-if="addTodoForm" @submit.prevent="addTodo()" @keyup.enter="addTodo()" class="todo-form">
+          <div class="todo-form-container" key="todo-form-surround" ref="form">
+            <TransitionGroup name="list" class="full-height" tag="div">
+              <form
+                v-if="addTodoForm"
+                @submit.prevent="addTodo()"
+                @keyup.enter="addTodo()"
+                key="todo-form"
+                class="todo-form"
+              >
                 <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" ref="taskInput" />
                 <v-date-picker
                   class="todo-date-picker"
@@ -39,7 +45,7 @@
                   <span class="material-icons-outlined bold"> add_circle </span>
                 </BaseButton>
               </form>
-              <div v-else class="empty-form">
+              <div v-else class="empty-form" key="todo-form-empty">
                 <BaseButton @click="openForm()" primary>
                   Add a task <span class="material-icons-outlined bold"> add_circle </span>
                 </BaseButton>
