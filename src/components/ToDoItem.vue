@@ -78,6 +78,7 @@ export default defineComponent({
   width: 100%;
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   overflow: hidden;
+  box-shadow: 2px 10px 20px var(--card-shadow);
 
   .todo-done {
     display: flex;
