@@ -14,26 +14,28 @@
             @remove="removeTodo(todo)"
           />
           <div class="todo-form-container" key="todo-form">
-            <form v-if="addTodoForm" @submit.prevent="addTodo()" class="todo-form" ref="form">
-              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
-              <div class="date-picker-wrapper">
-                <span class="material-icons-outlined bold"> event </span>
-                <Datepicker
-                  class="todo-date-picker"
-                  v-model="dueDate"
-                  input-format="MMM d, y"
-                  starting-view="day"
-                  tabindex="0"
-                  :style="calendarStyle"
-                />
-              </div>
-              <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+            <TransitionGroup name="fadestay" class="todo-list" tag="div">
+              <form v-if="addTodoForm" @submit.prevent="addTodo()" class="todo-form" ref="form">
+                <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Add a task" />
+                <div class="date-picker-wrapper">
+                  <span class="material-icons-outlined bold"> event </span>
+                  <Datepicker
+                    class="todo-date-picker"
+                    v-model="dueDate"
+                    input-format="MMM d, y"
+                    starting-view="day"
+                    tabindex="0"
+                    :style="calendarStyle"
+                  />
+                </div>
+                <BaseButton @clicked="addTodo()" class="add-todo-button" primary>
+                  <span class="material-icons-outlined bold"> add_circle </span>
+                </BaseButton>
+              </form>
+              <div v-else class="empty-todo empty-form" @click="openForm()">
                 <span class="material-icons-outlined bold"> add_circle </span>
-              </BaseButton>
-            </form>
-            <div v-else class="empty-todo empty-form" @click="openForm()">
-              <span class="material-icons-outlined bold"> add_circle </span>
-            </div>
+              </div>
+            </TransitionGroup>
           </div>
         </TransitionGroup>
       </div>
@@ -181,6 +183,7 @@ export default defineComponent({
 
   .todo-form-container {
     width: 100%;
+    height: 83px;
     padding: 1rem;
     border-radius: 4px;
     margin: 0.5rem 0;
@@ -336,6 +339,7 @@ export default defineComponent({
 
       &.empty-form {
         cursor: pointer;
+        padding: 0.375rem 1rem;
       }
     }
   }
