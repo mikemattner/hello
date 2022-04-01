@@ -1,6 +1,9 @@
 <template>
   <main class="home">
     <header class="home-header">
+      <!-- <div class="logo-zone">
+        <h1>Hello</h1>
+      </div> -->
       <div class="corner-weather">
         <BaseCard>
           <TransitionGroup name="fadeweather" mode="out-in">
@@ -71,10 +74,19 @@ export default defineComponent({
     @media (min-width: 1300px) {
       display: grid;
       grid-template-columns:
-        [empty] 1fr
+        [logo] 1fr
         [time] 2fr
         [weather] 1fr;
       gap: 20px;
+    }
+  }
+
+  .logo-zone {
+    grid-area: logo;
+
+    h1 {
+      font-size: 0.75rem;
+      font-weight: 700;
     }
   }
 
