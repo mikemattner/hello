@@ -125,6 +125,14 @@ export default defineComponent({
       return getTodos.value.filter((i) => i.done === true);
     });
 
+    const dueToday = computed<ToDo[]>(() => {
+      return getTodos.value.filter((i) => {
+        const due = new Date(i.due);
+        const today = new Date();
+        return due.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0);
+      });
+    });
+
     const addTodo = () => {
       if (newTodo.value) {
         todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value);
@@ -161,6 +169,7 @@ export default defineComponent({
       taskInput,
       newCategory,
       options,
+      dueToday,
     };
   },
   components: { BaseCard, CloseIcon, BaseButton, BaseInput, BaseSelect, ToDoItem },
