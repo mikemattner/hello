@@ -7,6 +7,7 @@ export interface Messages {
 export interface ToDo {
     category: string;
     content: string;
+    description: string;
     date: string;
     done: boolean;
     due: string;

@@ -25,6 +25,16 @@
                 <BaseInput v-model="newTodo" class="input-grow" name="newTodo" id="todoInput" label="Task title" />
               </div>
               <div class="row">
+                <BaseTextArea
+                  v-model="newTodoDescription"
+                  class="input-grow"
+                  name="todoDescription"
+                  id="todoDescription"
+                  label="Task description"
+                  rows="2"
+                />
+              </div>
+              <div class="row">
                 <BaseSelect
                   v-model="newCategory"
                   :options="options"
@@ -106,12 +116,14 @@ import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
+import BaseTextArea from './BaseTextArea.vue';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
     const options: String[] = ['Work', 'Personal', 'Home'];
     const newTodo = ref('');
+    const newTodoDescription = ref('');
     const newCategory = ref('Work');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
@@ -137,8 +149,9 @@ export default defineComponent({
 
     const addTodo = () => {
       if (newTodo.value) {
-        todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value);
+        todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value, newTodoDescription.value);
         newTodo.value = '';
+        newTodoDescription.value = '';
         newCategory.value = 'Work';
         dueDate.value = new Date();
         toggleForm();
@@ -172,9 +185,10 @@ export default defineComponent({
       newCategory,
       options,
       dueToday,
+      newTodoDescription,
     };
   },
-  components: { BaseCard, CloseIcon, BaseButton, BaseInput, BaseSelect, ToDoItem },
+  components: { BaseCard, CloseIcon, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea },
 });
 </script>
 
@@ -218,7 +232,7 @@ export default defineComponent({
     align-items: stretch;
     justify-content: center;
     flex-direction: column;
-    gap: 30px;
+    gap: 20px;
     width: 100%;
 
     .row {
