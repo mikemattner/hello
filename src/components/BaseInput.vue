@@ -118,13 +118,13 @@ export default defineComponent({
     .input-text-field__label {
       top: 0;
       transform: translateY(-70%);
-      font-size: 0.675rem;
+      font-size: 0.5rem;
     }
   }
   &--populated > .input-text-field__label {
     top: 0;
     transform: translateY(-70%);
-    font-size: 0.675rem;
+    font-size: 0.5rem;
   }
 
   &--populated > .input-text-field__input {

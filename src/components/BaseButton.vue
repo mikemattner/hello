@@ -78,7 +78,13 @@ export default defineComponent({
   }
 
   &.button__warning {
-    color: var(--color--red);
+    color: var(--color);
+
+    :deep(.material-icons-outlined) {
+      color: var(--color--red);
+    }
+
+    border: 1px solid var(--color--red);
     &:hover:not(:disabled) {
       background-color: rgba(#dcebf6, 0.125);
       border-color: var(--color--red);

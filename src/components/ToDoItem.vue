@@ -180,7 +180,7 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       padding: 1rem;
 
       &__time {

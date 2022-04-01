@@ -112,6 +112,11 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     opacity: 0.5;
     margin: 0;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color) 50%),
+      linear-gradient(135deg, var(--color) 50%, transparent 50%);
+    background-position: calc(100% - 20px) 1.125em, calc(100% - 15px) 1.125em;
+    background-size: 5px 5px, 5px 5px, 1px 1.5em;
+    background-repeat: no-repeat;
 
     option {
       color: var(--card-bg);
@@ -132,13 +137,13 @@ export default defineComponent({
     .input-text-field__label {
       top: 0;
       transform: translateY(-70%);
-      font-size: 0.675rem;
+      font-size: 0.5rem;
     }
   }
   &--populated > .input-select-field__label {
     top: 0;
     transform: translateY(-70%);
-    font-size: 0.675rem;
+    font-size: 0.5rem;
   }
 
   &--populated > .input-select-field__input {

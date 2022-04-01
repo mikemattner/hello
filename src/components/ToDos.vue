@@ -22,7 +22,7 @@
               class="todo-form"
             >
               <div class="row">
-                <BaseInput v-model="newTodo" class="input-grow" name="newTodo" id="todoInput" label="Task name" />
+                <BaseInput v-model="newTodo" class="input-grow" name="newTodo" id="todoInput" label="Task title" />
               </div>
               <div class="row">
                 <BaseSelect
@@ -53,13 +53,15 @@
                 </v-date-picker>
               </div>
               <div class="row">
-                <BaseButton type="submit" class="add-todo-button" primary> Add </BaseButton>
-                <BaseButton class="add-todo-button" primary color="warning" @click="toggleForm()"> Cancel </BaseButton>
+                <BaseButton type="submit" class="add-todo-button" primary>
+                  Add <span class="material-icons-outlined bold"> add </span>
+                </BaseButton>
+                <BaseButton class="add-todo-button" color="warning" @click="toggleForm()"> Cancel </BaseButton>
               </div>
             </form>
             <div v-else class="empty-form" key="todo-form-empty">
               <BaseButton @click="toggleForm()" primary>
-                Add a task <span class="material-icons-outlined bold"> add_circle </span>
+                Add a task <span class="material-icons-outlined bold"> add </span>
               </BaseButton>
             </div>
           </div>
