@@ -80,9 +80,9 @@ export default defineComponent({
   &.button__warning {
     color: var(--color);
 
-    :deep(.material-icons-outlined) {
-      color: var(--color--red);
-    }
+    // :deep(.material-icons-outlined) {
+    //   color: var(--color--red);
+    // }
 
     border: 1px solid var(--color--red);
     &:hover:not(:disabled) {

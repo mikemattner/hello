@@ -3,11 +3,11 @@
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">Tasks</span> <span class="count">{{ notCompletedTodos.length }}</span>
+          <span class="content">Tasks</span> <span class="count">{{ getTodos.length }}</span>
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem
-            v-for="(todo, index) in notCompletedTodos"
+            v-for="(todo, index) in getTodos"
             :key="todo.content"
             :todo="todo"
             @done="doneTodo(todo)"
@@ -69,10 +69,10 @@
       </div>
       <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">Done</span> <span class="count">{{ completedTodos.length }}</span>
+          <span class="content">Due Today</span> <span class="count">{{ dueToday.length }}</span>
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
-          <div v-if="completedTodos.length < 1" class="empty-todo">
+          <div v-if="dueToday.length < 1" class="empty-todo">
             <template v-if="getTodos.length < 1">
               <p class="empty-emoji">🥳</p>
               <p>You finished it all!</p>
@@ -83,7 +83,7 @@
             </template>
           </div>
           <ToDoItem
-            v-for="(todo, index) in completedTodos"
+            v-for="(todo, index) in dueToday"
             :key="todo.content"
             :todo="todo"
             @done="doneTodo(todo)"
