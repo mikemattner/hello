@@ -5,6 +5,7 @@ export interface Messages {
 }
 
 export interface ToDo {
+    category: string;
     content: string;
     date: string;
     done: boolean;
@@ -25,9 +26,11 @@ interface WeatherState {
     description: string;
     location: Location;
     weatherIcon: string;
-  }
-  
-  interface Location {
-    name: string;
-    country: string;
-  }
+}
+
+interface Location {
+  name: string;
+  country: string;
+}
+
+type Colors = 'highlight' | 'warning';

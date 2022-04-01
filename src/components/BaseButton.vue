@@ -8,6 +8,8 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
+import type { PropType } from 'vue';
+import type { Colors } from '@/types/types';
 
 export default defineComponent({
   name: 'BaseButton',
@@ -15,6 +17,10 @@ export default defineComponent({
     primary: {
       type: Boolean,
       default: false,
+    },
+    color: {
+      type: String as PropType<Colors>,
+      default: 'highlight',
     },
     disabled: {
       type: Boolean,
@@ -33,6 +39,8 @@ export default defineComponent({
         'button',
         {
           button__primary: props.primary,
+          button__highlight: props.color === 'highlight',
+          button__warning: props.color === 'warning',
           button__disabled: props.disabled,
         },
       ];
@@ -61,9 +69,23 @@ export default defineComponent({
   border: 1px solid rgba(#dcebf6, 0.125);
   transition: all 0.25s ease-in-out;
 
+  &.button__highlight {
+    color: var(--color);
+    &:hover:not(:disabled) {
+      background-color: rgba(#dcebf6, 0.125);
+      border-color: var(--contrast-color);
+    }
+  }
+
+  &.button__warning {
+    color: var(--color--red);
+    &:hover:not(:disabled) {
+      background-color: rgba(#dcebf6, 0.125);
+      border-color: var(--color--red);
+    }
+  }
+
   &:hover:not(:disabled) {
-    background-color: rgba(#dcebf6, 0.125);
-    border-color: var(--contrast-color);
     cursor: pointer;
   }
   &:focus {
@@ -93,16 +115,30 @@ export default defineComponent({
   }
 
   &__primary {
-    background-color: var(--contrast-color);
-    color: var(--card-bg);
     box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0);
+
+    &.button__highlight {
+      color: var(--card-bg);
+      background-color: var(--contrast-color);
+      &:hover:not(:disabled) {
+        background-color: var(--contrast-color);
+      }
+    }
+
+    &.button__warning {
+      color: #fff;
+      background-color: var(--color--red);
+      &:hover:not(:disabled) {
+        background-color: var(--color--red);
+        border-color: var(--color--red);
+      }
+    }
 
     :deep(svg) {
       fill: var(--card-bg);
     }
     &:hover:not(:disabled) {
       box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0.25);
-      background-color: var(--contrast-color);
     }
     &:focus {
       outline: 0;
