@@ -116,10 +116,10 @@ export default defineComponent({
       transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
-    &.done {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    // &.done {
+    //   opacity: 1;
+    //   transform: translateX(0);
+    // }
   }
 
   &:hover,

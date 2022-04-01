@@ -3,7 +3,7 @@
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">Tasks</span> <span class="count">{{ getTodos.length }}</span>
+          <span class="content">All Tasks</span> <span class="count">{{ getTodos.length }}</span>
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
           <ToDoItem

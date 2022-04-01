@@ -1,9 +1,12 @@
 <template>
   <main class="home">
     <header class="home-header">
-      <!-- <div class="logo-zone">
-        <h1>Hello</h1>
-      </div> -->
+      <div class="logo-zone">
+        <div class="logo">
+          <span class="material-icons-outlined"> task_alt </span>
+          <h1>My Todos</h1>
+        </div>
+      </div>
       <div class="corner-weather">
         <BaseCard>
           <TransitionGroup name="fadeweather" mode="out-in">
@@ -83,6 +86,12 @@ export default defineComponent({
 
   .logo-zone {
     grid-area: logo;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     h1 {
       font-size: 0.75rem;

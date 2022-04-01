@@ -76,22 +76,25 @@ export default defineComponent({
   position: relative;
 
   &__label {
-    padding-left: 0.5rem;
+    background-color: var(--card-bg);
+    // padding-left: 0.5rem;
+    padding: 0 2px;
     opacity: 1;
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     position: absolute;
-    left: 0;
+    left: 0.5rem;
     top: 50%;
     transform: translateY(-50%);
     width: 100%;
     font-weight: 700;
     font-size: 0.75rem;
+    width: max-content;
   }
 
   &__input {
     border: none;
-    border-bottom: 1px solid var(--input-bg-color);
-    border-radius: 0;
+    border: 1px solid var(--input-bg-color);
+    border-radius: 4px;
     background: none;
     color: var(--color);
     font-weight: 300;
@@ -117,14 +120,16 @@ export default defineComponent({
     }
     .input-text-field__label {
       top: 0;
-      transform: translateY(-70%);
+      transform: translateY(-50%);
       font-size: 0.5rem;
+      z-index: 2;
     }
   }
   &--populated > .input-text-field__label {
     top: 0;
-    transform: translateY(-70%);
+    transform: translateY(-50%);
     font-size: 0.5rem;
+    z-index: 2;
   }
 
   &--populated > .input-text-field__input {
