@@ -12,6 +12,7 @@
       </div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
+        <div v-if="todo.description" class="todo-content__description">{{ todo.description }}</div>
         <div class="todo-content__time">
           <span v-if="todo.category" class="category-label">{{ todo.category }}</span>
           <template v-if="!todo.done">
@@ -205,6 +206,10 @@ export default defineComponent({
       }
       &__label {
         font-weight: 700;
+      }
+      &__description {
+        margin: 0.25rem 0 1rem;
+        font-size: 0.675rem;
       }
     }
 
