@@ -12,19 +12,22 @@
       </div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
-        <div v-if="!todo.done" class="todo-content__time">
-          <span class="material-icons-outlined"> event </span>
-          <strong>{{ dateSet }}</strong>
-          <span class="time-ago">{{ timeAgo }}</span>
-        </div>
-        <div v-else class="todo-content__time">
-          <span class="material-icons-outlined"> task_alt </span>
-          <strong>Completed</strong>
+        <div class="todo-content__time">
+          <span v-if="todo.category" class="category-label">{{ todo.category }}</span>
+          <template v-if="!todo.done">
+            <span class="material-icons-outlined"> event </span>
+            <strong>{{ dateSet }}</strong>
+            <span class="time-ago">{{ timeAgo }}</span>
+          </template>
+          <template v-else>
+            <span class="material-icons-outlined"> task_alt </span>
+            <strong>Completed</strong>
+          </template>
         </div>
       </div>
     </div>
     <div :class="['todo-done', { done: todo.done }]">
-      <BaseButton @clicked="removeTodo()">
+      <BaseButton @clicked="removeTodo()" color="warning">
         <span class="material-icons-outlined"> delete_outline </span>
       </BaseButton>
     </div>
@@ -85,6 +88,12 @@ export default defineComponent({
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   overflow: hidden;
   box-shadow: 2px 10px 20px var(--card-shadow);
+
+  .category-label {
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: var(--input-color);
+  }
 
   .checkmark-surround {
     display: flex;

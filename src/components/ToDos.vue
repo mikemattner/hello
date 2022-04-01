@@ -21,31 +21,44 @@
               key="todo-form"
               class="todo-form"
             >
-              <BaseInput v-model="newTodo" name="newTodo" id="todoInput" label="Task name" ref="taskInput" />
-              <v-date-picker
-                class="todo-date-picker"
-                :min-date="new Date()"
-                v-model="dueDate"
-                mode="dateTime"
-                color="gray"
-                is-dark
-              >
-                <template v-slot="{ inputValue, inputEvents }">
-                  <BaseInput
-                    id="date-picker"
-                    name="date"
-                    label="Due Date"
-                    :model-value="inputValue"
-                    v-on="inputEvents"
-                  />
-                </template>
-              </v-date-picker>
-              <BaseButton type="submit" class="add-todo-button" primary>
-                <span class="material-icons-outlined bold"> add_circle </span>
-              </BaseButton>
+              <div class="row">
+                <BaseInput v-model="newTodo" class="input-grow" name="newTodo" id="todoInput" label="Task name" />
+              </div>
+              <div class="row">
+                <BaseSelect
+                  v-model="newCategory"
+                  :options="options"
+                  class="input-grow"
+                  name="newCategory"
+                  id="newCategory"
+                  label="Category"
+                />
+                <v-date-picker
+                  class="todo-date-picker"
+                  :min-date="new Date()"
+                  v-model="dueDate"
+                  mode="dateTime"
+                  color="gray"
+                  is-dark
+                >
+                  <template v-slot="{ inputValue, inputEvents }">
+                    <BaseInput
+                      id="date-picker"
+                      name="date"
+                      label="Due Date"
+                      :model-value="inputValue"
+                      v-on="inputEvents"
+                    />
+                  </template>
+                </v-date-picker>
+              </div>
+              <div class="row">
+                <BaseButton type="submit" class="add-todo-button" primary> Add </BaseButton>
+                <BaseButton class="add-todo-button" primary color="warning" @click="toggleForm()"> Cancel </BaseButton>
+              </div>
             </form>
             <div v-else class="empty-form" key="todo-form-empty">
-              <BaseButton @click="openForm()" primary>
+              <BaseButton @click="toggleForm()" primary>
                 Add a task <span class="material-icons-outlined bold"> add_circle </span>
               </BaseButton>
             </div>
@@ -86,16 +99,18 @@ import BaseCard from './BaseCard.vue';
 import CloseIcon from './CloseIcon.vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
+import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
-import { onClickOutside } from '@vueuse/core';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
+    const options: String[] = ['Work', 'Personal', 'Home'];
     const newTodo = ref('');
+    const newCategory = ref('Work');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
     const dueDate = ref<Date>(new Date());
@@ -112,10 +127,11 @@ export default defineComponent({
 
     const addTodo = () => {
       if (newTodo.value) {
-        todoStore.addTodo(newTodo.value, dueDate.value);
+        todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value);
         newTodo.value = '';
+        newCategory.value = 'Work';
         dueDate.value = new Date();
-        addTodoForm.value = !addTodoForm.value;
+        toggleForm();
       }
     };
 
@@ -127,16 +143,9 @@ export default defineComponent({
       todoStore.removeTodo(todo);
     };
 
-    const openForm = () => {
+    const toggleForm = () => {
       addTodoForm.value = !addTodoForm.value;
     };
-
-    const form = ref();
-    onClickOutside(form, (event) => {
-      if (addTodoForm.value) {
-        addTodoForm.value = !addTodoForm.value;
-      }
-    });
 
     return {
       newTodo,
@@ -148,12 +157,13 @@ export default defineComponent({
       completedTodos,
       dueDate,
       addTodoForm,
-      openForm,
-      form,
+      toggleForm,
       taskInput,
+      newCategory,
+      options,
     };
   },
-  components: { BaseCard, CloseIcon, BaseButton, BaseInput, ToDoItem },
+  components: { BaseCard, CloseIcon, BaseButton, BaseInput, BaseSelect, ToDoItem },
 });
 </script>
 
@@ -196,8 +206,16 @@ export default defineComponent({
     display: flex;
     align-items: stretch;
     justify-content: center;
-    gap: 10px;
+    flex-direction: column;
+    gap: 30px;
     width: 100%;
+
+    .row {
+      display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 10px;
+    }
 
     .add-todo-button {
       flex-grow: 0;
@@ -208,7 +226,7 @@ export default defineComponent({
       }
     }
 
-    .input-text-field {
+    .input-grow {
       flex-grow: 1;
     }
 
