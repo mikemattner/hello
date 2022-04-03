@@ -14,61 +14,15 @@
             @remove="removeTodo(todo)"
           />
           <div class="todo-form-container" key="todo-form-surround" ref="form">
-            <form
+            <ToDoNewForm
               v-if="addTodoForm"
-              @submit.prevent="addTodo()"
-              @keyup.enter="addTodo()"
-              key="todo-form"
-              class="todo-form"
-            >
-              <div class="row">
-                <BaseInput v-model="newTodo" class="input-grow" name="newTodo" id="todoInput" label="Task title" />
-              </div>
-              <div class="row">
-                <BaseTextArea
-                  v-model="newTodoDescription"
-                  class="input-grow"
-                  name="todoDescription"
-                  id="todoDescription"
-                  label="Task description"
-                  rows="2"
-                />
-              </div>
-              <div class="row">
-                <BaseSelect
-                  v-model="newCategory"
-                  :options="options"
-                  class="input-grow"
-                  name="newCategory"
-                  id="newCategory"
-                  label="Category"
-                />
-                <v-date-picker
-                  class="todo-date-picker"
-                  :min-date="new Date()"
-                  v-model="dueDate"
-                  mode="dateTime"
-                  color="gray"
-                  is-dark
-                >
-                  <template v-slot="{ inputValue, inputEvents }">
-                    <BaseInput
-                      id="date-picker"
-                      name="date"
-                      label="Due Date"
-                      :model-value="inputValue"
-                      v-on="inputEvents"
-                    />
-                  </template>
-                </v-date-picker>
-              </div>
-              <div class="row">
-                <BaseButton type="submit" class="add-todo-button" primary>
-                  Add <span class="material-icons-outlined bold"> add </span>
-                </BaseButton>
-                <BaseButton class="add-todo-button" color="warning" @click="toggleForm()"> Cancel </BaseButton>
-              </div>
-            </form>
+              @addTodo="addTodo()"
+              @toggle="toggleForm()"
+              v-model:todoTitle="newTodo"
+              v-model:todoDescription="newTodoDescription"
+              v-model:todoCategory="newCategory"
+              v-model:dueDate="dueDate"
+            />
             <div v-else class="empty-form" key="todo-form-empty">
               <BaseButton @click="toggleForm()" primary>
                 Add a task <span class="material-icons-outlined bold"> add </span>
@@ -108,7 +62,6 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from 'vue';
 import BaseCard from './BaseCard.vue';
-import CloseIcon from './CloseIcon.vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
@@ -117,6 +70,7 @@ import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
 import type { ToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
+import ToDoNewForm from './ToDoNewForm.vue';
 
 export default defineComponent({
   name: 'ToDos',
@@ -188,7 +142,7 @@ export default defineComponent({
       newTodoDescription,
     };
   },
-  components: { BaseCard, CloseIcon, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea },
+  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewForm },
 });
 </script>
 
@@ -224,43 +178,6 @@ export default defineComponent({
       display: flex;
       align-items: stretch;
       justify-content: center;
-    }
-  }
-
-  .todo-form {
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-
-    .row {
-      display: flex;
-      align-items: stretch;
-      justify-content: flex-start;
-      gap: 10px;
-    }
-
-    .add-todo-button {
-      flex-grow: 0;
-
-      .bold {
-        position: relative;
-        top: 1px;
-      }
-    }
-
-    .input-grow {
-      flex-grow: 1;
-    }
-
-    .todo-date-picker {
-      max-width: 200px;
-    }
-
-    :deep(.vc-popover-content) {
-      background-color: var(--card-bg);
     }
   }
 

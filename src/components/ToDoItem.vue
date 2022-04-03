@@ -18,7 +18,6 @@
           <template v-if="!todo.done">
             <span class="material-icons-outlined"> event </span>
             <strong>{{ dateSet }}</strong>
-            <span class="time-ago">{{ timeAgo }}</span>
           </template>
           <template v-else>
             <span class="material-icons-outlined"> task_alt </span>
@@ -41,7 +40,6 @@ import { defineComponent, ref } from 'vue';
 import type { PropType } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CloseIcon from './CloseIcon.vue';
-import { useDateFormat, useTimeAgo } from '@vueuse/core';
 import { format } from 'date-fns';
 
 export default defineComponent({
@@ -66,13 +64,11 @@ export default defineComponent({
 
     const dateFormat = ref<string>('MMM d, y');
     const dateSet = format(new Date(props.todo.due), dateFormat.value);
-    const timeAgo = useTimeAgo(props.todo.due);
 
     return {
       finishTodo,
       removeTodo,
       dateSet,
-      timeAgo,
     };
   },
 });
