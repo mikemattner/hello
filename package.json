@@ -19,7 +19,8 @@
     "pinia-plugin-persistedstate": "^1.5.1",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.31",
-    "vue-router": "^4.0.12"
+    "vue-router": "^4.0.12",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

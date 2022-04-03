@@ -62,7 +62,15 @@ export default defineComponent({
     });
 
     const addTodo = () => {
-      emit('addTodo', todoModel.value);
+      if (todoModel.value.todoTitle) {
+        emit('addTodo', todoModel.value);
+        todoModel.value = {
+          todoTitle: '',
+          todoDescription: '',
+          todoCategory: 'Work',
+          dueDate: new Date(),
+        };
+      }
     };
 
     const toggleForm = () => {
