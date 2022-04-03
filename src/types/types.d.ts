@@ -14,6 +14,13 @@ export interface ToDo {
     key: number;
 }
 
+export interface NewToDo {
+    todoTitle: string;
+    todoDescription: string;
+    todoCategory: string;
+    dueDate: Date;
+}
+
 interface TodoState {
     todos: ToDo[];
 }

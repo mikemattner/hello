@@ -14,15 +14,7 @@
             @remove="removeTodo(todo)"
           />
           <div class="todo-form-container" key="todo-form-surround" ref="form">
-            <ToDoNewForm
-              v-if="addTodoForm"
-              @addTodo="addTodo()"
-              @toggle="toggleForm()"
-              v-model:todoTitle="newTodo"
-              v-model:todoDescription="newTodoDescription"
-              v-model:todoCategory="newCategory"
-              v-model:dueDate="dueDate"
-            />
+            <ToDoNewForm v-if="addTodoForm" @addTodo="addTodo($event)" @toggle="toggleForm()" />
             <div v-else class="empty-form" key="todo-form-empty">
               <BaseButton @click="toggleForm()" primary>
                 Add a task <span class="material-icons-outlined bold"> add </span>
@@ -68,7 +60,7 @@ import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
-import type { ToDo } from '@/types/types';
+import type { NewToDo, ToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewForm from './ToDoNewForm.vue';
 
@@ -83,7 +75,6 @@ export default defineComponent({
     const { getTodos } = storeToRefs(todoStore);
     const dueDate = ref<Date>(new Date());
     const addTodoForm = ref<boolean>(false);
-    const taskInput = ref();
 
     const notCompletedTodos = computed<ToDo[]>(() => {
       return getTodos.value.filter((i) => i.done === false);
@@ -101,13 +92,9 @@ export default defineComponent({
       });
     });
 
-    const addTodo = () => {
-      if (newTodo.value) {
-        todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value, newTodoDescription.value);
-        newTodo.value = '';
-        newTodoDescription.value = '';
-        newCategory.value = 'Work';
-        dueDate.value = new Date();
+    const addTodo = (value: NewToDo) => {
+      if (value.todoTitle) {
+        todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
         toggleForm();
       }
     };
@@ -135,7 +122,6 @@ export default defineComponent({
       dueDate,
       addTodoForm,
       toggleForm,
-      taskInput,
       newCategory,
       options,
       dueToday,
