@@ -1,44 +1,28 @@
 <template>
   <form key="todo-form" class="todo-form" @submit.prevent="addTodo()" @keyup.enter="addTodo()">
     <div class="row">
-      <BaseInput
-        :model-value="todoTitle"
-        class="input-grow"
-        name="newTodo"
-        id="todoInput"
-        label="Task title"
-        @input="updateTodoTitle($event)"
-      />
+      <BaseInput v-model="todoModel.todoTitle" class="input-grow" name="newTodo" id="todoInput" label="Task title" />
     </div>
     <div class="row">
       <BaseTextArea
-        :model-value="todoDescription"
+        v-model="todoModel.todoDescription"
         class="input-grow"
         name="todoDescription"
         id="todoDescription"
         label="Task description"
         rows="2"
-        @input="updateTodoDescription($event)"
       />
     </div>
     <div class="row">
       <BaseSelect
-        :model-value="todoCategory"
+        v-model="todoModel.todoCategory"
         :options="options"
         class="input-grow"
         name="newCategory"
         id="newCategory"
         label="Category"
-        @input="updateTodoCategory($event)"
       />
-      <v-date-picker
-        class="todo-date-picker"
-        v-model="selectedDate"
-        mode="date"
-        color="gray"
-        is-dark
-        @dayclick="updateDueDate()"
-      >
+      <v-date-picker class="todo-date-picker" v-model="todoModel.dueDate" mode="date" color="gray" is-dark>
         <template v-slot="{ inputValue, inputEvents }">
           <BaseInput id="date-picker" name="date" label="Due Date" :model-value="inputValue" v-on="inputEvents" />
         </template>
@@ -59,6 +43,7 @@ import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import BaseTextArea from './BaseTextArea.vue';
+import type { NewToDo } from '@/types/types';
 
 export default defineComponent({
   components: {
@@ -67,59 +52,36 @@ export default defineComponent({
     BaseSelect,
     BaseTextArea,
   },
-  props: {
-    todoTitle: {
-      type: String,
-      default: '',
-    },
-    todoDescription: {
-      type: String,
-      default: '',
-    },
-    todoCategory: {
-      type: String,
-      default: '',
-    },
-    dueDate: {
-      type: Date,
-      default: '',
-    },
-  },
   setup(props, { emit }) {
     const options: String[] = ['Work', 'Personal', 'Home'];
-    const selectedDate = ref<Date>(props.dueDate);
+    const todoModel = ref<NewToDo>({
+      todoTitle: '',
+      todoDescription: '',
+      todoCategory: 'Work',
+      dueDate: new Date(),
+    });
+
     const addTodo = () => {
-      emit('addTodo');
+      if (todoModel.value.todoTitle) {
+        emit('addTodo', todoModel.value);
+        todoModel.value = {
+          todoTitle: '',
+          todoDescription: '',
+          todoCategory: 'Work',
+          dueDate: new Date(),
+        };
+      }
     };
+
     const toggleForm = () => {
       emit('toggle');
-    };
-
-    const updateTodoTitle = (event: any) => {
-      emit('update:todoTitle', event.target.value);
-    };
-
-    const updateTodoDescription = (event: any) => {
-      emit('update:todoDescription', event.target.value);
-    };
-
-    const updateTodoCategory = (event: any) => {
-      emit('update:todoCategory', event.target.value);
-    };
-
-    const updateDueDate = () => {
-      emit('update:dueDate', selectedDate.value);
     };
 
     return {
       addTodo,
       toggleForm,
       options,
-      updateTodoTitle,
-      updateTodoDescription,
-      updateTodoCategory,
-      updateDueDate,
-      selectedDate,
+      todoModel,
     };
   },
 });

@@ -6,23 +6,21 @@
           <span class="content">All Tasks</span> <span class="count">{{ getTodos.length }}</span>
         </h4>
         <TransitionGroup name="list" class="todo-list" tag="div">
-          <ToDoItem
-            v-for="(todo, index) in getTodos"
-            :key="todo.content"
-            :todo="todo"
-            @done="doneTodo(todo)"
-            @remove="removeTodo(todo)"
-          />
-          <div class="todo-form-container" key="todo-form-surround" ref="form">
-            <ToDoNewForm
-              v-if="addTodoForm"
-              @addTodo="addTodo()"
-              @toggle="toggleForm()"
-              v-model:todoTitle="newTodo"
-              v-model:todoDescription="newTodoDescription"
-              v-model:todoCategory="newCategory"
-              v-model:dueDate="dueDate"
-            />
+          <VDraggable
+            v-model="todoList"
+            tag="transition-group"
+            item-key="key"
+            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
+            key="draggable-list"
+            @start="drag = true"
+            @end="drag = false"
+          >
+            <template #item="{ element }">
+              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
+            </template>
+          </VDraggable>
+          <div class="todo-form-container" key="new-todo-form">
+            <ToDoNewForm v-if="addTodoForm" @addTodo="addTodo($event)" @toggle="toggleForm()" />
             <div v-else class="empty-form" key="todo-form-empty">
               <BaseButton @click="toggleForm()" primary>
                 Add a task <span class="material-icons-outlined bold"> add </span>
@@ -68,22 +66,18 @@ import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
 import { storeToRefs } from 'pinia';
-import type { ToDo } from '@/types/types';
+import type { NewToDo, ToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewForm from './ToDoNewForm.vue';
+import VDraggable from 'vuedraggable';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
-    const options: String[] = ['Work', 'Personal', 'Home'];
-    const newTodo = ref('');
-    const newTodoDescription = ref('');
-    const newCategory = ref('Work');
     const todoStore = useTodoStore();
     const { getTodos } = storeToRefs(todoStore);
-    const dueDate = ref<Date>(new Date());
     const addTodoForm = ref<boolean>(false);
-    const taskInput = ref();
+    const drag = ref<boolean>(false);
 
     const notCompletedTodos = computed<ToDo[]>(() => {
       return getTodos.value.filter((i) => i.done === false);
@@ -101,15 +95,15 @@ export default defineComponent({
       });
     });
 
-    const addTodo = () => {
-      if (newTodo.value) {
-        todoStore.addTodo(newTodo.value, dueDate.value, newCategory.value, newTodoDescription.value);
-        newTodo.value = '';
-        newTodoDescription.value = '';
-        newCategory.value = 'Work';
-        dueDate.value = new Date();
-        toggleForm();
-      }
+    const todoList = computed({
+      get: () => todoStore.$state.todos,
+      set: (value) => {
+        todoStore.$state.todos = value;
+      },
+    });
+
+    const addTodo = (value: NewToDo) => {
+      todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
     };
 
     const doneTodo = (todo: ToDo) => {
@@ -125,24 +119,20 @@ export default defineComponent({
     };
 
     return {
-      newTodo,
       addTodo,
       doneTodo,
       removeTodo,
       getTodos,
+      todoList,
       notCompletedTodos,
       completedTodos,
-      dueDate,
       addTodoForm,
       toggleForm,
-      taskInput,
-      newCategory,
-      options,
       dueToday,
-      newTodoDescription,
+      drag,
     };
   },
-  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewForm },
+  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewForm, VDraggable },
 });
 </script>
 
