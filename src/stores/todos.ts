@@ -5,6 +5,7 @@ export const useTodoStore = defineStore({
   id: 'todos',
   state: () => ({
     todos: [],
+    inProgress: [],
   }) as TodoState,
   getters: {
     getTodos: (state) => state.todos,
@@ -23,11 +24,21 @@ export const useTodoStore = defineStore({
     },
     removeTodo(todo: ToDo) {
       const index = this.todos.indexOf(todo);
-      this.todos.splice(index, 1);
+      const progressIndex = this.inProgress.indexOf(todo);
+      if(index > -1) {
+        this.todos.splice(index, 1);
+      } else {
+        this.inProgress.splice(progressIndex, 1);
+      }
     },
     doneTodo(todo: ToDo) {
       const index = this.todos.indexOf(todo);
-      this.todos[index].done = !this.todos[index].done;
+      const progressIndex = this.inProgress.indexOf(todo);
+      if(index > -1) {
+        this.todos[index].done = !this.todos[index].done;
+      } else {
+        this.inProgress[progressIndex].done = !this.inProgress[progressIndex].done;
+      }
     },
   },
   persist: {
