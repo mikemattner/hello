@@ -5,11 +5,13 @@
         <h4 class="headings">
           <span class="content">All Tasks</span> <span class="count">{{ getTodos.length }}</span>
         </h4>
-        <TransitionGroup name="list" class="todo-list" tag="div">
+        <div class="todo-list">
           <VDraggable
             v-model="todoList"
-            tag="transition-group"
+            tag="div"
             item-key="key"
+            group="tasks"
+            class="todo-list-draggable"
             :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
             key="draggable-list"
             @start="drag = true"
@@ -27,31 +29,29 @@
               </BaseButton>
             </div>
           </div>
-        </TransitionGroup>
+        </div>
       </div>
       <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">Due Today</span> <span class="count">{{ dueToday.length }}</span>
+          <span class="content">In Progress</span> <span class="count">{{ inProgressTodoList.length }}</span>
         </h4>
-        <TransitionGroup name="list" class="todo-list" tag="div">
-          <div v-if="dueToday.length < 1" class="empty-todo">
-            <template v-if="getTodos.length < 1">
-              <p class="empty-emoji">🥳</p>
-              <p>You finished it all!</p>
+        <div class="todo-list">
+          <VDraggable
+            v-model="inProgressTodoList"
+            tag="div"
+            item-key="key"
+            group="tasks"
+            class="todo-list-draggable"
+            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
+            key="draggable-list"
+            @start="drag = true"
+            @end="drag = false"
+          >
+            <template #item="{ element }">
+              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
             </template>
-            <template v-else>
-              <p class="empty-emoji">🙌</p>
-              <p>You&rsquo;ve got this!</p>
-            </template>
-          </div>
-          <ToDoItem
-            v-for="(todo, index) in dueToday"
-            :key="todo.content"
-            :todo="todo"
-            @done="doneTodo(todo)"
-            @remove="removeTodo(todo)"
-          />
-        </TransitionGroup>
+          </VDraggable>
+        </div>
       </div>
     </section>
   </div>
@@ -102,6 +102,13 @@ export default defineComponent({
       },
     });
 
+    const inProgressTodoList = computed({
+      get: () => todoStore.$state.inProgress,
+      set: (value) => {
+        todoStore.$state.inProgress = value;
+      },
+    });
+
     const addTodo = (value: NewToDo) => {
       todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
     };
@@ -124,6 +131,7 @@ export default defineComponent({
       removeTodo,
       getTodos,
       todoList,
+      inProgressTodoList,
       notCompletedTodos,
       completedTodos,
       addTodoForm,
@@ -175,6 +183,9 @@ export default defineComponent({
     width: 100%;
     position: relative;
     flex-grow: 1;
+    &-draggable {
+      min-height: 100px;
+    }
   }
 
   .todo-list-todos {
@@ -258,10 +269,10 @@ export default defineComponent({
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  transform: translateY(-30px);
+  // transform: translateY(-30px);
 }
 
-.list-leave-active {
-  position: absolute;
-}
+// .list-leave-active {
+//   position: absolute;
+// }
 </style>
