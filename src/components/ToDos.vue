@@ -1,9 +1,21 @@
 <template>
+  <div v-if="addTodoForm" class="todo-form-overlay">
+    <div class="todo-form-container">
+      <h2 class="todo-form-title">Add New To Do</h2>
+      <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
+    </div>
+  </div>
   <div class="todo-list-container">
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <h4 class="headings">
-          <span class="content">All Tasks</span> <span class="count">{{ getTodos.length }}</span>
+          <div class="flex-content">
+            <span class="content">To Do</span>
+            <BaseButton @click="toggleForm()" primary>
+              <span class="material-icons-outlined bold"> add </span>
+            </BaseButton>
+          </div>
+          <span class="count">{{ todoList.length }}</span>
         </h4>
         <div class="todo-list">
           <VDraggable
@@ -21,14 +33,6 @@
               <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
             </template>
           </VDraggable>
-          <div class="todo-form-container" key="new-todo-form">
-            <ToDoNewForm v-if="addTodoForm" @addTodo="addTodo($event)" @toggle="toggleForm()" />
-            <div v-else class="empty-form" key="todo-form-empty">
-              <BaseButton @click="toggleForm()" primary>
-                Add a task <span class="material-icons-outlined bold"> add </span>
-              </BaseButton>
-            </div>
-          </div>
         </div>
       </div>
       <div class="todo-list-todos__col">
@@ -38,6 +42,28 @@
         <div class="todo-list">
           <VDraggable
             v-model="inProgressTodoList"
+            tag="div"
+            item-key="key"
+            group="tasks"
+            class="todo-list-draggable"
+            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
+            key="draggable-list"
+            @start="drag = true"
+            @end="drag = false"
+          >
+            <template #item="{ element }">
+              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
+            </template>
+          </VDraggable>
+        </div>
+      </div>
+      <div class="todo-list-todos__col">
+        <h4 class="headings">
+          <span class="content">Done</span> <span class="count">{{ doneTodoList.length }}</span>
+        </h4>
+        <div class="todo-list">
+          <VDraggable
+            v-model="doneTodoList"
             tag="div"
             item-key="key"
             group="tasks"
@@ -75,42 +101,66 @@ export default defineComponent({
   name: 'ToDos',
   setup() {
     const todoStore = useTodoStore();
-    const { getTodos } = storeToRefs(todoStore);
     const addTodoForm = ref<boolean>(false);
     const drag = ref<boolean>(false);
 
-    const notCompletedTodos = computed<ToDo[]>(() => {
-      return getTodos.value.filter((i) => i.done === false);
-    });
-
-    const completedTodos = computed<ToDo[]>(() => {
-      return getTodos.value.filter((i) => i.done === true);
-    });
-
-    const dueToday = computed<ToDo[]>(() => {
-      return getTodos.value.filter((i) => {
-        const due = new Date(i.due);
-        const today = new Date();
-        return due.setHours(0, 0, 0, 0) === today.setHours(0, 0, 0, 0);
-      });
-    });
-
-    const todoList = computed({
+    const todoList = computed<ToDo[]>({
       get: () => todoStore.$state.todos,
       set: (value) => {
-        todoStore.$state.todos = value;
+        const mapped: ToDo[] = value.map((item) => {
+          return {
+            category: item.category,
+            content: item.content,
+            description: item.description,
+            date: item.date,
+            done: false,
+            due: item.due,
+            key: item.key,
+          };
+        });
+        todoStore.$state.todos = mapped;
       },
     });
 
-    const inProgressTodoList = computed({
+    const inProgressTodoList = computed<ToDo[]>({
       get: () => todoStore.$state.inProgress,
       set: (value) => {
-        todoStore.$state.inProgress = value;
+        const mapped: ToDo[] = value.map((item) => {
+          return {
+            category: item.category,
+            content: item.content,
+            description: item.description,
+            date: item.date,
+            done: false,
+            due: item.due,
+            key: item.key,
+          };
+        });
+        todoStore.$state.inProgress = mapped;
+      },
+    });
+
+    const doneTodoList = computed<ToDo[]>({
+      get: () => todoStore.$state.done,
+      set: (value) => {
+        const mapped: ToDo[] = value.map((item) => {
+          return {
+            category: item.category,
+            content: item.content,
+            description: item.description,
+            date: item.date,
+            done: true,
+            due: item.due,
+            key: item.key,
+          };
+        });
+        todoStore.$state.done = mapped;
       },
     });
 
     const addTodo = (value: NewToDo) => {
       todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
+      toggleForm();
     };
 
     const doneTodo = (todo: ToDo) => {
@@ -129,14 +179,11 @@ export default defineComponent({
       addTodo,
       doneTodo,
       removeTodo,
-      getTodos,
       todoList,
       inProgressTodoList,
-      notCompletedTodos,
-      completedTodos,
+      doneTodoList,
       addTodoForm,
       toggleForm,
-      dueToday,
       drag,
     };
   },
@@ -152,7 +199,7 @@ export default defineComponent({
   flex-grow: 1;
   gap: 10px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   padding-bottom: 60px;
 
   @media (max-width: 1299px) {
@@ -162,29 +209,17 @@ export default defineComponent({
     margin-top: 1rem;
   }
 
-  .todo-form-container {
-    width: 100%;
-    min-height: 94px;
-    padding: 1.25rem 1rem;
-    border-radius: 4px;
-    margin: 0.5rem 0;
-    background-color: var(--card-bg);
-    box-shadow: 2px 10px 20px var(--card-shadow);
-
-    .full-height {
-      height: 42px;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-    }
-  }
-
   .todo-list {
     width: 100%;
     position: relative;
     flex-grow: 1;
+    height: 600px;
+    padding: 10px;
+    background-color: rgba(#031a36, 0.5);
+    border-radius: 4px;
+    overflow-y: auto;
     &-draggable {
-      min-height: 100px;
+      min-height: 550px;
     }
   }
 
@@ -192,7 +227,7 @@ export default defineComponent({
     width: 100%;
     @media (min-width: 1023px) {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 40px;
     }
 
@@ -213,6 +248,12 @@ export default defineComponent({
       justify-content: space-between;
       gap: 10px;
       padding: 0 0.5rem;
+
+      .flex-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
       .content {
         font-weight: 900;
@@ -258,6 +299,34 @@ export default defineComponent({
       width: 100%;
       height: 42px;
     }
+  }
+}
+
+.todo-form-overlay {
+  background-color: rgba(#000, 0.95);
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 100;
+}
+.todo-form-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 500px;
+  padding: 1.25rem 1rem;
+  border-radius: 4px;
+  background-color: var(--card-bg);
+  box-shadow: 2px 10px 20px var(--card-shadow);
+
+  .todo-form-title {
+    font-size: 1rem;
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 }
 .list-move,

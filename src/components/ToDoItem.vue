@@ -202,6 +202,7 @@ export default defineComponent({
       }
       &__label {
         font-weight: 700;
+        font-size: 0.75rem;
       }
       &__description {
         margin: 0.25rem 0 1rem;

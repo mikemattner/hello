@@ -23,6 +23,7 @@ export interface NewToDo {
 
 interface TodoState {
     todos: ToDo[];
+    done: ToDo[];
     inProgress: ToDo[];
 }
 
