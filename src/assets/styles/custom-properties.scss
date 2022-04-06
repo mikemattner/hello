@@ -1,13 +1,35 @@
 // DEFAULT Custom Properties
 :root {
-  --background-image: linear-gradient(45deg, #031a36 0%, #12324d 100%);
-  --color: #dcebf6;
-  --tooltip-bg: #12324d;
-  --tooltip-color: #dcebf6;
-  --card-bg: #031a36;
+  --robins-egg-blue-50: #eefffc;
+  --robins-egg-blue-100: #c6fff8;
+  --robins-egg-blue-200: #8efff2;
+  --robins-egg-blue-300: #4dfbeb;
+  --robins-egg-blue-400: #19e8db;
+  --robins-egg-blue-500: #00c6bd;
+  --robins-egg-blue-600: #00a4a1;
+  --robins-egg-blue-700: #028381;
+  --robins-egg-blue-800: #086767;
+  --robins-egg-blue-900: #0c5555;
+
+  --tangaroa-50: #e6faff;
+  --tangaroa-100: #d2f5ff;
+  --tangaroa-200: #afeaff;
+  --tangaroa-300: #7edaff;
+  --tangaroa-400: #4cb8ff;
+  --tangaroa-500: #2495ff;
+  --tangaroa-600: #006bff;
+  --tangaroa-700: #0070ff;
+  --tangaroa-800: #005ed6;
+  --tangaroa-900: #031a36;
+
+  --background-image: linear-gradient(25deg, var(--tangaroa-900) 0%, var(--tangaroa-800) 90%, var(--tangaroa-700) 100%);
+  --color: var(--tangaroa-200);
+  --tooltip-bg: var(--tangaroa-800);
+  --tooltip-color: var(--tangaroa-200);
+  --card-bg: var(--tangaroa-900);
   --card-shadow: rgba(3, 26, 54, 0.5);
   --input-bg-color: var(--color);
-  --input-color: #12324d;
+  --input-color: var(--tangaroa-800);
   --input-focus: var(--color);
 
   --button-focus-shadow: 0 0 0 0.2rem rgba(220, 235, 246, 0.25);
@@ -15,9 +37,8 @@
 
   --color--red: #ef233c;
 
-  --contrast-text-color: #054f3d;
-  --contrast-color: #45d8a7;
-  --contrast-color-hover: #04976e;
-  --contrast-text-color-hover: #a6f4d2;
-  --contrast-color-highlight: #d1fae6;
+  --contrast-text-color: var(--robins-egg-blue-900);
+  --contrast-color: var(--robins-egg-blue-300);
+  --contrast-color-hover: var(--robins-egg-blue-700);
+  --contrast-text-color-hover: var(--robins-egg-blue-100);
 }

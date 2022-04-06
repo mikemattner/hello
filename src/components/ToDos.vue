@@ -271,13 +271,12 @@ export default defineComponent({
 
     .headings {
       font-size: 0.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       padding: 0 0.5rem;
-      height: 40px;
 
       .flex-content {
         display: flex;
@@ -333,7 +332,7 @@ export default defineComponent({
 }
 
 .todo-form-overlay {
-  background-color: rgba(#000, 0.95);
+  background-color: rgba(#000, 0.65);
   position: fixed;
   top: 0;
   right: 0;
