@@ -14,15 +14,17 @@
         <div class="todo-content__label">{{ todo.content }}</div>
         <div v-if="todo.description" class="todo-content__description">{{ todo.description }}</div>
         <div class="todo-content__time">
-          <span v-if="todo.category" class="category-label">{{ todo.category }}</span>
-          <template v-if="!todo.done">
+          <div class="content-time" v-if="!todo.done">
             <span class="material-icons-outlined"> event </span>
             <strong>{{ dateSet }}</strong>
-          </template>
-          <template v-else>
+          </div>
+          <div class="content-time" v-else>
             <span class="material-icons-outlined"> task_alt </span>
             <strong>Completed</strong>
-          </template>
+          </div>
+          <span v-if="todo.category" class="category-label">
+            <span>{{ todo.category }}</span>
+          </span>
         </div>
       </div>
     </div>
@@ -88,7 +90,7 @@ export default defineComponent({
 
   .category-label {
     padding: 3px 8px;
-    border-radius: 4px;
+    border-radius: 10px;
     background-color: var(--input-color);
   }
 
@@ -107,11 +109,11 @@ export default defineComponent({
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.1);
 
-    @media (min-width: 730px) {
-      opacity: 0;
-      transform: translateX(50px);
-      transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    }
+    // @media (min-width: 730px) {
+    //   opacity: 0;
+    //   transform: translateX(50px);
+    //   transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    // }
 
     // &.done {
     //   opacity: 1;
@@ -179,6 +181,7 @@ export default defineComponent({
       position: relative;
       font-size: 0.75rem;
       padding: 1rem;
+      width: 100%;
 
       &__time {
         margin-top: 0.375rem;
@@ -186,7 +189,15 @@ export default defineComponent({
         line-height: 1;
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 5px;
+        width: 100%;
+
+        .content-time {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
 
         strong {
           font-weight: 700;
