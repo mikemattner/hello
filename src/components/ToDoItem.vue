@@ -187,7 +187,6 @@ export default defineComponent({
 
       .checkmark {
         opacity: 1;
-        background-color: var(--tooltip-bg);
         border-color: var(--contrast-color);
       }
     }
@@ -204,8 +203,8 @@ export default defineComponent({
         line-height: 1;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 5px;
+        justify-content: flex-start;
+        gap: 10px;
         width: 100%;
 
         .content-time {

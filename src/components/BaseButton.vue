@@ -18,6 +18,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    actionButton: {
+      type: Boolean,
+      default: false,
+    },
     color: {
       type: String as PropType<Colors>,
       default: 'highlight',
@@ -39,6 +43,7 @@ export default defineComponent({
         'button',
         {
           button__primary: props.primary,
+          button__action: props.actionButton,
           button__highlight: props.color === 'highlight',
           button__warning: props.color === 'warning',
           button__disabled: props.disabled,
@@ -69,6 +74,19 @@ export default defineComponent({
   border: 1px solid rgba(#dcebf6, 0.125);
   transition: all 0.25s ease-in-out;
 
+  &.button__action {
+    position: fixed;
+    bottom: 40px;
+    right: 20px;
+    border-radius: 30px;
+    padding: 0.5rem 0.75rem;
+    z-index: 99;
+    box-shadow: 2px 10px 20px var(--card-shadow);
+
+    :deep(.material-icons-outlined) {
+      font-size: 1.25rem;
+    }
+  }
   &.button__highlight {
     color: var(--color);
     &:hover:not(:disabled) {
@@ -125,7 +143,7 @@ export default defineComponent({
       color: var(--contrast-text-color);
       background-color: var(--contrast-color);
       &:hover:not(:disabled) {
-        color: var(--contrast-color-highlight);
+        color: var(--contrast-text-color-hover);
         background-color: var(--contrast-color-hover);
       }
     }

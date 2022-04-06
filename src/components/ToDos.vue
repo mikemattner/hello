@@ -7,15 +7,16 @@
       </div>
     </div>
   </div>
+  <BaseButton @click="toggleForm()" action-button primary>
+    <span class="material-icons-outlined bold"> add </span>
+    Add Task
+  </BaseButton>
   <div class="todo-list-container">
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <div class="headings">
           <div class="flex-content">
             <span class="content">To Do</span>
-            <BaseButton @click="toggleForm()" primary>
-              <span class="material-icons-outlined bold"> add </span>
-            </BaseButton>
           </div>
           <span class="count">{{ todoList.length }}</span>
         </div>
@@ -270,13 +271,12 @@ export default defineComponent({
 
     .headings {
       font-size: 0.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
       padding: 0 0.5rem;
-      height: 40px;
 
       .flex-content {
         display: flex;
@@ -332,7 +332,7 @@ export default defineComponent({
 }
 
 .todo-form-overlay {
-  background-color: rgba(#000, 0.95);
+  background-color: rgba(#000, 0.65);
   position: fixed;
   top: 0;
   right: 0;
