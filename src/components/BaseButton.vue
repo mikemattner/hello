@@ -121,13 +121,12 @@ export default defineComponent({
   }
 
   &__primary {
-    box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0);
-
     &.button__highlight {
-      color: var(--card-bg);
+      color: var(--contrast-text-color);
       background-color: var(--contrast-color);
       &:hover:not(:disabled) {
-        background-color: var(--contrast-color);
+        color: var(--contrast-color-highlight);
+        background-color: var(--contrast-color-hover);
       }
     }
 

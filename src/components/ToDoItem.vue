@@ -23,6 +23,7 @@
             <strong>Completed</strong>
           </div>
           <span v-if="todo.category" class="category-label">
+            <span class="dot"></span>
             <span>{{ todo.category }}</span>
           </span>
         </div>
@@ -89,9 +90,23 @@ export default defineComponent({
   box-shadow: 2px 10px 20px var(--card-shadow);
 
   .category-label {
-    padding: 3px 8px;
+    padding: 4px 8px;
     border-radius: 10px;
     background-color: var(--input-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    span {
+      font-weight: 900;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      display: block;
+      background-color: var(--color);
+    }
   }
 
   .checkmark-surround {
