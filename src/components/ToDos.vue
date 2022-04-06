@@ -1,14 +1,16 @@
 <template>
   <div v-if="addTodoForm" class="todo-form-overlay">
     <div class="todo-form-container">
-      <h2 class="todo-form-title">Add New To Do</h2>
-      <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
+      <div class="todo-form-title">Add New To Do</div>
+      <div class="todo-form-body">
+        <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
+      </div>
     </div>
   </div>
   <div class="todo-list-container">
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
-        <h4 class="headings">
+        <div class="headings">
           <div class="flex-content">
             <span class="content">To Do</span>
             <BaseButton @click="toggleForm()" primary>
@@ -16,7 +18,7 @@
             </BaseButton>
           </div>
           <span class="count">{{ todoList.length }}</span>
-        </h4>
+        </div>
         <div class="todo-list">
           <VDraggable
             v-model="todoList"
@@ -26,6 +28,7 @@
             class="todo-list-draggable"
             :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
             key="draggable-list"
+            v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
           >
@@ -36,9 +39,9 @@
         </div>
       </div>
       <div class="todo-list-todos__col">
-        <h4 class="headings">
+        <div class="headings">
           <span class="content">In Progress</span> <span class="count">{{ inProgressTodoList.length }}</span>
-        </h4>
+        </div>
         <div class="todo-list">
           <VDraggable
             v-model="inProgressTodoList"
@@ -48,6 +51,7 @@
             class="todo-list-draggable"
             :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
             key="draggable-list"
+            v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
           >
@@ -58,9 +62,9 @@
         </div>
       </div>
       <div class="todo-list-todos__col">
-        <h4 class="headings">
+        <div class="headings">
           <span class="content">Done</span> <span class="count">{{ doneTodoList.length }}</span>
-        </h4>
+        </div>
         <div class="todo-list">
           <VDraggable
             v-model="doneTodoList"
@@ -70,6 +74,7 @@
             class="todo-list-draggable"
             :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
             key="draggable-list"
+            v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
           >
@@ -84,7 +89,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, onMounted, onUnmounted } from 'vue';
 import BaseCard from './BaseCard.vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
@@ -103,6 +108,14 @@ export default defineComponent({
     const todoStore = useTodoStore();
     const addTodoForm = ref<boolean>(false);
     const drag = ref<boolean>(false);
+    const dragOptions = computed(() => {
+      return {
+        animation: 200,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost',
+      };
+    });
 
     const todoList = computed<ToDo[]>({
       get: () => todoStore.$state.todos,
@@ -175,6 +188,20 @@ export default defineComponent({
       addTodoForm.value = !addTodoForm.value;
     };
 
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && addTodoForm.value) {
+        toggleForm();
+      }
+    };
+
+    onMounted(() => {
+      document.addEventListener('keydown', handleEscape);
+    });
+
+    onUnmounted(() => {
+      document.removeEventListener('keydown', handleEscape);
+    });
+
     return {
       addTodo,
       doneTodo,
@@ -185,6 +212,7 @@ export default defineComponent({
       addTodoForm,
       toggleForm,
       drag,
+      dragOptions,
     };
   },
   components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewForm, VDraggable },
@@ -248,6 +276,7 @@ export default defineComponent({
       justify-content: space-between;
       gap: 10px;
       padding: 0 0.5rem;
+      height: 40px;
 
       .flex-content {
         display: flex;
@@ -317,7 +346,6 @@ export default defineComponent({
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   width: 500px;
-  padding: 1.25rem 1rem;
   border-radius: 4px;
   background-color: var(--card-bg);
   box-shadow: 2px 10px 20px var(--card-shadow);
@@ -326,8 +354,16 @@ export default defineComponent({
     font-size: 1rem;
     font-weight: 900;
     text-align: center;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: rgba(#000, 0.375);
   }
+  .todo-form-body {
+    padding: 1.25rem 1rem;
+  }
+}
+
+.ghost {
+  opacity: 0.5;
 }
 .list-move,
 .list-enter-active,
