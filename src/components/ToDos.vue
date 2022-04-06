@@ -227,7 +227,6 @@ export default defineComponent({
   flex-grow: 1;
   gap: 10px;
   width: 100%;
-  max-width: 1600px;
   padding-bottom: 60px;
 
   @media (max-width: 1299px) {
@@ -242,9 +241,6 @@ export default defineComponent({
     position: relative;
     flex-grow: 1;
     height: 600px;
-    padding: 10px;
-    background-color: rgba(#031a36, 0.5);
-    border-radius: 4px;
     overflow-y: auto;
     &-draggable {
       min-height: 550px;
@@ -256,10 +252,14 @@ export default defineComponent({
     @media (min-width: 1023px) {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 40px;
+      gap: 20px;
     }
 
     &__col {
+      padding: 20px 10px;
+      background-color: rgba(#031a36, 0.5);
+      border-radius: 4px;
+
       @media (max-width: 1022px) {
         margin-top: 1.25rem;
         &:first-child {
@@ -355,7 +355,7 @@ export default defineComponent({
     font-weight: 900;
     text-align: center;
     padding: 1rem;
-    background-color: rgba(#000, 0.375);
+    background-color: rgba(0, 0, 0, 0.1);
   }
   .todo-form-body {
     padding: 1.25rem 1rem;
