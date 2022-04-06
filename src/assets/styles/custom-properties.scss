@@ -22,14 +22,25 @@
   --tangaroa-800: #005ed6;
   --tangaroa-900: #031a36;
 
-  --background-image: linear-gradient(45deg, var(--tangaroa-900) 0%, #354565 50%, var(--tangaroa-900) 100%);
-  --color: var(--tangaroa-200);
-  --tooltip-bg: var(--tangaroa-800);
-  --tooltip-color: var(--tangaroa-200);
-  --card-bg: var(--tangaroa-900);
+  --ebony-50: #f4f6fb;
+  --ebony-100: #e7ebf7;
+  --ebony-200: #cad5ed;
+  --ebony-300: #9cb1dd;
+  --ebony-400: #6788c9;
+  --ebony-500: #446ab3;
+  --ebony-600: #325197;
+  --ebony-700: #2a427a;
+  --ebony-800: #263966;
+  --ebony-900: #0d121f;
+
+  --background-image: linear-gradient(45deg, #0d121f 0%, #263966 50%, #0d121f 100%);
+  --color: var(--ebony-200);
+  --tooltip-bg: var(--ebony-800);
+  --tooltip-color: var(--ebony-200);
+  --card-bg: var(--ebony-900);
   --card-shadow: rgba(3, 26, 54, 0.5);
   --input-bg-color: var(--color);
-  --input-color: var(--tangaroa-800);
+  --input-color: var(--ebony-800);
   --input-focus: var(--color);
 
   --button-focus-shadow: 0 0 0 0.2rem rgba(220, 235, 246, 0.25);
