@@ -7,15 +7,16 @@
       </div>
     </div>
   </div>
+  <BaseButton @click="toggleForm()" action-button primary>
+    <span class="material-icons-outlined bold"> add </span>
+    Add Task
+  </BaseButton>
   <div class="todo-list-container">
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <div class="headings">
           <div class="flex-content">
             <span class="content">To Do</span>
-            <BaseButton @click="toggleForm()" primary>
-              <span class="material-icons-outlined bold"> add </span>
-            </BaseButton>
           </div>
           <span class="count">{{ todoList.length }}</span>
         </div>
