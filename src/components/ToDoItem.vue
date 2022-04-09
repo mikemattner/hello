@@ -90,6 +90,7 @@ export default defineComponent({
   box-shadow: 2px 10px 20px var(--card-shadow);
 
   .category-label {
+    color: var(--color);
     padding: 4px 8px;
     border-radius: 10px;
     background-color: var(--input-color);
@@ -206,6 +207,7 @@ export default defineComponent({
         justify-content: flex-start;
         gap: 10px;
         width: 100%;
+        color: var(--bunker-200);
 
         .content-time {
           display: flex;

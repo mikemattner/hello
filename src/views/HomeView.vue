@@ -91,6 +91,8 @@ export default defineComponent({
       display: flex;
       align-items: center;
       gap: 10px;
+
+      color: var(--ebony-400);
     }
 
     h1 {

@@ -1,12 +1,14 @@
 <template>
-  <div v-if="addTodoForm" class="todo-form-overlay">
-    <div class="todo-form-container">
-      <div class="todo-form-title">Add New To Do</div>
-      <div class="todo-form-body">
-        <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
+  <Transition name="modal" mode="out-in">
+    <div v-if="addTodoForm" class="todo-form-overlay">
+      <div class="todo-form-container slide-up">
+        <div class="todo-form-title">Add New To Do</div>
+        <div class="todo-form-body">
+          <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
+        </div>
       </div>
     </div>
-  </div>
+  </Transition>
   <BaseButton @click="toggleForm()" action-button primary>
     <span class="material-icons-outlined bold"> add </span>
     Add Task
@@ -258,7 +260,7 @@ export default defineComponent({
 
     &__col {
       padding: 20px 10px;
-      background-color: rgba(#031a36, 0.5);
+      background-color: rgba(#263966, 0.125);
       border-radius: 4px;
 
       @media (max-width: 1022px) {
@@ -299,7 +301,7 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         font-weight: 900;
-        color: var(--contrast-color);
+        color: var(--tooltip-color);
       }
     }
 
@@ -332,33 +334,34 @@ export default defineComponent({
 }
 
 .todo-form-overlay {
-  background-color: rgba(#000, 0.65);
+  background-color: rgba(#263966, 0.75);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
   z-index: 100;
-}
-.todo-form-container {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  width: 500px;
-  border-radius: 4px;
-  background-color: var(--card-bg);
-  box-shadow: 2px 10px 20px var(--card-shadow);
+  transition: opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  .todo-form-title {
-    font-size: 1rem;
-    font-weight: 900;
-    text-align: center;
-    padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-  .todo-form-body {
-    padding: 1.25rem 1rem;
+  .todo-form-container {
+    width: 500px;
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    box-shadow: 2px 10px 20px var(--card-shadow);
+
+    .todo-form-title {
+      font-size: 1rem;
+      font-weight: 900;
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+    .todo-form-body {
+      padding: 1.25rem 1rem;
+    }
   }
 }
 
@@ -374,10 +377,14 @@ export default defineComponent({
 .list-enter-from,
 .list-leave-to {
   opacity: 0;
-  // transform: translateY(-30px);
+}
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.25s ease;
 }
 
-// .list-leave-active {
-//   position: absolute;
-// }
+.modal-enter,
+.modal-leave-active {
+  opacity: 0;
+}
 </style>

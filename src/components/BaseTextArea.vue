@@ -108,7 +108,6 @@ export default defineComponent({
     -webkit-appearance: none;
     outline: none;
     transition: all 0.25s ease-in-out;
-    opacity: 0.5;
     margin: 0;
     font-family: Inter, sans-serif;
 

@@ -113,7 +113,6 @@ export default defineComponent({
     appearance: none;
     outline: none;
     transition: all 0.25s ease-in-out;
-    opacity: 0.5;
     margin: 0;
     background-image: linear-gradient(45deg, transparent 50%, var(--color) 50%),
       linear-gradient(135deg, var(--color) 50%, transparent 50%);
