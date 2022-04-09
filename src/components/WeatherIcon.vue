@@ -49,9 +49,9 @@ export default defineComponent({
     position: absolute;
     top: 50%;
     left: 50%;
+    font-size: 1.5rem;
     transform: translate(-50%, -50%);
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    font-size: 2.25rem;
   }
   .icon-container {
     width: 80px;
