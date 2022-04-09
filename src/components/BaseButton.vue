@@ -96,16 +96,11 @@ export default defineComponent({
   }
 
   &.button__warning {
-    color: var(--color);
-
-    // :deep(.material-icons-outlined) {
-    //   color: var(--color--red);
-    // }
-
-    border: 1px solid var(--color--red);
+    color: var(--red-color);
+    border: 1px solid var(--red-color);
     &:hover:not(:disabled) {
-      background-color: rgba(#dcebf6, 0.125);
-      border-color: var(--color--red);
+      background-color: rgba(#f56565, 0.125);
+      border-color: var(--red-color);
     }
   }
 
@@ -145,6 +140,7 @@ export default defineComponent({
       &:hover:not(:disabled) {
         color: var(--contrast-text-color-hover);
         background-color: var(--contrast-color-hover);
+        border-color: var(--contrast-color-hover);
       }
     }
 

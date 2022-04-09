@@ -207,7 +207,7 @@ export default defineComponent({
         justify-content: flex-start;
         gap: 10px;
         width: 100%;
-        color: var(--bunker-200);
+        color: var(--ebony-400);
 
         .content-time {
           display: flex;
