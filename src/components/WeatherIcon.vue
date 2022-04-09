@@ -2,6 +2,7 @@
   <section class="weather-icon-container">
     <div class="icon-container">
       <span :class="['weather__icon', 'owi', `owi-${icon}`]"></span>
+      <span class="material-icons-outlined refresh">refresh</span>
     </div>
   </section>
 </template>
@@ -39,6 +40,18 @@ export default defineComponent({
     width: 80px;
     font-size: 2.25rem;
     color: var(--tooltip-color);
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  .refresh {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    font-size: 2.25rem;
   }
   .icon-container {
     width: 80px;
@@ -73,10 +86,14 @@ export default defineComponent({
   }
 
   &:hover {
-    .icon-description {
-      transform: translate3d(0, 10px, 0);
-      transition: all 0.25s ease-in-out;
+    .weather__icon {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .refresh {
       opacity: 1;
+      visibility: visible;
     }
   }
 }
