@@ -78,6 +78,7 @@ export default defineComponent({
   &__message {
     font-size: 1rem;
     line-height: 1.2;
+    color: var(--bunker-400);
   }
 }
 </style>

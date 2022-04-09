@@ -19,7 +19,7 @@ export default defineComponent({
   margin: 2rem 0;
   border-radius: 4px;
   padding: 1rem;
-  background-color: var(--card-bg);
+  background-color: var(--card-bg-contrast);
   box-shadow: 2px 10px 20px var(--card-shadow);
   transition: all 0.25s ease-in-out;
 

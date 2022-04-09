@@ -33,23 +33,27 @@
   --ebony-800: #263966;
   --ebony-900: #0d121f;
 
-  --background-image: linear-gradient(45deg, #0d121f 0%, #263966 50%, #0d121f 100%);
+  --background-color: var(--ebony-900);
   --color: var(--ebony-200);
+
   --tooltip-bg: var(--ebony-800);
   --tooltip-color: var(--ebony-200);
-  --card-bg: var(--ebony-900);
-  --card-shadow: rgba(3, 26, 54, 0.5);
-  --input-bg-color: var(--color);
-  --input-color: var(--ebony-800);
-  --input-focus: var(--color);
 
-  --button-focus-shadow: 0 0 0 0.2rem rgba(220, 235, 246, 0.25);
-  --inner-focus-shadow: inset 0 0 0 0.2rem rgba(220, 235, 246, 0.25);
+  --card-bg: var(--ebony-900);
+  --card-shadow: rgba(13, 18, 31, 0.5);
+  --card-bg-contrast: #111727;
+
+  --input-bg-color: var(--ebony-600);
+  --input-color: var(--ebony-800);
+  --input-focus: var(--ebony-400);
+
+  --button-focus-shadow: 0 0 0 0.2rem rgba(103, 136, 201, 0.5);
+  --inner-focus-shadow: inset 0 0 0 0.2rem rgba(103, 136, 201, 0.5);
 
   --color--red: #ef233c;
 
-  --contrast-text-color: var(--robins-egg-blue-900);
-  --contrast-color: var(--robins-egg-blue-300);
-  --contrast-color-hover: var(--robins-egg-blue-700);
-  --contrast-text-color-hover: var(--robins-egg-blue-100);
+  --contrast-text-color: var(--ebony-900);
+  --contrast-color: var(--ebony-300);
+  --contrast-color-hover: var(--ebony-700);
+  --contrast-text-color-hover: var(--ebony-100);
 }

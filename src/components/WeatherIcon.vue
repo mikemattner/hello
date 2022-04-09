@@ -38,7 +38,7 @@ export default defineComponent({
   .weather__icon {
     width: 80px;
     font-size: 2.25rem;
-    color: var(--contrast-color);
+    color: var(--tooltip-color);
   }
   .icon-container {
     width: 80px;
