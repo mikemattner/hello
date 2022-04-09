@@ -22,7 +22,7 @@
         id="newCategory"
         label="Category"
       />
-      <v-date-picker class="todo-date-picker" v-model="todoModel.dueDate" mode="date" color="gray" is-dark>
+      <v-date-picker class="todo-date-picker" v-model="todoModel.dueDate" mode="date" color="red" is-dark>
         <template v-slot="{ inputValue, inputEvents }">
           <BaseInput id="date-picker" name="date" label="Due Date" :model-value="inputValue" v-on="inputEvents" />
         </template>
@@ -118,10 +118,6 @@ export default defineComponent({
 
   .todo-date-picker {
     max-width: 200px;
-  }
-
-  :deep(.vc-popover-content) {
-    background-color: var(--card-bg);
   }
 }
 </style>
