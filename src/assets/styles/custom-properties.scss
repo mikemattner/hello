@@ -11,6 +11,28 @@
   --carnation-800: #971d1d;
   --carnation-900: #7d1f1f;
 
+  --ocean-green-50: #eefbf2;
+  --ocean-green-100: #d7f4df;
+  --ocean-green-200: #b2e8c3;
+  --ocean-green-300: #7fd6a0;
+  --ocean-green-400: #48bb78;
+  --ocean-green-500: #28a15f;
+  --ocean-green-600: #1a814b;
+  --ocean-green-700: #15673e;
+  --ocean-green-800: #135232;
+  --ocean-green-900: #10442b;
+
+  --jaffa-50: #fef8ee;
+  --jaffa-100: #fcefd8;
+  --jaffa-200: #f9daaf;
+  --jaffa-300: #f5bf7c;
+  --jaffa-400: #f09a47;
+  --jaffa-500: #ed8936;
+  --jaffa-600: #dd6519;
+  --jaffa-700: #b74d17;
+  --jaffa-800: #923d1a;
+  --jaffa-900: #763418;
+
   --ebony-50: #f4f6fb;
   --ebony-100: #e7ebf7;
   --ebony-200: #cad5ed;
@@ -46,8 +68,8 @@
   --red-color-hover: var(--carnation-700);
   --red-text-color-hover: var(--carnation-100);
 
-  --contrast-text-color: var(--ebony-900);
-  --contrast-color: var(--ebony-300);
-  --contrast-color-hover: var(--ebony-700);
-  --contrast-text-color-hover: var(--ebony-100);
+  --contrast-text-color: var(--ocean-green-900);
+  --contrast-color: var(--ocean-green-400);
+  --contrast-color-hover: var(--ocean-green-500);
+  --contrast-text-color-hover: var(--ocean-green-100);
 }

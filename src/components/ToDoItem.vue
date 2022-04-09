@@ -22,7 +22,7 @@
             <span class="material-icons-outlined"> task_alt </span>
             <strong>Completed</strong>
           </div>
-          <span v-if="todo.category" class="category-label">
+          <span v-if="todo.category" :class="categoryClasses">
             <span class="dot"></span>
             <span>{{ todo.category }}</span>
           </span>
@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import type { ToDo } from '@/types/types';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import type { PropType } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CloseIcon from './CloseIcon.vue';
@@ -65,6 +65,17 @@ export default defineComponent({
       emit('done');
     };
 
+    const categoryClasses = computed(() => {
+      return [
+        'category-label',
+        {
+          'category-home': props.todo.category === 'Home',
+          'category-personal': props.todo.category === 'Personal',
+          'category-work': props.todo.category === 'Work',
+        },
+      ];
+    });
+
     const dateFormat = ref<string>('MMM d, y');
     const dateSet = format(new Date(props.todo.due), dateFormat.value);
 
@@ -72,6 +83,7 @@ export default defineComponent({
       finishTodo,
       removeTodo,
       dateSet,
+      categoryClasses,
     };
   },
 });
@@ -90,7 +102,6 @@ export default defineComponent({
   box-shadow: 2px 10px 20px var(--card-shadow);
 
   .category-label {
-    color: var(--color);
     padding: 4px 8px;
     border-radius: 10px;
     background-color: var(--input-color);
@@ -98,6 +109,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     gap: 5px;
+
     span {
       font-weight: 900;
     }
@@ -106,7 +118,33 @@ export default defineComponent({
       height: 6px;
       border-radius: 50%;
       display: block;
-      background-color: var(--color);
+    }
+
+    &.category-home {
+      color: var(--ocean-green-900);
+      background-color: var(--ocean-green-400);
+
+      .dot {
+        background-color: var(--ocean-green-900);
+      }
+    }
+
+    &.category-work {
+      color: var(--jaffa-900);
+      background-color: var(--jaffa-400);
+
+      .dot {
+        background-color: var(--jaffa-900);
+      }
+    }
+
+    &.category-personal {
+      color: var(--ebony-900);
+      background-color: var(--ebony-400);
+
+      .dot {
+        background-color: var(--ebony-900);
+      }
     }
   }
 
@@ -188,7 +226,7 @@ export default defineComponent({
 
       .checkmark {
         opacity: 1;
-        border-color: var(--contrast-color);
+        border-color: var(--input-focus);
       }
     }
 
@@ -242,7 +280,7 @@ export default defineComponent({
         &__label {
           text-decoration-line: line-through;
           text-decoration-style: wavy;
-          text-decoration-color: var(--contrast-color);
+          text-decoration-color: var(--input-focus);
           text-decoration-thickness: 1px;
           color: rgba(255, 255, 255, 0.5);
         }
@@ -250,8 +288,8 @@ export default defineComponent({
 
       .checkmark {
         opacity: 1;
-        background-color: var(--contrast-color);
-        border-color: var(--contrast-color);
+        background-color: var(--input-focus);
+        border-color: var(--input-focus);
         &:after {
           opacity: 1;
           transform: rotate(45deg) scale(1);
