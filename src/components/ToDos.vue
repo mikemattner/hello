@@ -260,7 +260,7 @@ export default defineComponent({
 
     &__col {
       padding: 20px 10px;
-      background-color: rgba(#263966, 0.125);
+      background-color: var(--card-bg-contrast);
       border-radius: 4px;
 
       @media (max-width: 1022px) {
@@ -301,7 +301,6 @@ export default defineComponent({
         align-items: center;
         justify-content: center;
         font-weight: 900;
-        color: var(--tooltip-color);
       }
     }
 
@@ -334,7 +333,7 @@ export default defineComponent({
 }
 
 .todo-form-overlay {
-  background-color: rgba(#263966, 0.75);
+  background-color: rgba(#111727, 0.75);
   position: fixed;
   top: 0;
   right: 0;
