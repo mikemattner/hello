@@ -16,7 +16,7 @@
         <div class="todo-content__time">
           <div class="content-time" v-if="!todo.done">
             <span class="material-icons-outlined"> event </span>
-            <strong>{{ dateSet }}</strong>
+            {{ dateSet }}
           </div>
           <div class="content-time" v-else>
             <span class="material-icons-outlined"> task_alt </span>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div :class="['todo-done', { done: todo.done }]">
-      <BaseButton @clicked="removeTodo()" color="warning">
+      <BaseButton @click="removeTodo()" color="warning">
         <span class="material-icons-outlined"> delete_outline </span>
       </BaseButton>
     </div>
@@ -56,6 +56,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['remove', 'done'],
   setup(props, { emit }) {
     const removeTodo = () => {
       emit('remove');
@@ -139,11 +140,11 @@ export default defineComponent({
     }
 
     &.category-personal {
-      color: var(--ebony-900);
-      background-color: var(--ebony-400);
+      color: var(--carnation-900);
+      background-color: var(--carnation-400);
 
       .dot {
-        background-color: var(--ebony-900);
+        background-color: var(--carnation-900);
       }
     }
   }
@@ -162,17 +163,6 @@ export default defineComponent({
     justify-content: center;
     padding: 0 1rem;
     background-color: rgba(0, 0, 0, 0.1);
-
-    // @media (min-width: 730px) {
-    //   opacity: 0;
-    //   transform: translateX(50px);
-    //   transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    // }
-
-    // &.done {
-    //   opacity: 1;
-    //   transform: translateX(0);
-    // }
   }
 
   &:hover,
