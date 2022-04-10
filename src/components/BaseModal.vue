@@ -68,7 +68,7 @@ export default defineComponent({
     onClickOutside(modal, () => close());
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && props.isOpen) {
         close();
       }
     };

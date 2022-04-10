@@ -65,7 +65,7 @@ export default defineComponent({
     onClickOutside(drawer, () => close());
 
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
+      if (e.key === 'Escape' && props.isOpen) {
         close();
       }
     };
