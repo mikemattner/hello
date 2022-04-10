@@ -1,14 +1,5 @@
 <template>
-  <Transition name="modal" mode="out-in">
-    <div v-if="addTodoForm" class="todo-form-overlay">
-      <div class="todo-form-container slide-up">
-        <div class="todo-form-title">Add New To Do</div>
-        <div class="todo-form-body">
-          <ToDoNewForm @addTodo="addTodo($event)" @toggle="toggleForm()" />
-        </div>
-      </div>
-    </div>
-  </Transition>
+  <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
   <BaseButton @click="toggleForm()" action-button primary>
     <span class="material-icons-outlined bold"> add </span>
     Add Task
@@ -92,17 +83,16 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref, onMounted, onUnmounted } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import BaseCard from './BaseCard.vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
-import { storeToRefs } from 'pinia';
 import type { NewToDo, ToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
-import ToDoNewForm from './ToDoNewForm.vue';
+import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
 
 export default defineComponent({
@@ -180,6 +170,7 @@ export default defineComponent({
     };
 
     const doneTodo = (todo: ToDo) => {
+      console.log('Done');
       todoStore.doneTodo(todo);
     };
 
@@ -190,20 +181,6 @@ export default defineComponent({
     const toggleForm = () => {
       addTodoForm.value = !addTodoForm.value;
     };
-
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && addTodoForm.value) {
-        toggleForm();
-      }
-    };
-
-    onMounted(() => {
-      document.addEventListener('keydown', handleEscape);
-    });
-
-    onUnmounted(() => {
-      document.removeEventListener('keydown', handleEscape);
-    });
 
     return {
       addTodo,
@@ -218,7 +195,7 @@ export default defineComponent({
       dragOptions,
     };
   },
-  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewForm, VDraggable },
+  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewModal, VDraggable },
 });
 </script>
 
@@ -332,38 +309,6 @@ export default defineComponent({
   }
 }
 
-.todo-form-overlay {
-  background-color: rgba(#111727, 0.75);
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 100;
-  transition: opacity 0.3s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .todo-form-container {
-    width: 500px;
-    border-radius: 4px;
-    background-color: var(--card-bg);
-    box-shadow: 2px 10px 20px var(--card-shadow);
-
-    .todo-form-title {
-      font-size: 1rem;
-      font-weight: 900;
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-    .todo-form-body {
-      padding: 1.25rem 1rem;
-    }
-  }
-}
-
 .ghost {
   opacity: 0.5;
 }
@@ -375,15 +320,6 @@ export default defineComponent({
 
 .list-enter-from,
 .list-leave-to {
-  opacity: 0;
-}
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.modal-enter,
-.modal-leave-active {
   opacity: 0;
 }
 </style>
