@@ -1,5 +1,5 @@
 <template>
-  <component :is="element" :class="classes" v-bind="{ ...attributes }">
+  <component :is="element" :class="classes" v-bind="attributes">
     <span class="button--content">
       <slot />
     </span>
