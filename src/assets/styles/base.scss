@@ -30,6 +30,36 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 900;
+}
+
+p {
+  margin: 0 0 0.75rem;
+}
+
+dl {
+  margin: 0 0 0.75rem;
+  dt {
+    font-weight: 900;
+  }
+  dd {
+    margin: 0 0 0.75rem;
+  }
+}
+
+a {
+  color: var(--ebony-400);
+  transition: all 0.25s ease;
+
+  &:hover {
+    color: var(--ebony-300);
+  }
+}
+
 .visually-hidden:not(:focus):not(:active) {
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -61,7 +91,7 @@ body {
 .slide-down {
   transform: translate(0, -50px);
   opacity: 0;
-  animation: slideIn 0.5s forwards;
+  animation: slideIn 0.375s forwards;
 }
 
 .slide-down-small {
@@ -73,7 +103,7 @@ body {
 .slide-right {
   transform: translate(-50px, 0);
   opacity: 0;
-  animation: slideIn 0.5s forwards;
+  animation: slideIn 0.125s forwards;
 }
 
 .load-animate {

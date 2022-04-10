@@ -3,8 +3,10 @@
     <header class="home-header">
       <div class="logo-zone">
         <div class="logo">
-          <span class="material-icons-outlined"> task_alt </span>
-          <h1>My Todos</h1>
+          <BaseButton @click="toggleDrawer()">
+            <span class="material-icons-outlined"> task_alt </span>
+            <h1>MyTodos</h1>
+          </BaseButton>
         </div>
       </div>
       <div class="corner-weather">
@@ -23,10 +25,28 @@
     </header>
     <ToDos />
   </main>
+  <BaseDrawer :is-open="openDrawer" @close="toggleDrawer()">
+    <template v-slot:body class="about-app">
+      <h2>About</h2>
+      <p>Personal dashboard with time and local weather conditions, plus a simple todo interface.</p>
+      <h3>Why build this?</h3>
+      <p>
+        Another Todo app&hellip;I know. The idea here was to learn Vue 3 a little more in-depth, update the initial
+        dashboard app I created, and properly connect to the weather API using Netlify functions.
+      </p>
+      <dl>
+        <dt>Repo</dt>
+        <dd><a href="https://github.com/mikemattner/hello">https://github.com/mikemattner/hello</a></dd>
+        <dt>Credits</dt>
+        <dd><a href="https://mikemattner.com">Mike Mattner</a></dd>
+      </dl>
+      <p>&copy; {{ currentYear }}</p>
+    </template>
+  </BaseDrawer>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount } from 'vue';
+import { defineComponent, onBeforeMount, ref } from 'vue';
 import CurrentTime from '@/components/CurrentTime.vue';
 import CurrentWeather from '@/components/CurrentWeather.vue';
 import BaseCard from '@/components/BaseCard.vue';
@@ -34,6 +54,9 @@ import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
 import ToDos from '../components/ToDos.vue';
 import BaseLoader from '@/components/BaseLoader.vue';
+import BaseDrawer from '@/components/BaseDrawer.vue';
+import BaseButton from '../components/BaseButton.vue';
+import { useDateFormat, useNow } from '@vueuse/core';
 
 export default defineComponent({
   name: 'HomeView',
@@ -43,9 +66,15 @@ export default defineComponent({
     BaseCard,
     ToDos,
     BaseLoader,
+    BaseDrawer,
+    BaseButton,
   },
   setup() {
     const weatherStore = useWeatherStore();
+    const openDrawer = ref<boolean>(false);
+
+    const yearFormat = ref<string>('YYYY');
+    const currentYear = useDateFormat(useNow(), yearFormat);
 
     onBeforeMount(async () => {
       if (navigator.onLine) {
@@ -55,9 +84,16 @@ export default defineComponent({
 
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
+    const toggleDrawer = () => {
+      openDrawer.value = !openDrawer.value;
+    };
+
     return {
       isInitialized,
       isError,
+      openDrawer,
+      toggleDrawer,
+      currentYear,
     };
   },
 });
