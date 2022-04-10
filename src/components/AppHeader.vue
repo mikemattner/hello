@@ -5,7 +5,7 @@
         <BaseButton @click="toggleDrawer()" simple-button>
           <span class="material-icons-outlined"> more_vert </span>
         </BaseButton>
-        <BaseButton to="/">
+        <BaseButton to="/" simple-button>
           <span class="material-icons-outlined"> task_alt </span>
           <span class="logo-title">MyTodos</span>
         </BaseButton>
@@ -25,14 +25,22 @@
     </div>
     <CurrentTime class="current-time" />
   </header>
-  <BaseDrawer title="My Todos" :is-open="openDrawer" @close="toggleDrawer()">
+  <BaseDrawer title="MyTodos" :is-open="openDrawer" @close="toggleDrawer()">
     <template v-slot:body class="about-app">
       <ul class="app-menu">
         <li>
-          <RouterLink to="/"><span @click="toggleDrawer()">Todos</span></RouterLink>
+          <RouterLink to="/">
+            <span class="menu-block" @click="toggleDrawer()">
+              <span class="material-icons-outlined"> task_alt </span> Todos
+            </span>
+          </RouterLink>
         </li>
         <li>
-          <RouterLink to="/about"><span @click="toggleDrawer()">About</span></RouterLink>
+          <RouterLink to="/about">
+            <span class="menu-block" @click="toggleDrawer()">
+              <span class="material-icons-outlined"> info </span> About
+            </span>
+          </RouterLink>
         </li>
       </ul>
     </template>
@@ -86,7 +94,7 @@ export default defineComponent({
 <style lang="scss">
 .app-header {
   width: 100%;
-  padding-bottom: 1rem;
+  padding: 0 20px 1rem 20px;
   @media (min-width: 1300px) {
     display: grid;
     grid-template-columns:
@@ -159,19 +167,23 @@ export default defineComponent({
   list-style: none;
 
   a {
-    font-size: 0.75rem;
+    font-size: 0.675rem;
     display: block;
-    padding: 0.5rem 0;
     color: var(--ebony-200);
     text-decoration: none;
 
-    span {
+    .menu-block {
       font-weight: 900;
       display: block;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.5rem 1rem;
     }
 
     &:hover {
-      color: var(--ebony-400);
+      background-color: var(--ebony-800);
+      color: var(--ebony-200);
     }
   }
 }

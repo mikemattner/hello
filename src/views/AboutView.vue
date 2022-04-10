@@ -43,7 +43,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding-top: 2rem;
+  padding: 1rem 20px;
   border-top: 1px solid var(--card-bg-contrast);
 
   .container {

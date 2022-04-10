@@ -23,5 +23,6 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding: 0 20px;
 }
 </style>
