@@ -1,0 +1,204 @@
+<template>
+  <header class="app-header">
+    <div class="logo-zone">
+      <div class="logo">
+        <BaseButton @click="toggleDrawer()" simple-button>
+          <span class="material-icons-outlined"> more_vert </span>
+        </BaseButton>
+        <BaseButton to="/">
+          <span class="material-icons-outlined"> task_alt </span>
+          <span class="logo-title">MyTodos</span>
+        </BaseButton>
+      </div>
+    </div>
+    <div class="corner-weather">
+      <BaseCard>
+        <TransitionGroup name="fadeweather" mode="out-in">
+          <BaseLoader v-if="!isInitialized" />
+          <div v-if="isError && isInitialized" class="error-state">
+            <span class="material-icons-outlined"> error_outline </span>
+            <p>Couldn&rsquo;t load weather!</p>
+          </div>
+          <CurrentWeather v-if="isInitialized && !isError" />
+        </TransitionGroup>
+      </BaseCard>
+    </div>
+    <CurrentTime class="current-time" />
+  </header>
+  <BaseDrawer title="My Todos" :is-open="openDrawer" @close="toggleDrawer()">
+    <template v-slot:body class="about-app">
+      <ul class="app-menu">
+        <li>
+          <RouterLink to="/"><span @click="toggleDrawer()">Todos</span></RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about"><span @click="toggleDrawer()">About</span></RouterLink>
+        </li>
+      </ul>
+    </template>
+  </BaseDrawer>
+</template>
+
+<script lang="ts">
+import { defineComponent, ref } from 'vue';
+import CurrentTime from '@/components/CurrentTime.vue';
+import CurrentWeather from '@/components/CurrentWeather.vue';
+import BaseCard from '@/components/BaseCard.vue';
+import { useWeatherStore } from '@/stores/weather';
+import { storeToRefs } from 'pinia';
+import ToDos from './ToDos.vue';
+import BaseLoader from '@/components/BaseLoader.vue';
+import BaseDrawer from '@/components/BaseDrawer.vue';
+import BaseButton from './BaseButton.vue';
+import { RouterLink } from 'vue-router';
+
+export default defineComponent({
+  name: 'HomeView',
+  components: {
+    CurrentTime,
+    CurrentWeather,
+    BaseCard,
+    ToDos,
+    BaseLoader,
+    BaseDrawer,
+    BaseButton,
+  },
+  setup() {
+    const weatherStore = useWeatherStore();
+    const openDrawer = ref<boolean>(false);
+
+    const { isInitialized, isError } = storeToRefs(weatherStore);
+
+    const toggleDrawer = () => {
+      openDrawer.value = !openDrawer.value;
+    };
+
+    return {
+      isInitialized,
+      isError,
+      openDrawer,
+      toggleDrawer,
+    };
+  },
+});
+</script>
+
+<style lang="scss">
+.app-header {
+  width: 100%;
+  padding-bottom: 1rem;
+  @media (min-width: 1300px) {
+    display: grid;
+    grid-template-columns:
+      [logo] 1fr
+      [time] 2fr
+      [weather] 1fr;
+    gap: 20px;
+  }
+
+  .logo-zone {
+    grid-area: logo;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      &-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .current-time {
+    grid-area: time;
+  }
+
+  .error-state {
+    text-align: center;
+    color: var(--contrast-color);
+    p {
+      font-size: 0.75rem;
+    }
+  }
+
+  .corner-weather {
+    grid-area: weather;
+    .card {
+      margin-top: 0;
+      margin-bottom: 0;
+      width: 272px;
+      height: 124px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      @media (max-width: 500px) {
+        width: 100%;
+        border-radius: 0 0 4px 4px;
+      }
+      @media (max-width: 1299px) {
+        margin-left: auto;
+        margin-right: auto;
+      }
+      @media (min-width: 1300px) {
+        margin-left: auto;
+      }
+      .card--body {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+      }
+    }
+  }
+}
+.app-menu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    font-size: 0.75rem;
+    display: block;
+    padding: 0.5rem 0;
+    color: var(--ebony-200);
+    text-decoration: none;
+
+    span {
+      font-weight: 900;
+      display: block;
+    }
+
+    &:hover {
+      color: var(--ebony-400);
+    }
+  }
+}
+.fadestay-enter-active,
+.fadestay-leave-active {
+  transition: opacity 100ms ease;
+  position: absolute;
+}
+
+.fadestay-enter-from,
+.fadestay-leave-to {
+  opacity: 0;
+}
+
+.fadeweather-move,
+.fadeweather-enter-active,
+.fadeweather-leave-active {
+  transition: all 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.fadeweather-enter-from,
+.fadeweather-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+
+.fadeweather-leave-active {
+  position: absolute;
+}
+</style>

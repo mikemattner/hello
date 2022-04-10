@@ -1,24 +1,40 @@
 <template>
-  <button :class="classes" v-bind="{ ...attributes }">
+  <component :is="element" :class="classes" v-bind="{ ...attributes }">
     <span class="button--content">
       <slot />
     </span>
-  </button>
+  </component>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import type { PropType } from 'vue';
 import type { Colors } from '@/types/types';
+import { RouterLink } from 'vue-router';
 
 export default defineComponent({
+  components: {
+    RouterLink,
+  },
   name: 'BaseButton',
   props: {
+    href: {
+      type: String,
+      default: null,
+    },
+    to: {
+      type: String,
+      default: null,
+    },
     primary: {
       type: Boolean,
       default: false,
     },
     actionButton: {
+      type: Boolean,
+      default: false,
+    },
+    simpleButton: {
       type: Boolean,
       default: false,
     },
@@ -34,6 +50,8 @@ export default defineComponent({
   setup(props) {
     const attributes = computed(() => {
       return {
+        href: props.href,
+        to: props.to,
         disabled: props.disabled,
       };
     });
@@ -44,6 +62,7 @@ export default defineComponent({
         {
           button__primary: props.primary,
           button__action: props.actionButton,
+          button__simple: props.simpleButton,
           button__highlight: props.color === 'highlight',
           button__warning: props.color === 'warning',
           button__disabled: props.disabled,
@@ -51,9 +70,22 @@ export default defineComponent({
       ];
     });
 
+    const element = computed(() => {
+      if (props.href) {
+        return 'a';
+      }
+
+      if (props.to) {
+        return 'router-link';
+      }
+
+      return 'button';
+    });
+
     return {
       attributes,
       classes,
+      element,
     };
   },
 });
@@ -95,6 +127,15 @@ export default defineComponent({
     }
   }
 
+  &.button__simple {
+    color: var(--color);
+    border-color: transparent;
+    &:hover:not(:disabled) {
+      background-color: rgba(#dcebf6, 0.125);
+      border-color: rgba(#dcebf6, 0.125);
+    }
+  }
+
   &.button__warning {
     color: var(--red-color);
     border: 1px solid var(--red-color);
@@ -107,7 +148,8 @@ export default defineComponent({
   &:hover:not(:disabled) {
     cursor: pointer;
   }
-  &:focus {
+  &:focus,
+  &:active {
     outline: 0;
     box-shadow: var(--button-focus-shadow);
   }

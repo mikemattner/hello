@@ -15,7 +15,7 @@
               <div v-if="title" class="drawer-header-title" id="drawer-title">
                 {{ title }}
               </div>
-              <BaseButton @click="close()">
+              <BaseButton @click="close()" simple-button>
                 <span class="visually-hidden">Close</span>
                 <span class="material-icons-outlined">close</span>
               </BaseButton>
@@ -108,17 +108,16 @@ export default defineComponent({
     bottom: 0;
     left: 0;
     width: 100%;
-    max-width: 500px;
+    max-width: 300px;
     height: 100%;
     border-radius: 4px 0 0 4px;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
 
     .drawer-header {
-      font-size: 1rem;
+      font-size: 0.75rem;
       text-align: center;
       padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
       justify-content: space-between;
