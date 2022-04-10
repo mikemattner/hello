@@ -127,7 +127,7 @@ export default defineComponent({
       }
     }
     .drawer-body {
-      padding: 1.25rem 1rem;
+      padding: 1.25rem 0;
       font-size: 0.75rem;
     }
     .drawer-footer {
