@@ -123,11 +123,12 @@ export default defineComponent({
       justify-content: space-between;
 
       &-title {
+        font-size: 0.5rem;
         font-weight: 900;
       }
     }
     .drawer-body {
-      padding: 1.25rem 0;
+      padding: 1rem 0;
       font-size: 0.75rem;
     }
     .drawer-footer {
