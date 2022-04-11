@@ -151,7 +151,7 @@ export default defineComponent({
       justify-content: space-between;
 
       &-title {
-        font-size: 0.5rem;
+        font-size: 0.675rem;
         font-weight: 900;
       }
     }
