@@ -1,7 +1,10 @@
 <template>
   <main class="home">
-    <header class="home-header">
-      <div class="corner-weather">
+    <div class="home-grid">
+      <div class="home-col main-content">
+        <ToDos />
+      </div>
+      <div class="home-col sidebar">
         <BaseCard>
           <TransitionGroup name="fadeweather" mode="out-in">
             <BaseLoader v-if="!isInitialized" />
@@ -12,15 +15,25 @@
             <CurrentWeather v-if="isInitialized && !isError" />
           </TransitionGroup>
         </BaseCard>
+        <div class="todo-counter">
+          <span class="todo-count">{{ getTodos.length }}</span>
+          <span class="todo-count-label">Todos to Start</span>
+        </div>
+        <div class="todo-counter">
+          <span class="todo-count">{{ getInProgressTodos.length }}</span>
+          <span class="todo-count-label">Todos in Progress</span>
+        </div>
+        <div class="todo-counter">
+          <span class="todo-count">{{ todoCount }}</span>
+          <span class="todo-count-label">Total Todos</span>
+        </div>
       </div>
-      <CurrentTime class="current-time" />
-    </header>
-    <ToDos />
+    </div>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeMount, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 import ToDos from '../components/ToDos.vue';
 import CurrentTime from '@/components/CurrentTime.vue';
 import CurrentWeather from '@/components/CurrentWeather.vue';
@@ -28,6 +41,8 @@ import BaseCard from '@/components/BaseCard.vue';
 import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
 import BaseLoader from '@/components/BaseLoader.vue';
+import CurrentGreeting from '../components/CurrentGreeting.vue';
+import { useTodoStore } from '@/stores/todos';
 
 export default defineComponent({
   name: 'HomeView',
@@ -37,14 +52,27 @@ export default defineComponent({
     BaseCard,
     ToDos,
     BaseLoader,
+    CurrentGreeting,
   },
   setup() {
     const weatherStore = useWeatherStore();
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
+    const todoStore = useTodoStore();
+    const { getTodos, getInProgressTodos } = storeToRefs(todoStore);
+
+    const todoCount = computed<number>(() => {
+      const todoCount = getTodos.value.length;
+      const inProgressCount = getInProgressTodos.value.length;
+      return todoCount + inProgressCount;
+    });
+
     return {
       isInitialized,
       isError,
+      todoCount,
+      getTodos,
+      getInProgressTodos,
     };
   },
 });
@@ -53,83 +81,73 @@ export default defineComponent({
 <style lang="scss">
 .home {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 20px;
+  height: 100%;
+  padding: 20px;
 
-  .home-header {
-    width: 100%;
-    padding: 0 20px;
-
-    @media (min-width: 1300px) {
+  .home-grid {
+    @media (min-width: 1200px) {
       display: grid;
       grid-template-columns:
-        [logo] 1fr
-        [time] 2fr
-        [weather] 1fr;
-      gap: 20px;
+        [main] 1fr
+        [sidebar] 272px;
+      gap: 0 20px;
     }
+  }
 
-    .logo-zone {
-      grid-area: logo;
+  .main-content {
+    grid-area: main;
+  }
 
-      .logo {
-        display: flex;
-        align-items: center;
-        gap: 10px;
+  .sidebar {
+    grid-area: sidebar;
+    gap: 20px;
 
-        &-title {
-          font-size: 0.75rem;
-          font-weight: 700;
-        }
+    .card {
+      margin: 0 0 10px;
+      width: 272px;
+      height: 124px;
+      .card--body {
+        height: 100%;
+      }
+
+      @media (max-width: 1022px) {
+        width: 100%;
       }
     }
 
-    .current-time {
-      grid-area: time;
-    }
-
-    .error-state {
-      text-align: center;
-      color: var(--contrast-color);
-      p {
-        font-size: 0.75rem;
-      }
-    }
-
-    .corner-weather {
-      grid-area: weather;
+    .todo-counter {
+      background-color: var(--card-bg-contrast);
+      border-radius: 4px;
+      margin: 0 0 10px;
+      padding: 1rem;
       display: flex;
       align-items: center;
-      justify-content: flex-end;
-      .card {
-        margin-top: 0;
-        margin-bottom: 0;
-        width: 272px;
-        height: 124px;
+      gap: 10px;
+
+      .todo-count {
+        aspect-ratio: 1;
+        border-radius: 20px;
+        width: 40px;
+        height: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-        @media (max-width: 500px) {
-          width: 100%;
-          border-radius: 0 0 4px 4px;
-        }
-        @media (max-width: 1299px) {
-          margin-left: auto;
-          margin-right: auto;
-        }
-        @media (min-width: 1300px) {
-          margin-left: auto;
-        }
-        .card--body {
-          display: flex;
-          align-items: stretch;
-          justify-content: center;
-        }
+        background-color: var(--card-bg);
+        font-weight: 700;
+        font-size: 0.75rem;
+        color: var(--carnation-400);
       }
+      .todo-count-label {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  .error-state {
+    text-align: center;
+    color: var(--contrast-color);
+    p {
+      font-size: 0.75rem;
     }
   }
 }

@@ -10,6 +10,7 @@ export const useTodoStore = defineStore({
   }) as TodoState,
   getters: {
     getTodos: (state) => state.todos,
+    getInProgressTodos: (state) => state.inProgress,
   },
   actions: {
     addTodo(newTodo: string, due: Date, category: string, description: string) {

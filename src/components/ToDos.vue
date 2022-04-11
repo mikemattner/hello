@@ -1,10 +1,19 @@
 <template>
-  <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
-  <BaseButton @click="toggleForm()" action-button primary>
-    <span class="material-icons-outlined bold"> add </span>
-    Add Task
-  </BaseButton>
-  <div class="todo-list-container">
+  <div class="todo-list-header">
+    <CurrentGreeting />
+    <CurrentTime />
+    <div class="add-task-button-container">
+      <BaseButton @click="toggleForm()" primary color="warning">
+        Add
+        <span class="material-icons-outlined bold"> add </span>
+      </BaseButton>
+    </div>
+  </div>
+  <div v-if="todoList.length < 1 && inProgressTodoList.length < 1 && doneTodoList.length < 1" class="empty-todo">
+    <p class="empty-emoji">🥳</p>
+    <p>You finished it all!</p>
+  </div>
+  <div v-else class="todo-list-container">
     <section class="todo-list-todos">
       <div class="todo-list-todos__col">
         <div class="headings">
@@ -80,6 +89,7 @@
       </div>
     </section>
   </div>
+  <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
 </template>
 
 <script lang="ts">
@@ -94,6 +104,8 @@ import type { NewToDo, ToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
+import CurrentGreeting from './CurrentGreeting.vue';
+import CurrentTime from './CurrentTime.vue';
 
 export default defineComponent({
   name: 'ToDos',
@@ -195,11 +207,52 @@ export default defineComponent({
       dragOptions,
     };
   },
-  components: { BaseCard, BaseButton, BaseInput, BaseSelect, ToDoItem, BaseTextArea, ToDoNewModal, VDraggable },
+  components: {
+    BaseCard,
+    BaseButton,
+    BaseInput,
+    BaseSelect,
+    ToDoItem,
+    BaseTextArea,
+    ToDoNewModal,
+    VDraggable,
+    CurrentGreeting,
+    CurrentTime,
+  },
 });
 </script>
 
 <style lang="scss" scoped>
+.todo-list-header {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding-bottom: 20px;
+
+  .add-task-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+}
+
+.empty-todo {
+  padding: 0.5rem 1rem;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  .empty-emoji {
+    font-size: 1.75rem;
+  }
+}
 .todo-list-container {
   display: flex;
   flex-direction: column;
@@ -209,18 +262,11 @@ export default defineComponent({
   width: 100%;
   padding-bottom: 1rem;
 
-  @media (max-width: 1299px) {
-    margin-top: 1rem;
-  }
-  @media (min-width: 1300px) {
-    margin-top: 1rem;
-  }
-
   .todo-list {
     width: 100%;
     position: relative;
     flex-grow: 1;
-    height: 600px;
+    height: 70vh;
     overflow-y: auto;
     &-draggable {
       min-height: 550px;
@@ -279,32 +325,6 @@ export default defineComponent({
         justify-content: center;
         font-weight: 900;
       }
-    }
-
-    .empty-todo {
-      padding: 0.5rem 1rem;
-      border: 1px dashed rgba(255, 255, 255, 0.25);
-      border-radius: 4px;
-      font-size: 0.75rem;
-      width: 100%;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
-      .empty-emoji {
-        font-size: 1.75rem;
-      }
-    }
-    .empty-form {
-      cursor: pointer;
-      transition: all 0.25s ease-in-out;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      width: 100%;
-      height: 42px;
     }
   }
 }

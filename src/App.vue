@@ -41,7 +41,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr;
-  padding: 2rem 0 0 0;
+  padding: 0 0 0;
 }
 .fade-enter-active,
 .fade-leave-active {
