@@ -136,8 +136,8 @@ export default defineComponent({
         font-size: 0.75rem;
 
         &.progress {
-          background-color: var(--carnation-400);
-          color: var(--carnation-900);
+          background-color: var(--ocean-green-400);
+          color: var(--ocean-green-900);
         }
         &.start {
           background-color: var(--jaffa-400);
