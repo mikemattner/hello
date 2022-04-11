@@ -58,8 +58,8 @@ export default defineComponent({
     line-height: 1.2;
     color: var(--bunker-400);
     display: flex;
-    align-items: baseline;
-    gap: 10px;
+    flex-direction: column;
+    gap: 5px;
 
     strong {
       font-weight: 700;
