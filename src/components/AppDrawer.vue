@@ -1,11 +1,11 @@
 <template>
   <BaseDrawer title="Dashboard" :is-open="open" @close="toggleDrawer()">
-    <template v-slot:body class="about-app">
+    <template v-slot:body class="about-app" tag="nav">
       <ul class="app-menu">
         <li>
           <RouterLink to="/">
             <span class="menu-block" @click="toggleDrawer()">
-              <span class="material-icons-outlined"> task_alt </span> Todos
+              <span class="material-icons-outlined"> task_alt </span> MyTodos
             </span>
           </RouterLink>
         </li>
