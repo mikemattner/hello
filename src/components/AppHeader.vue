@@ -46,18 +46,22 @@ export default defineComponent({
   border-bottom: 1px solid rgba(#263966, 0.25);
   display: flex;
   background-color: var(--background-color);
-  z-index: 1000;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
+  // z-index: 1000;
+  // position: fixed;
+  // top: 0;
+  // right: 0;
+  // left: 0;
   .logo {
     display: flex;
     align-items: center;
     gap: 10px;
 
+    .material-icons-outlined {
+      font-size: 1rem;
+    }
+
     &-title {
-      font-size: 0.75rem;
+      font-size: 0.5rem;
       font-weight: 700;
     }
   }

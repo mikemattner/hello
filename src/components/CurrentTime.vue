@@ -1,50 +1,21 @@
 <template>
   <div class="current-time">
     <div class="current-time__display">{{ currentTime }}</div>
-    <div class="current-time__message">{{ greeting }}. Today is {{ currentDate }}.</div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
-import type { Messages } from '@/types/types';
+import { defineComponent, ref } from 'vue';
 import { useDateFormat, useNow } from '@vueuse/core';
-import { format } from 'date-fns';
 
 export default defineComponent({
   name: 'CurrentTime',
   setup() {
     const timeFormat = ref<string>('h:mm');
-    const dateFormat = ref<string>('MMM d, y');
-    const hourFormat = ref<string>('H');
     const currentTime = useDateFormat(useNow(), timeFormat);
-    const currentDate = format(useNow().value, dateFormat.value);
-    const currentHour = useDateFormat(useNow(), hourFormat);
-
-    const messages: Messages = {
-      afternoon: 'Good afternoon',
-      evening: 'Good evening',
-      morning: 'Good morning',
-    };
-
-    const greeting = computed<string>(() => {
-      const hour = parseInt(currentHour.value);
-      switch (true) {
-        case hour < 12:
-          return messages.morning;
-        case hour < 17:
-          return messages.afternoon;
-        case hour >= 17:
-          return messages.evening;
-        default:
-          return 'Hello';
-      }
-    });
 
     return {
-      currentDate,
       currentTime,
-      greeting,
     };
   },
 });
@@ -53,32 +24,17 @@ export default defineComponent({
 <style scoped lang="scss">
 .current-time {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
   text-align: center;
   width: 100%;
-  padding-bottom: 1rem;
-  @media (max-width: 1299px) {
-    padding-top: 1rem;
-  }
-  @media (min-width: 1300px) {
-    padding-top: 1rem;
-  }
+  height: 100%;
+
   &__display {
     font-size: 2rem;
     font-weight: 900;
     line-height: 1;
-    margin-top: 1rem;
-    @media (min-width: 852px) {
-      font-size: 3rem;
-      margin-top: 0;
-    }
-  }
-  &__message {
-    font-size: 1rem;
-    line-height: 1.2;
-    color: var(--bunker-400);
   }
 }
 </style>
