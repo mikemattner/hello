@@ -16,15 +16,15 @@
           </TransitionGroup>
         </BaseCard>
         <div class="todo-counter">
-          <span class="todo-count">{{ getTodos.length }}</span>
-          <span class="todo-count-label">Todos to Start</span>
-        </div>
-        <div class="todo-counter">
-          <span class="todo-count">{{ getInProgressTodos.length }}</span>
+          <span class="todo-count progress">{{ getInProgressTodos.length }}</span>
           <span class="todo-count-label">Todos in Progress</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count">{{ todoCount }}</span>
+          <span class="todo-count start">{{ getTodos.length }}</span>
+          <span class="todo-count-label">Todos to Start</span>
+        </div>
+        <div class="todo-counter">
+          <span class="todo-count total">{{ todoCount }}</span>
           <span class="todo-count-label">Total Todos</span>
         </div>
       </div>
@@ -132,13 +132,25 @@ export default defineComponent({
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: var(--card-bg);
         font-weight: 700;
         font-size: 0.75rem;
-        color: var(--carnation-400);
+
+        &.progress {
+          background-color: var(--ocean-green-400);
+          color: var(--ocean-green-900);
+        }
+        &.start {
+          background-color: var(--jaffa-400);
+          color: var(--jaffa-900);
+        }
+        &.total {
+          background-color: var(--ebony-400);
+          color: var(--ebony-900);
+        }
       }
       .todo-count-label {
         font-size: 0.75rem;
+        font-weight: 700;
       }
     }
   }
