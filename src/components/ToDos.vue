@@ -207,7 +207,7 @@ export default defineComponent({
   flex-grow: 1;
   gap: 10px;
   width: 100%;
-  padding-bottom: 60px;
+  padding-bottom: 1rem;
 
   @media (max-width: 1299px) {
     margin-top: 1rem;

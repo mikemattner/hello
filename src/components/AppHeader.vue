@@ -1,69 +1,37 @@
 <template>
-  <header class="app-header">
-    <div class="logo-zone">
-      <div class="logo">
-        <BaseButton @click="toggleDrawer()" simple-button>
-          <span class="material-icons-outlined"> more_vert </span>
-        </BaseButton>
-        <BaseButton to="/" simple-button>
-          <span class="material-icons-outlined"> task_alt </span>
-          <span class="logo-title">MyTodos</span>
-        </BaseButton>
-      </div>
+  <div class="navbar">
+    <div class="logo">
+      <BaseButton @click="toggleDrawer()" simple-button>
+        <span class="material-icons-outlined"> more_vert </span>
+      </BaseButton>
+      <BaseButton to="/" simple-button>
+        <span class="material-icons-outlined"> task_alt </span>
+        <span class="logo-title">MyTodos</span>
+      </BaseButton>
     </div>
-    <div class="corner-weather">
-      <BaseCard>
-        <TransitionGroup name="fadeweather" mode="out-in">
-          <BaseLoader v-if="!isInitialized" />
-          <div v-if="isError && isInitialized" class="error-state">
-            <span class="material-icons-outlined"> error_outline </span>
-            <p>Couldn&rsquo;t load weather!</p>
-          </div>
-          <CurrentWeather v-if="isInitialized && !isError" />
-        </TransitionGroup>
-      </BaseCard>
-    </div>
-    <CurrentTime class="current-time" />
-  </header>
+  </div>
+
   <AppDrawer :open="openDrawer" @toggle="toggleDrawer()" />
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import CurrentTime from '@/components/CurrentTime.vue';
-import CurrentWeather from '@/components/CurrentWeather.vue';
-import BaseCard from '@/components/BaseCard.vue';
-import { useWeatherStore } from '@/stores/weather';
-import { storeToRefs } from 'pinia';
-import ToDos from './ToDos.vue';
-import BaseLoader from '@/components/BaseLoader.vue';
 import BaseButton from './BaseButton.vue';
 import AppDrawer from './AppDrawer.vue';
 
 export default defineComponent({
-  name: 'HomeView',
+  name: 'AppHeader',
   components: {
-    CurrentTime,
-    CurrentWeather,
-    BaseCard,
-    ToDos,
-    BaseLoader,
     BaseButton,
     AppDrawer,
   },
   setup() {
-    const weatherStore = useWeatherStore();
     const openDrawer = ref<boolean>(false);
-
-    const { isInitialized, isError } = storeToRefs(weatherStore);
-
     const toggleDrawer = () => {
       openDrawer.value = !openDrawer.value;
     };
 
     return {
-      isInitialized,
-      isError,
       openDrawer,
       toggleDrawer,
     };
@@ -72,73 +40,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.app-header {
+.navbar {
   width: 100%;
-  padding: 0 20px 1rem 20px;
+  padding: 0.25rem 1rem;
+  border-bottom: 1px solid rgba(#263966, 0.25);
+  display: flex;
+  background-color: var(--background-color);
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-  @media (min-width: 1300px) {
-    display: grid;
-    grid-template-columns:
-      [logo] 1fr
-      [time] 2fr
-      [weather] 1fr;
-    gap: 20px;
-  }
-
-  .logo-zone {
-    grid-area: logo;
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      &-title {
-        font-size: 0.75rem;
-        font-weight: 700;
-      }
-    }
-  }
-
-  .current-time {
-    grid-area: time;
-  }
-
-  .error-state {
-    text-align: center;
-    color: var(--contrast-color);
-    p {
+    &-title {
       font-size: 0.75rem;
-    }
-  }
-
-  .corner-weather {
-    grid-area: weather;
-    .card {
-      margin-top: 0;
-      margin-bottom: 0;
-      width: 272px;
-      height: 124px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      @media (max-width: 500px) {
-        width: 100%;
-        border-radius: 0 0 4px 4px;
-      }
-      @media (max-width: 1299px) {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      @media (min-width: 1300px) {
-        margin-left: auto;
-      }
-      .card--body {
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-      }
+      font-weight: 700;
     }
   }
 }

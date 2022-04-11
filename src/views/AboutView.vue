@@ -1,11 +1,11 @@
 <template>
   <main class="about">
     <div class="container">
-      <h2>About</h2>
+      <h1>About This App</h1>
       <p>Personal dashboard with time and local weather conditions, and a simple todo board.</p>
-      <h3>Why build this?</h3>
+      <h2>Why build this?</h2>
       <p>
-        Another Todo app&hellip;I know. The idea here was to learn Vue 3 a little more in-depth, update the initial
+        Another Todo app &hellip; I know. The idea here was to learn Vue 3 a little more in-depth, update the initial
         dashboard app I created, and properly connect to the weather API using Netlify functions.
       </p>
       <dl>
@@ -44,7 +44,7 @@ export default defineComponent({
   justify-content: flex-start;
   align-items: center;
   padding: 1rem 20px;
-  border-top: 1px solid rgba(#263966, 0.25);
+  font-size: 0.75rem;
 
   .container {
     max-width: 800px;
