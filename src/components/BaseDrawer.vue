@@ -1,45 +1,40 @@
 <template>
   <Teleport to="body">
-    <Transition name="drawer" mode="out-in">
-      <div v-if="isOpen" class="drawer-overlay">
-        <UseFocusTrap v-if="isOpen" class="drawer-focus">
-          <div
-            class="drawer-container slide-right"
-            role="dialog"
-            ref="drawer"
-            aria-drawer="true"
-            aria-labelledby="drawer-title"
-            aria-describedby="drawer-description"
-          >
-            <div class="drawer-header">
-              <div v-if="title" class="drawer-header-title" id="drawer-title">
-                {{ title }}
-              </div>
-              <BaseButton @click="close()" simple-button>
-                <span class="visually-hidden">Close</span>
-                <span class="material-icons-outlined">close</span>
-              </BaseButton>
-            </div>
-            <div class="drawer-body" id="drawer-description">
-              <slot name="body"></slot>
-            </div>
+    <div :class="['drawer-overlay', { active: isOpen }]">
+      <div
+        :class="['drawer-container', { active: isOpen }]"
+        role="dialog"
+        ref="drawer"
+        aria-drawer="true"
+        aria-labelledby="drawer-title"
+        aria-describedby="drawer-description"
+      >
+        <div class="drawer-header">
+          <div v-if="title" class="drawer-header-title" id="drawer-title">
+            {{ title }}
           </div>
-        </UseFocusTrap>
+          <BaseButton @click="close()" simple-button>
+            <span class="visually-hidden">Close</span>
+            <span class="material-icons-outlined">close</span>
+          </BaseButton>
+        </div>
+        <div class="drawer-body" id="drawer-description">
+          <slot name="body"></slot>
+        </div>
       </div>
-    </Transition>
+    </div>
   </Teleport>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
 import { onClickOutside } from '@vueuse/core';
-import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
 export default defineComponent({
   components: {
     BaseButton,
-    UseFocusTrap,
   },
   name: 'BaseDrawer',
   props: {
@@ -53,6 +48,29 @@ export default defineComponent({
   },
   emits: ['close'],
   setup(props, { emit, slots }) {
+    const drawer = ref();
+
+    onClickOutside(drawer, () => {
+      if (props.isOpen) {
+        close();
+      }
+    });
+
+    const { activate, deactivate } = useFocusTrap(drawer);
+
+    watch(
+      () => props.isOpen,
+      (value) => {
+        if (value) {
+          setTimeout(() => {
+            activate();
+          }, 250);
+        } else {
+          deactivate();
+        }
+      },
+    );
+
     const hasSlot = (name: string) => {
       return !!slots[name];
     };
@@ -60,9 +78,6 @@ export default defineComponent({
     const close = () => {
       emit('close');
     };
-
-    const drawer = ref();
-    onClickOutside(drawer, () => close());
 
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && props.isOpen) {
@@ -96,7 +111,14 @@ export default defineComponent({
   left: 0;
   bottom: 0;
   z-index: 1001;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
 
   .drawer-focus {
     height: 100%;
@@ -113,6 +135,12 @@ export default defineComponent({
     border-radius: 4px 0 0 4px;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
+    transform: translateX(-50px);
+    transition: all 0.375s ease;
+
+    &.active {
+      transform: translateX(0);
+    }
 
     .drawer-header {
       font-size: 0.75rem;
@@ -137,14 +165,5 @@ export default defineComponent({
       background-color: rgba(0, 0, 0, 0.1);
     }
   }
-}
-.drawer-enter-active,
-.drawer-leave-active {
-  transition: opacity 0.25s ease;
-}
-
-.drawer-enter,
-.drawer-leave-active {
-  opacity: 0;
 }
 </style>

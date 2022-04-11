@@ -1,48 +1,43 @@
 <template>
   <Teleport to="body">
-    <Transition name="modal" mode="out-in">
-      <div v-if="isOpen" class="modal-overlay">
-        <UseFocusTrap v-if="isOpen">
-          <div
-            class="modal-container slide-up"
-            role="dialog"
-            ref="modal"
-            aria-modal="true"
-            aria-labelledby="modal-title"
-            aria-describedby="modal-description"
-          >
-            <div class="modal-header">
-              <div class="modal-header-title" id="modal-title">
-                {{ title }}
-              </div>
-              <BaseButton @click="close()">
-                <span class="visually-hidden">Close</span>
-                <span class="material-icons-outlined">close</span>
-              </BaseButton>
-            </div>
-            <div class="modal-body" id="modal-description">
-              <slot name="body"></slot>
-            </div>
-            <div v-if="hasSlot('footer')" class="modal-footer">
-              <slot name="footer"></slot>
-            </div>
+    <div :class="['modal-overlay', { active: isOpen }]">
+      <div
+        :class="['modal-container', { active: isOpen }]"
+        role="dialog"
+        ref="modal"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <div class="modal-header">
+          <div class="modal-header-title" id="modal-title">
+            {{ title }}
           </div>
-        </UseFocusTrap>
+          <BaseButton @click="close()">
+            <span class="visually-hidden">Close</span>
+            <span class="material-icons-outlined">close</span>
+          </BaseButton>
+        </div>
+        <div class="modal-body" id="modal-description">
+          <slot name="body"></slot>
+        </div>
+        <div v-if="hasSlot('footer')" class="modal-footer">
+          <slot name="footer"></slot>
+        </div>
       </div>
-    </Transition>
+    </div>
   </Teleport>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
 import { onClickOutside } from '@vueuse/core';
-import { UseFocusTrap } from '@vueuse/integrations/useFocusTrap/component';
+import { useFocusTrap } from '@vueuse/integrations/useFocusTrap';
 
 export default defineComponent({
   components: {
     BaseButton,
-    UseFocusTrap,
   },
   name: 'BaseModal',
   props: {
@@ -65,7 +60,25 @@ export default defineComponent({
     };
 
     const modal = ref();
-    onClickOutside(modal, () => close());
+    onClickOutside(modal, () => {
+      if (props.isOpen) {
+        close();
+      }
+    });
+    const { activate, deactivate } = useFocusTrap(modal);
+
+    watch(
+      () => props.isOpen,
+      (value) => {
+        if (value) {
+          setTimeout(() => {
+            activate();
+          }, 250);
+        } else {
+          deactivate();
+        }
+      },
+    );
 
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && props.isOpen) {
@@ -99,16 +112,28 @@ export default defineComponent({
   left: 0;
   bottom: 0;
   z-index: 100;
-  transition: opacity 0.3s ease;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: opacity 0.25s ease;
+  opacity: 0;
+  visibility: hidden;
 
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
   .modal-container {
     width: 500px;
     border-radius: 4px;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
+    transform: translateY(50px);
+    transition: all 0.375s ease;
+
+    &.active {
+      transform: translateY(0);
+    }
 
     .modal-header {
       font-size: 1rem;
