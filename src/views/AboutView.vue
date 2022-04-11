@@ -44,7 +44,7 @@ export default defineComponent({
   justify-content: flex-start;
   align-items: center;
   padding: 1rem 20px;
-  border-top: 1px solid var(--card-bg-contrast);
+  border-top: 1px solid rgba(#263966, 0.25);
 
   .container {
     max-width: 800px;

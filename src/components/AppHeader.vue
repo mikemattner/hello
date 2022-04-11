@@ -25,26 +25,7 @@
     </div>
     <CurrentTime class="current-time" />
   </header>
-  <BaseDrawer title="MyTodos" :is-open="openDrawer" @close="toggleDrawer()">
-    <template v-slot:body class="about-app">
-      <ul class="app-menu">
-        <li>
-          <RouterLink to="/">
-            <span class="menu-block" @click="toggleDrawer()">
-              <span class="material-icons-outlined"> task_alt </span> Todos
-            </span>
-          </RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/about">
-            <span class="menu-block" @click="toggleDrawer()">
-              <span class="material-icons-outlined"> info </span> About
-            </span>
-          </RouterLink>
-        </li>
-      </ul>
-    </template>
-  </BaseDrawer>
+  <AppDrawer :open="openDrawer" @toggle="toggleDrawer()" />
 </template>
 
 <script lang="ts">
@@ -56,9 +37,8 @@ import { useWeatherStore } from '@/stores/weather';
 import { storeToRefs } from 'pinia';
 import ToDos from './ToDos.vue';
 import BaseLoader from '@/components/BaseLoader.vue';
-import BaseDrawer from '@/components/BaseDrawer.vue';
 import BaseButton from './BaseButton.vue';
-import { RouterLink } from 'vue-router';
+import AppDrawer from './AppDrawer.vue';
 
 export default defineComponent({
   name: 'HomeView',
@@ -68,8 +48,8 @@ export default defineComponent({
     BaseCard,
     ToDos,
     BaseLoader,
-    BaseDrawer,
     BaseButton,
+    AppDrawer,
   },
   setup() {
     const weatherStore = useWeatherStore();
@@ -95,6 +75,7 @@ export default defineComponent({
 .app-header {
   width: 100%;
   padding: 0 20px 1rem 20px;
+
   @media (min-width: 1300px) {
     display: grid;
     grid-template-columns:
@@ -158,32 +139,6 @@ export default defineComponent({
         align-items: stretch;
         justify-content: center;
       }
-    }
-  }
-}
-.app-menu {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-  a {
-    font-size: 0.675rem;
-    display: block;
-    color: var(--ebony-200);
-    text-decoration: none;
-
-    .menu-block {
-      font-weight: 900;
-      display: block;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0.5rem 1rem;
-    }
-
-    &:hover {
-      background-color: var(--ebony-800);
-      color: var(--ebony-200);
     }
   }
 }
