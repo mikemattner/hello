@@ -224,7 +224,7 @@ export default defineComponent({
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 1fr;
-  padding-bottom: 20px;
+  padding: 0 20px 20px;
 
   .add-task-button-container {
     display: flex;
@@ -280,7 +280,7 @@ export default defineComponent({
 
     &__col {
       padding: 20px 10px;
-      background-color: var(--card-bg-contrast);
+      background-color: rgba(#1e293b, 0.25);
       border-radius: 4px;
 
       @media (max-width: 1022px) {
@@ -292,7 +292,7 @@ export default defineComponent({
     }
 
     .headings {
-      font-size: 0.75rem;
+      font-size: 0.675rem;
       margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
