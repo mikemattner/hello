@@ -226,9 +226,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .todo-list-header {
   display: grid;
-  align-items: center;
+  align-items: flex-end;
   grid-template-columns: 1fr 1fr;
-  padding: 0 20px 20px;
+  padding: 1.5rem 20px 1.25rem;
 
   .add-task-button-container {
     display: flex;
@@ -267,7 +267,7 @@ export default defineComponent({
     width: 100%;
     position: relative;
     flex-grow: 1;
-    height: 70vh;
+    height: 65vh;
     overflow-y: auto;
     &-draggable {
       min-height: 550px;
