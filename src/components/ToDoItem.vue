@@ -153,7 +153,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.25);
   }
 
   .todo-done {
@@ -161,7 +161,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     padding: 0 1rem;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.25);
   }
 
   &-content {

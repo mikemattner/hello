@@ -104,7 +104,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .drawer-overlay {
-  background-color: rgba(#0f172a, 0.75);
+  background-color: rgba(#000, 0.75);
   position: fixed;
   top: 0;
   right: 0;
@@ -132,7 +132,7 @@ export default defineComponent({
     width: 100%;
     max-width: 300px;
     height: 100%;
-    border-radius: 4px 0 0 4px;
+    border-radius: 0;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
     transform: translateX(-50px);

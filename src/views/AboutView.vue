@@ -2,14 +2,17 @@
   <main class="about">
     <div class="container">
       <h1>About This App</h1>
-      <p>Personal dashboard with time and local weather conditions, and a simple todo board.</p>
+      <p>
+        Personal dashboard with time, local weather conditions, and a simple todo board. Built with Vue 3 and far too
+        many commits.
+      </p>
       <h2>Why build this?</h2>
       <p>
         Another Todo app &hellip; I know. The idea here was to learn Vue 3 a little more in-depth, update the initial
         dashboard app I created, and properly connect to the weather API using Netlify functions.
       </p>
       <dl>
-        <dt>Repo</dt>
+        <dt>GitHub Repo</dt>
         <dd><a href="https://github.com/mikemattner/hello">https://github.com/mikemattner/hello</a></dd>
         <dt>Credits</dt>
         <dd><a href="https://mikemattner.com">Mike Mattner</a></dd>
