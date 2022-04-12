@@ -127,57 +127,77 @@ export default defineComponent({
       };
     });
 
-    const todoList = computed<ToDo[]>(() => {
-      return todoStore.$state.todos.filter((item) => item.ready === true);
-    });
+    // const toDos = todoStore.$state.todos;
 
-    const inProgressTodoList = computed<ToDo[]>(() => {
-      return todoStore.$state.todos.filter((item) => item.inProgress === true);
-    });
+    // const todoList = computed<ToDo[]>(() => {
+    //   return toDos.filter((item) => item.ready === true);
+    // });
+
+    // const inProgressTodoList = computed<ToDo[]>(() => {
+    //   return toDos.filter((item) => item.inProgress === true);
+    // });
 
     const doneTodoList = computed<ToDo[]>(() => {
       return todoStore.$state.todos.filter((item) => item.done === true);
     });
 
-    // const todoList = computed<ToDo[]>({
-    //   get: () => todoStore.$state.todos,
-    //   set: (value) => {
-    //     const mapped: ToDo[] = value.map((item) => {
-    //       return {
-    //         category: item.category,
-    //         content: item.content,
-    //         description: item.description,
-    //         date: item.date,
-    //         done: false,
-    //         inProgress: false,
-    //         ready: true,
-    //         due: item.due,
-    //         key: item.key,
-    //       };
-    //     });
-    //     todoStore.$state.todos = mapped;
-    //   },
-    // });
+    const log = (evt: any) => {
+      if (evt.moved) {
+        console.log(evt.moved.element.key);
+        console.log(todoStore.$state.todos);
+      }
+      if (evt.removed) {
+        console.log(evt.removed.element.key);
+        console.log(todoStore.$state.todos);
+      }
+    };
 
-    // const inProgressTodoList = computed<ToDo[]>({
-    //   get: () => todoStore.$state.inProgress,
-    //   set: (value) => {
-    //     const mapped: ToDo[] = value.map((item) => {
-    //       return {
-    //         category: item.category,
-    //         content: item.content,
-    //         description: item.description,
-    //         date: item.date,
-    //         done: false,
-    //         inProgress: true,
-    //         ready: false,
-    //         due: item.due,
-    //         key: item.key,
-    //       };
-    //     });
-    //     todoStore.$state.inProgress = mapped;
-    //   },
-    // });
+    const todoList = computed<ToDo[]>({
+      get: () => todoStore.$state.todos.filter((item) => item.ready === true),
+      set: (value) => {
+        const mapped: ToDo[] = value.map((item) => {
+          return {
+            category: item.category,
+            content: item.content,
+            description: item.description,
+            date: item.date,
+            done: false,
+            inProgress: false,
+            ready: true,
+            due: item.due,
+            key: item.key,
+          };
+        });
+        todoStore.$state.todos = mapped;
+      },
+    });
+
+    const inProgressTodoList = computed<ToDo[]>({
+      get: () => todoStore.$state.todos.filter((item) => item.inProgress === true),
+      set: (value) => {
+        value.forEach((item: ToDo) => {
+          const updatedTodo = todoStore.$state.todos.find((elm: ToDo) => elm.key === item.key);
+          if (updatedTodo) {
+            const index = todoStore.$state.todos.indexOf(updatedTodo);
+            console.log(index);
+          }
+        });
+        // const mapped: ToDo[] = value.map((item) => {
+        //   return {
+        //     category: item.category,
+        //     content: item.content,
+        //     description: item.description,
+        //     date: item.date,
+        //     done: false,
+        //     inProgress: true,
+        //     ready: false,
+        //     due: item.due,
+        //     key: item.key,
+        //   };
+        // });
+        // todoStore.$state.inProgress = mapped;
+      },
+    });
 
     // const doneTodoList = computed<ToDo[]>({
     //   get: () => todoStore.$state.done,
@@ -215,10 +235,6 @@ export default defineComponent({
 
     const toggleForm = () => {
       addTodoForm.value = !addTodoForm.value;
-    };
-
-    const log = (evt: any) => {
-      console.log(evt);
     };
 
     return {
