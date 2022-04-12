@@ -59,7 +59,6 @@ export default defineComponent({
     color: var(--bunker-400);
     display: flex;
     flex-direction: column;
-    gap: 5px;
 
     strong {
       font-weight: 700;
@@ -67,7 +66,6 @@ export default defineComponent({
 
     .date {
       font-size: 0.675rem;
-      color: var(--ebony-400);
     }
   }
 }
