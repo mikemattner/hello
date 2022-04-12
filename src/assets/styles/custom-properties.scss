@@ -45,6 +45,7 @@
   --ebony-900: #0d121f;
 
   --background-color: var(--ebony-900);
+  --background-image: radial-gradient(circle, #151c32 0%, #0d121f 70%);
   --color: var(--ebony-200);
 
   --tooltip-bg: var(--ebony-800);
@@ -52,7 +53,7 @@
 
   --card-bg: var(--ebony-900);
   --card-shadow: rgba(13, 18, 31, 0.5);
-  --card-bg-contrast: #111727;
+  --card-bg-contrast: #151c32;
 
   --input-bg-color: var(--ebony-700);
   --input-color: var(--ebony-800);

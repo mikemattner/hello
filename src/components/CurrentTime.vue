@@ -39,6 +39,10 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-end;
     gap: 5px;
+
+    .material-icons-outlined {
+      color: var(--ebony-500);
+    }
     .time {
       font-size: 1rem;
       font-weight: 900;

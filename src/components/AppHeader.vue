@@ -5,7 +5,7 @@
         <span class="material-icons-outlined"> more_vert </span>
       </BaseButton>
       <BaseButton to="/" simple-button>
-        <span class="material-icons-outlined"> task_alt </span>
+        <span class="material-icons-outlined logo-icon"> task_alt </span>
         <span class="logo-title">MyTodos</span>
       </BaseButton>
     </div>
@@ -59,6 +59,10 @@ export default defineComponent({
 
     .material-icons-outlined {
       font-size: 1rem;
+
+      &.logo-icon {
+        color: var(--ebony-500);
+      }
     }
 
     &-title {

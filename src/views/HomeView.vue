@@ -16,12 +16,16 @@
           </TransitionGroup>
         </BaseCard>
         <div class="todo-counter">
-          <span class="todo-count progress">{{ getInProgressTodos.length }}</span>
-          <span class="todo-count-label">Todos in Progress</span>
+          <span class="todo-count start">{{ getTodos.length }}</span>
+          <span class="todo-count-label">Ready</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count start">{{ getTodos.length }}</span>
-          <span class="todo-count-label">Todos to Start</span>
+          <span class="todo-count progress">{{ getInProgressTodos.length }}</span>
+          <span class="todo-count-label">In Progress</span>
+        </div>
+        <div class="todo-counter">
+          <span class="todo-count done">{{ getDoneTodos.length }}</span>
+          <span class="todo-count-label">Done</span>
         </div>
         <div class="todo-counter">
           <span class="todo-count total">{{ todoCount }}</span>
@@ -59,12 +63,13 @@ export default defineComponent({
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
     const todoStore = useTodoStore();
-    const { getTodos, getInProgressTodos } = storeToRefs(todoStore);
+    const { getTodos, getInProgressTodos, getDoneTodos } = storeToRefs(todoStore);
 
     const todoCount = computed<number>(() => {
       const todoCount = getTodos.value.length;
       const inProgressCount = getInProgressTodos.value.length;
-      return todoCount + inProgressCount;
+      const doneTodoCount = getDoneTodos.value.length;
+      return todoCount + inProgressCount + doneTodoCount;
     });
 
     return {
@@ -73,6 +78,7 @@ export default defineComponent({
       todoCount,
       getTodos,
       getInProgressTodos,
+      getDoneTodos,
     };
   },
 });
@@ -126,9 +132,9 @@ export default defineComponent({
 
       .todo-count {
         aspect-ratio: 1;
-        border-radius: 15px;
-        width: 30px;
-        height: 30px;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -140,6 +146,10 @@ export default defineComponent({
           color: var(--ocean-green-900);
         }
         &.start {
+          background-color: var(--carnation-400);
+          color: var(--carnation-900);
+        }
+        &.done {
           background-color: var(--jaffa-400);
           color: var(--jaffa-900);
         }
