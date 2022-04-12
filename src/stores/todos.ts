@@ -22,6 +22,8 @@ export const useTodoStore = defineStore({
         description: description,
         date: new Date().toString(),
         done: false,
+        inProgress: false,
+        ready: true,
         due: due.toString(),
       });
     },

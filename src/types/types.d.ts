@@ -12,6 +12,8 @@ export interface ToDo {
     done: boolean;
     due: string;
     key: number;
+    inProgress: boolean;
+    ready: boolean;
 }
 
 export interface NewToDo {

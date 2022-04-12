@@ -37,6 +37,7 @@
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
+            @change="log($event)"
           >
             <template #item="{ element }">
               <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
@@ -60,6 +61,7 @@
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
+            @change="log($event)"
           >
             <template #item="{ element }">
               <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
@@ -83,6 +85,7 @@
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
+            @change="log($event)"
           >
             <template #item="{ element }">
               <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
@@ -124,59 +127,77 @@ export default defineComponent({
       };
     });
 
-    const todoList = computed<ToDo[]>({
-      get: () => todoStore.$state.todos,
-      set: (value) => {
-        const mapped: ToDo[] = value.map((item) => {
-          return {
-            category: item.category,
-            content: item.content,
-            description: item.description,
-            date: item.date,
-            done: false,
-            due: item.due,
-            key: item.key,
-          };
-        });
-        todoStore.$state.todos = mapped;
-      },
+    const todoList = computed<ToDo[]>(() => {
+      return todoStore.$state.todos.filter((item) => item.ready === true);
     });
 
-    const inProgressTodoList = computed<ToDo[]>({
-      get: () => todoStore.$state.inProgress,
-      set: (value) => {
-        const mapped: ToDo[] = value.map((item) => {
-          return {
-            category: item.category,
-            content: item.content,
-            description: item.description,
-            date: item.date,
-            done: false,
-            due: item.due,
-            key: item.key,
-          };
-        });
-        todoStore.$state.inProgress = mapped;
-      },
+    const inProgressTodoList = computed<ToDo[]>(() => {
+      return todoStore.$state.todos.filter((item) => item.inProgress === true);
     });
 
-    const doneTodoList = computed<ToDo[]>({
-      get: () => todoStore.$state.done,
-      set: (value) => {
-        const mapped: ToDo[] = value.map((item) => {
-          return {
-            category: item.category,
-            content: item.content,
-            description: item.description,
-            date: item.date,
-            done: true,
-            due: item.due,
-            key: item.key,
-          };
-        });
-        todoStore.$state.done = mapped;
-      },
+    const doneTodoList = computed<ToDo[]>(() => {
+      return todoStore.$state.todos.filter((item) => item.done === true);
     });
+
+    // const todoList = computed<ToDo[]>({
+    //   get: () => todoStore.$state.todos,
+    //   set: (value) => {
+    //     const mapped: ToDo[] = value.map((item) => {
+    //       return {
+    //         category: item.category,
+    //         content: item.content,
+    //         description: item.description,
+    //         date: item.date,
+    //         done: false,
+    //         inProgress: false,
+    //         ready: true,
+    //         due: item.due,
+    //         key: item.key,
+    //       };
+    //     });
+    //     todoStore.$state.todos = mapped;
+    //   },
+    // });
+
+    // const inProgressTodoList = computed<ToDo[]>({
+    //   get: () => todoStore.$state.inProgress,
+    //   set: (value) => {
+    //     const mapped: ToDo[] = value.map((item) => {
+    //       return {
+    //         category: item.category,
+    //         content: item.content,
+    //         description: item.description,
+    //         date: item.date,
+    //         done: false,
+    //         inProgress: true,
+    //         ready: false,
+    //         due: item.due,
+    //         key: item.key,
+    //       };
+    //     });
+    //     todoStore.$state.inProgress = mapped;
+    //   },
+    // });
+
+    // const doneTodoList = computed<ToDo[]>({
+    //   get: () => todoStore.$state.done,
+    //   set: (value) => {
+    //     const mapped: ToDo[] = value.map((item) => {
+    //       return {
+    //         category: item.category,
+    //         content: item.content,
+    //         description: item.description,
+    //         date: item.date,
+    //         done: true,
+    //         inProgress: false,
+    //         ready: false,
+    //         due: item.due,
+    //         key: item.key,
+    //       };
+    //     });
+    //     todoStore.$state.done = mapped;
+    //   },
+    // });
 
     const addTodo = (value: NewToDo) => {
       todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
@@ -196,6 +217,10 @@ export default defineComponent({
       addTodoForm.value = !addTodoForm.value;
     };
 
+    const log = (evt: any) => {
+      console.log(evt);
+    };
+
     return {
       addTodo,
       doneTodo,
@@ -207,6 +232,7 @@ export default defineComponent({
       toggleForm,
       drag,
       dragOptions,
+      log,
     };
   },
   components: {
