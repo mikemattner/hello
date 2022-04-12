@@ -2,7 +2,7 @@
   <div class="todo-list-header">
     <CurrentGreeting />
     <div class="add-task-button-container">
-      <BaseButton @click="toggleForm()" primary color="warning">
+      <BaseButton @click="toggleForm()" primary>
         Add
         <span class="material-icons-outlined bold"> add </span>
       </BaseButton>

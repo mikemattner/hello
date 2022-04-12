@@ -53,11 +53,14 @@ dl {
 }
 
 a {
-  color: var(--ebony-400);
-  transition: all 0.25s ease;
+  color: var(--sky-400);
+  text-decoration: underline 0.1em transparent;
+  text-underline-offset: 0.1em;
+  text-decoration-skip-ink: auto;
+  transition: text-decoration-color 300ms;
 
   &:hover {
-    color: var(--ebony-300);
+    text-decoration-color: inherit;
   }
 }
 

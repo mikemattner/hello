@@ -61,7 +61,7 @@ export default defineComponent({
       font-size: 1rem;
 
       &.logo-icon {
-        color: var(--ebony-500);
+        color: var(--sky-500);
       }
     }
 

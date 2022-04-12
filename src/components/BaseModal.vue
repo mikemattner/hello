@@ -105,7 +105,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .modal-overlay {
-  background-color: rgba(#111727, 0.75);
+  background-color: rgba(#0f172a, 0.75);
   position: fixed;
   top: 0;
   right: 0;
