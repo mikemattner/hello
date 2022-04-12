@@ -105,7 +105,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .modal-overlay {
-  background-color: rgba(#0f172a, 0.75);
+  background-color: rgba(#000, 0.75);
   position: fixed;
   top: 0;
   right: 0;
@@ -115,7 +115,7 @@ export default defineComponent({
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.25s ease;
+  transition: opacity 0.375s ease;
   opacity: 0;
   visibility: hidden;
 
@@ -128,11 +128,14 @@ export default defineComponent({
     border-radius: 4px;
     background-color: var(--card-bg);
     box-shadow: 2px 10px 20px var(--card-shadow);
-    transform: translateY(50px);
-    transition: all 0.375s ease;
+    opacity: 0;
+    transform: translate(0, 50px);
+    transition: all 0.375s 0s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     &.active {
-      transform: translateY(0);
+      opacity: 1;
+      transform: translate(0, 0);
+      transition: all 0.375s 0.125s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
 
     .modal-header {
