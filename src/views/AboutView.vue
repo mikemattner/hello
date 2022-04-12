@@ -42,12 +42,13 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   padding: 1rem 20px;
   font-size: 0.75rem;
 
   .container {
     max-width: 800px;
+    padding: 1.5rem 20px 0;
   }
 }
 </style>

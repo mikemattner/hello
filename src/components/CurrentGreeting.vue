@@ -54,7 +54,7 @@ export default defineComponent({
   padding: 0;
 
   &__message {
-    font-size: 1rem;
+    font-size: 1.25rem;
     line-height: 1.2;
     color: var(--bunker-400);
     display: flex;
