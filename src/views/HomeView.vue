@@ -119,21 +119,21 @@ export default defineComponent({
       background-color: var(--card-bg-contrast);
       border-radius: 4px;
       margin: 0 0 10px;
-      padding: 1rem;
+      padding: 0.5rem 1rem;
       display: flex;
       align-items: center;
       gap: 10px;
 
       .todo-count {
         aspect-ratio: 1;
-        border-radius: 20px;
-        width: 40px;
-        height: 40px;
+        border-radius: 15px;
+        width: 30px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 700;
-        font-size: 0.75rem;
+        font-size: 0.675rem;
 
         &.progress {
           background-color: var(--ocean-green-400);
@@ -149,7 +149,7 @@ export default defineComponent({
         }
       }
       .todo-count-label {
-        font-size: 0.75rem;
+        font-size: 0.675rem;
         font-weight: 700;
       }
     }

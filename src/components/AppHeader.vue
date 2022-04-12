@@ -9,6 +9,7 @@
         <span class="logo-title">MyTodos</span>
       </BaseButton>
     </div>
+    <CurrentTime />
   </div>
 
   <AppDrawer :open="openDrawer" @toggle="toggleDrawer()" />
@@ -18,12 +19,14 @@
 import { defineComponent, ref } from 'vue';
 import BaseButton from './BaseButton.vue';
 import AppDrawer from './AppDrawer.vue';
+import CurrentTime from './CurrentTime.vue';
 
 export default defineComponent({
   name: 'AppHeader',
   components: {
     BaseButton,
     AppDrawer,
+    CurrentTime,
   },
   setup() {
     const openDrawer = ref<boolean>(false);
@@ -45,11 +48,14 @@ export default defineComponent({
   padding: 0.25rem 1rem;
   border-bottom: 1px solid rgba(#263966, 0.25);
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   background-color: var(--background-color);
   .logo {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-grow: 1;
 
     .material-icons-outlined {
       font-size: 1rem;
@@ -57,7 +63,7 @@ export default defineComponent({
 
     &-title {
       font-size: 0.675rem;
-      font-weight: 700;
+      font-weight: 900;
     }
   }
 }

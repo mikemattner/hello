@@ -1,7 +1,6 @@
 <template>
   <div class="todo-list-header">
     <CurrentGreeting />
-    <CurrentTime />
     <div class="add-task-button-container">
       <BaseButton @click="toggleForm()" primary color="warning">
         Add
@@ -105,7 +104,6 @@ import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
 import CurrentGreeting from './CurrentGreeting.vue';
-import CurrentTime from './CurrentTime.vue';
 
 export default defineComponent({
   name: 'ToDos',
@@ -217,7 +215,6 @@ export default defineComponent({
     ToDoNewModal,
     VDraggable,
     CurrentGreeting,
-    CurrentTime,
   },
 });
 </script>
@@ -226,7 +223,7 @@ export default defineComponent({
 .todo-list-header {
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   padding-bottom: 20px;
 
   .add-task-button-container {

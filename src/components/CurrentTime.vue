@@ -1,12 +1,16 @@
 <template>
   <div class="current-time">
-    <div class="current-time__display">{{ currentTime }}</div>
+    <div class="current-time__display">
+      <span class="material-icons-outlined"> schedule </span>
+      <span class="time">{{ currentTime }}</span>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { useDateFormat, useNow } from '@vueuse/core';
+import { format } from 'date-fns';
 
 export default defineComponent({
   name: 'CurrentTime',
@@ -28,13 +32,18 @@ export default defineComponent({
   justify-content: center;
   flex-direction: column;
   text-align: center;
-  width: 100%;
   height: 100%;
 
   &__display {
-    font-size: 2rem;
-    font-weight: 900;
-    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    .time {
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1;
+    }
   }
 }
 </style>
