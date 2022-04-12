@@ -17,7 +17,7 @@
       <div class="todo-list-todos__col">
         <div class="headings">
           <div class="flex-content">
-            <span class="content">To Do</span>
+            <span class="content">Ready</span>
           </div>
           <span class="count">{{ todoList.length }}</span>
         </div>

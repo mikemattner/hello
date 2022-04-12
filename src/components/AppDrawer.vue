@@ -73,6 +73,10 @@ export default defineComponent({
       align-items: center;
       gap: 10px;
       padding: 0.5rem;
+
+      .material-icons-outlined {
+        color: var(--ebony-500);
+      }
     }
 
     &.router-link-active {

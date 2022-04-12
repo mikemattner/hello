@@ -165,15 +165,6 @@ export default defineComponent({
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  &:hover,
-  &:focus,
-  &:focus-within {
-    .todo-done {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
   &-content {
     display: flex;
     align-items: stretch;
