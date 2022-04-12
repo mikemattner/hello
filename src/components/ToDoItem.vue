@@ -16,7 +16,7 @@
         <div class="todo-content__time">
           <div class="content-time" v-if="!todo.done">
             <span class="material-icons-outlined"> event </span>
-            {{ dateSet }}
+            <strong>{{ dateSet }}</strong>
           </div>
           <div class="content-time" v-else>
             <span class="material-icons-outlined"> task_alt </span>
@@ -253,6 +253,7 @@ export default defineComponent({
       &__description {
         margin: 0.25rem 0 1rem;
         font-size: 0.675rem;
+        color: var(--ebony-400);
       }
     }
 

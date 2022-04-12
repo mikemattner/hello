@@ -75,7 +75,7 @@ export default defineComponent({
       padding: 0.5rem;
 
       .material-icons-outlined {
-        color: var(--ebony-500);
+        color: var(--sky-500);
       }
     }
 
