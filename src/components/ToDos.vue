@@ -11,6 +11,10 @@
   <div v-if="todoList.length < 1 && inProgressTodoList.length < 1 && doneTodoList.length < 1" class="empty-todo">
     <p class="empty-emoji">🥳</p>
     <p>You finished it all!</p>
+    <BaseButton @click="toggleForm()">
+      Add
+      <span class="material-icons-outlined bold"> add </span>
+    </BaseButton>
   </div>
   <div v-else class="todo-list-container">
     <section class="todo-list-todos">

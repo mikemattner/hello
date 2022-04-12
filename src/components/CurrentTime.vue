@@ -41,7 +41,7 @@ export default defineComponent({
     gap: 5px;
 
     .material-icons-outlined {
-      color: var(--ebony-500);
+      color: var(--slate-500);
     }
     .time {
       font-size: 1rem;

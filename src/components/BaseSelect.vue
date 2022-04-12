@@ -101,7 +101,7 @@ export default defineComponent({
 
   &__input {
     border: none;
-    border: 1px solid var(--input-bg-color);
+    border: 1px solid var(--input-border-color);
     border-radius: 4px;
     background: none;
     color: var(--color);
@@ -125,10 +125,10 @@ export default defineComponent({
     }
 
     &:hover {
-      border-color: var(--input-focus);
+      border-color: var(--input-border-focus);
     }
     &:focus {
-      border-color: var(--input-focus);
+      border-color: var(--input-border-focus);
     }
   }
 

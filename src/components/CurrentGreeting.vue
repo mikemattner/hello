@@ -66,7 +66,7 @@ export default defineComponent({
 
     .date {
       font-size: 0.675rem;
-      color: var(--ebony-400);
+      color: var(--slate-400);
     }
   }
 }

@@ -105,7 +105,6 @@ export default defineComponent({
   .category-label {
     padding: 4px 8px;
     border-radius: 10px;
-    background-color: var(--input-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -180,7 +179,7 @@ export default defineComponent({
       height: 25px;
       width: 25px;
       flex-grow: 0;
-      border: 1px solid var(--input-bg-color);
+      border: 1px solid var(--input-border-color);
       border-radius: 4px;
       opacity: 0.5;
       transition: all 0.25s ease-in-out;
@@ -207,7 +206,7 @@ export default defineComponent({
 
       .checkmark {
         opacity: 1;
-        border-color: var(--input-focus);
+        border-color: var(--input-border-focus);
       }
     }
 
@@ -226,7 +225,7 @@ export default defineComponent({
         justify-content: flex-start;
         gap: 10px;
         width: 100%;
-        color: var(--ebony-400);
+        color: var(--slate-400);
 
         .content-time {
           display: flex;
@@ -253,7 +252,7 @@ export default defineComponent({
       &__description {
         margin: 0.25rem 0 1rem;
         font-size: 0.675rem;
-        color: var(--ebony-400);
+        color: var(--slate-400);
       }
     }
 
@@ -262,7 +261,7 @@ export default defineComponent({
         &__label {
           text-decoration-line: line-through;
           text-decoration-style: wavy;
-          text-decoration-color: var(--input-focus);
+          text-decoration-color: var(--input-border-focus);
           text-decoration-thickness: 1px;
           color: rgba(255, 255, 255, 0.5);
         }
@@ -270,8 +269,8 @@ export default defineComponent({
 
       .checkmark {
         opacity: 1;
-        background-color: var(--input-focus);
-        border-color: var(--input-focus);
+        background-color: var(--input-border-focus);
+        border-color: var(--input-border-focus);
         &:after {
           opacity: 1;
           transform: rotate(45deg) scale(1);
