@@ -44,31 +44,30 @@
   --sky-800: #075985;
   --sky-900: #0c4a6e;
 
-  --ebony-50: #f8fafc;
-  --ebony-100: #f1f5f9;
-  --ebony-200: #e2e8f0;
-  --ebony-300: #cbd5e1;
-  --ebony-400: #94a3b8;
-  --ebony-500: #64748b;
-  --ebony-600: #475569;
-  --ebony-700: #334155;
-  --ebony-800: #1e293b;
-  --ebony-900: #0f172a;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --slate-200: #e2e8f0;
+  --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
+  --slate-500: #64748b;
+  --slate-600: #475569;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
 
-  --background-color: var(--ebony-900);
-  --background-image: radial-gradient(circle, var(--ebony-800) 0%, var(--ebony-900) 50%);
-  --color: var(--ebony-200);
+  --background-color: var(--slate-900);
+  --background-image: radial-gradient(circle, var(--slate-800) 0%, var(--slate-900) 50%);
+  --color: var(--slate-200);
 
-  --tooltip-bg: var(--ebony-700);
-  --tooltip-color: var(--ebony-200);
+  --tooltip-bg: var(--slate-700);
+  --tooltip-color: var(--slate-200);
 
-  --card-bg: var(--ebony-900);
+  --card-bg: var(--slate-900);
   --card-shadow: rgba(13, 18, 31, 0.5);
-  --card-bg-contrast: var(--ebony-800); //#151c32;
+  --card-bg-contrast: var(--slate-800);
 
-  --input-bg-color: var(--sky-700);
-  --input-color: var(--sky-800);
-  --input-focus: var(--sky-400);
+  --input-border-color: var(--sky-900);
+  --input-border-focus: var(--sky-400);
 
   --button-focus-shadow: 0 0 0 0.2rem rgba(103, 136, 201, 0.5);
   --inner-focus-shadow: inset 0 0 0 0.2rem rgba(103, 136, 201, 0.5);

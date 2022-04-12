@@ -63,9 +63,10 @@ export default defineComponent({
   a {
     font-size: 0.675rem;
     display: block;
-    color: var(--ebony-200);
+    color: var(--slate-200);
     text-decoration: none;
     border-radius: 4px;
+    transition: all 0.25s ease-in-out;
     .menu-block {
       font-weight: 900;
       display: block;
@@ -80,13 +81,13 @@ export default defineComponent({
     }
 
     &.router-link-active {
-      background-color: var(--card-bg-contrast);
-      color: var(--ebony-200);
+      background-color: var(--slate-800);
+      color: var(--slate-200);
     }
 
     &:hover {
-      background-color: var(--ebony-800);
-      color: var(--ebony-200);
+      background-color: var(--slate-800);
+      color: var(--slate-200);
     }
   }
 }

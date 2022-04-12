@@ -123,7 +123,7 @@ export default defineComponent({
   &.button__highlight {
     color: var(--color);
     &:hover:not(:disabled) {
-      background-color: rgba(#94a3b8, 0.125);
+      background-color: rgba(#0ea5e9, 0.125);
       border-color: var(--contrast-color);
     }
   }
@@ -132,8 +132,8 @@ export default defineComponent({
     color: var(--color);
     border-color: transparent;
     &:hover:not(:disabled) {
-      background-color: rgba(#94a3b8, 0.125);
-      border-color: rgba(#94a3b8, 0.125);
+      background-color: rgba(#0ea5e9, 0.125);
+      border-color: rgba(#0ea5e9, 0.125);
     }
   }
 

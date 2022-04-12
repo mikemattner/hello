@@ -154,8 +154,8 @@ export default defineComponent({
           color: var(--ocean-green-900);
         }
         &.total {
-          background-color: var(--ebony-400);
-          color: var(--ebony-900);
+          background-color: var(--slate-400);
+          color: var(--slate-900);
         }
       }
       .todo-count-label {
