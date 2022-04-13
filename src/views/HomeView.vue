@@ -16,15 +16,15 @@
           </TransitionGroup>
         </BaseCard>
         <div class="todo-counter">
-          <span class="todo-count start">{{ getTodos.length }}</span>
+          <span class="todo-count start">{{ getReadyTodos.tasks.length }}</span>
           <span class="todo-count-label">Ready</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count progress">{{ getInProgressTodos.length }}</span>
+          <span class="todo-count progress">{{ getInProgressTodos.tasks.length }}</span>
           <span class="todo-count-label">In Progress</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count done">{{ getDoneTodos.length }}</span>
+          <span class="todo-count done">{{ getDoneTodos.tasks.length }}</span>
           <span class="todo-count-label">Done</span>
         </div>
         <div class="todo-counter">
@@ -63,12 +63,12 @@ export default defineComponent({
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
     const todoStore = useTodoStore();
-    const { getTodos, getInProgressTodos, getDoneTodos } = storeToRefs(todoStore);
+    const { getTodos, getInProgressTodos, getDoneTodos, getReadyTodos } = storeToRefs(todoStore);
 
     const todoCount = computed<number>(() => {
-      const todoCount = getTodos.value.length;
-      const inProgressCount = getInProgressTodos.value.length;
-      const doneTodoCount = getDoneTodos.value.length;
+      const todoCount = getReadyTodos.value.tasks.length;
+      const inProgressCount = getInProgressTodos.value.tasks.length;
+      const doneTodoCount = getDoneTodos.value.tasks.length;
       return todoCount + inProgressCount + doneTodoCount;
     });
 
@@ -79,6 +79,7 @@ export default defineComponent({
       getTodos,
       getInProgressTodos,
       getDoneTodos,
+      getReadyTodos,
     };
   },
 });

@@ -12,8 +12,6 @@ export interface ToDo {
     done: boolean;
     due: string;
     key: number;
-    inProgress: boolean;
-    ready: boolean;
 }
 
 export interface NewToDo {
@@ -24,9 +22,18 @@ export interface NewToDo {
 }
 
 interface TodoState {
-    todos: ToDo[];
-    done: ToDo[];
-    inProgress: ToDo[];
+    todos: ToDoColumns;
+}
+
+export interface ToDoColumns {
+    done: ToDoColumn;
+    inProgress: ToDoColumn;
+    ready: ToDoColumn;
+}
+
+export interface ToDoColumn {
+    name: string;
+    tasks: ToDo[];
 }
 
 interface WeatherState {

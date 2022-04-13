@@ -8,26 +8,18 @@
       </BaseButton>
     </div>
   </div>
-  <div v-if="todoList.length < 1 && inProgressTodoList.length < 1 && doneTodoList.length < 1" class="empty-todo">
-    <p class="empty-emoji">🥳</p>
-    <p>You finished it all!</p>
-    <BaseButton @click="toggleForm()">
-      Add
-      <span class="material-icons-outlined bold"> add </span>
-    </BaseButton>
-  </div>
-  <div v-else class="todo-list-container">
+  <div class="todo-list-container">
     <section class="todo-list-todos">
-      <div class="todo-list-todos__col">
+      <div v-for="(column, index) in todoList" :key="`column-${column.name}-${index}`" class="todo-list-todos__col">
         <div class="headings">
           <div class="flex-content">
-            <span class="content">Ready</span>
+            <span class="content">{{ column.name }}</span>
           </div>
-          <span class="count">{{ todoList.length }}</span>
+          <span class="count">{{ column.tasks.length }}</span>
         </div>
         <div class="todo-list">
           <VDraggable
-            v-model="todoList"
+            v-model="column.tasks"
             tag="div"
             item-key="key"
             group="tasks"
@@ -37,55 +29,6 @@
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
-            @change="log($event)"
-          >
-            <template #item="{ element }">
-              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
-            </template>
-          </VDraggable>
-        </div>
-      </div>
-      <div class="todo-list-todos__col">
-        <div class="headings">
-          <span class="content">In Progress</span> <span class="count">{{ inProgressTodoList.length }}</span>
-        </div>
-        <div class="todo-list">
-          <VDraggable
-            v-model="inProgressTodoList"
-            tag="div"
-            item-key="key"
-            group="tasks"
-            class="todo-list-draggable"
-            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
-            key="draggable-list"
-            v-bind="dragOptions"
-            @start="drag = true"
-            @end="drag = false"
-            @change="log($event)"
-          >
-            <template #item="{ element }">
-              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
-            </template>
-          </VDraggable>
-        </div>
-      </div>
-      <div class="todo-list-todos__col">
-        <div class="headings">
-          <span class="content">Done</span> <span class="count">{{ doneTodoList.length }}</span>
-        </div>
-        <div class="todo-list">
-          <VDraggable
-            v-model="doneTodoList"
-            tag="div"
-            item-key="key"
-            group="tasks"
-            class="todo-list-draggable"
-            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
-            key="draggable-list"
-            v-bind="dragOptions"
-            @start="drag = true"
-            @end="drag = false"
-            @change="log($event)"
           >
             <template #item="{ element }">
               <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
@@ -106,7 +49,7 @@ import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
-import type { NewToDo, ToDo } from '@/types/types';
+import type { NewToDo, ToDo, ToDoColumns } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
@@ -127,97 +70,10 @@ export default defineComponent({
       };
     });
 
-    // const toDos = todoStore.$state.todos;
-
-    // const todoList = computed<ToDo[]>(() => {
-    //   return toDos.filter((item) => item.ready === true);
-    // });
-
-    // const inProgressTodoList = computed<ToDo[]>(() => {
-    //   return toDos.filter((item) => item.inProgress === true);
-    // });
-
-    const doneTodoList = computed<ToDo[]>(() => {
-      return todoStore.$state.todos.filter((item) => item.done === true);
+    const todoList = computed<ToDoColumns>({
+      get: () => todoStore.$state.todos,
+      set: (value) => (todoStore.$state.todos = value),
     });
-
-    const log = (evt: any) => {
-      if (evt.moved) {
-        console.log(evt.moved.element.key);
-        console.log(todoStore.$state.todos);
-      }
-      if (evt.removed) {
-        console.log(evt.removed.element.key);
-        console.log(todoStore.$state.todos);
-      }
-    };
-
-    const todoList = computed<ToDo[]>({
-      get: () => todoStore.$state.todos.filter((item) => item.ready === true),
-      set: (value) => {
-        const mapped: ToDo[] = value.map((item) => {
-          return {
-            category: item.category,
-            content: item.content,
-            description: item.description,
-            date: item.date,
-            done: false,
-            inProgress: false,
-            ready: true,
-            due: item.due,
-            key: item.key,
-          };
-        });
-        todoStore.$state.todos = mapped;
-      },
-    });
-
-    const inProgressTodoList = computed<ToDo[]>({
-      get: () => todoStore.$state.todos.filter((item) => item.inProgress === true),
-      set: (value) => {
-        value.forEach((item: ToDo) => {
-          const updatedTodo = todoStore.$state.todos.find((elm: ToDo) => elm.key === item.key);
-          if (updatedTodo) {
-            const index = todoStore.$state.todos.indexOf(updatedTodo);
-            console.log(index);
-          }
-        });
-        // const mapped: ToDo[] = value.map((item) => {
-        //   return {
-        //     category: item.category,
-        //     content: item.content,
-        //     description: item.description,
-        //     date: item.date,
-        //     done: false,
-        //     inProgress: true,
-        //     ready: false,
-        //     due: item.due,
-        //     key: item.key,
-        //   };
-        // });
-        // todoStore.$state.inProgress = mapped;
-      },
-    });
-
-    // const doneTodoList = computed<ToDo[]>({
-    //   get: () => todoStore.$state.done,
-    //   set: (value) => {
-    //     const mapped: ToDo[] = value.map((item) => {
-    //       return {
-    //         category: item.category,
-    //         content: item.content,
-    //         description: item.description,
-    //         date: item.date,
-    //         done: true,
-    //         inProgress: false,
-    //         ready: false,
-    //         due: item.due,
-    //         key: item.key,
-    //       };
-    //     });
-    //     todoStore.$state.done = mapped;
-    //   },
-    // });
 
     const addTodo = (value: NewToDo) => {
       todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
@@ -242,13 +98,10 @@ export default defineComponent({
       doneTodo,
       removeTodo,
       todoList,
-      inProgressTodoList,
-      doneTodoList,
       addTodoForm,
       toggleForm,
       drag,
       dragOptions,
-      log,
     };
   },
   components: {
