@@ -8,13 +8,9 @@
         <div class="todo-content__label">{{ todo.content }}</div>
         <div v-if="todo.description" class="todo-content__description">{{ todo.description }}</div>
         <div class="todo-content__time">
-          <div class="content-time" v-if="!todo.done">
+          <div class="content-time">
             <span class="material-icons-outlined"> event </span>
             <strong>{{ dateSet }}</strong>
-          </div>
-          <div class="content-time" v-else>
-            <span class="material-icons-outlined"> task_alt </span>
-            <strong>Completed</strong>
           </div>
           <span v-if="todo.category" :class="categoryClasses">
             <span class="dot"></span>
