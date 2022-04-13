@@ -9,7 +9,6 @@ export interface ToDo {
     content: string;
     description: string;
     date: string;
-    done: boolean;
     due: string;
     key: number;
 }
@@ -22,9 +21,18 @@ export interface NewToDo {
 }
 
 interface TodoState {
-    todos: ToDo[];
-    done: ToDo[];
-    inProgress: ToDo[];
+    todos: ToDoColumns;
+}
+
+export interface ToDoColumns {
+    done: ToDoColumn;
+    inProgress: ToDoColumn;
+    ready: ToDoColumn;
+}
+
+export interface ToDoColumn {
+    name: string;
+    tasks: ToDo[];
 }
 
 interface WeatherState {

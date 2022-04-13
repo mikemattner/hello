@@ -16,19 +16,19 @@
           </TransitionGroup>
         </BaseCard>
         <div class="todo-counter">
-          <span class="todo-count start">{{ getTodos.length }}</span>
+          <span class="todo-count start">{{ getReadyTodos.tasks.length }}</span>
           <span class="todo-count-label">Ready</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count progress">{{ getInProgressTodos.length }}</span>
+          <span class="todo-count progress">{{ getInProgressTodos.tasks.length }}</span>
           <span class="todo-count-label">In Progress</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count done">{{ getDoneTodos.length }}</span>
+          <span class="todo-count done">{{ getDoneTodos.tasks.length }}</span>
           <span class="todo-count-label">Done</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count total">{{ todoCount }}</span>
+          <span class="todo-count total">{{ getTotalCount }}</span>
           <span class="todo-count-label">Total Todos</span>
         </div>
       </div>
@@ -63,22 +63,15 @@ export default defineComponent({
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
     const todoStore = useTodoStore();
-    const { getTodos, getInProgressTodos, getDoneTodos } = storeToRefs(todoStore);
-
-    const todoCount = computed<number>(() => {
-      const todoCount = getTodos.value.length;
-      const inProgressCount = getInProgressTodos.value.length;
-      const doneTodoCount = getDoneTodos.value.length;
-      return todoCount + inProgressCount + doneTodoCount;
-    });
+    const { getInProgressTodos, getDoneTodos, getReadyTodos, getTotalCount } = storeToRefs(todoStore);
 
     return {
       isInitialized,
       isError,
-      todoCount,
-      getTodos,
       getInProgressTodos,
       getDoneTodos,
+      getReadyTodos,
+      getTotalCount,
     };
   },
 });
@@ -173,17 +166,6 @@ export default defineComponent({
     }
   }
 }
-.fadestay-enter-active,
-.fadestay-leave-active {
-  transition: opacity 100ms ease;
-  position: absolute;
-}
-
-.fadestay-enter-from,
-.fadestay-leave-to {
-  opacity: 0;
-}
-
 .fadeweather-move,
 .fadeweather-enter-active,
 .fadeweather-leave-active {

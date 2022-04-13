@@ -4,56 +4,42 @@ import { defineStore } from 'pinia'
 export const useTodoStore = defineStore({
   id: 'todos',
   state: () => ({
-    todos: [],
-    done: [],
-    inProgress: [],
+    todos: {
+      ready: { name: 'Ready', tasks: []},
+      inProgress: { name: 'In Progress', tasks: []},
+      done: { name: 'Done', tasks: []},
+    },
   }) as TodoState,
   getters: {
     getTodos: (state) => state.todos,
-    getInProgressTodos: (state) => state.inProgress,
-    getDoneTodos: (state) => state.done,
+    getReadyTodos: (state) => state.todos.ready,
+    getInProgressTodos: (state) => state.todos.inProgress,
+    getDoneTodos: (state) => state.todos.done,
+    getTotalCount: (state) => {
+       return state.todos.ready.tasks.length + state.todos.inProgress.tasks.length + state.todos.done.tasks.length;
+    },
   },
   actions: {
     addTodo(newTodo: string, due: Date, category: string, description: string) {
-      this.todos.unshift({
-        key: this.todos.length + 1,
+      this.todos.ready.tasks.unshift({
+        key: this.todos.ready.tasks.length + 1,
         category: category,
         content: newTodo,
         description: description,
         date: new Date().toString(),
-        done: false,
         due: due.toString(),
       });
     },
     removeTodo(todo: ToDo) {
-      const index = this.todos.indexOf(todo);
-      const progressIndex = this.inProgress.indexOf(todo);
-      const doneIndex = this.done.indexOf(todo);
+      const index = this.todos.ready.tasks.indexOf(todo);
+      const progressIndex = this.todos.inProgress.tasks.indexOf(todo);
+      const doneIndex = this.todos.done.tasks.indexOf(todo);
       if(index > -1) {
-        this.todos.splice(index, 1);
+        this.todos.ready.tasks.splice(index, 1);
       } else if(progressIndex > -1) {
-        this.inProgress.splice(progressIndex, 1);
+        this.todos.inProgress.tasks.splice(progressIndex, 1);
       } else if(doneIndex > -1) {
-        this.done.splice(doneIndex, 1);
-      }
-    },
-    doneTodo(todo: ToDo) {
-      const index = this.todos.indexOf(todo);
-      const progressIndex = this.inProgress.indexOf(todo);
-      const doneIndex = this.done.indexOf(todo);
-
-      if(index > -1) {
-        this.todos[index].done = !this.todos[index].done;
-        this.todos.splice(index, 1);
-        this.done.push(todo);
-      } else if(progressIndex > -1) {
-        this.inProgress[progressIndex].done = !this.inProgress[progressIndex].done;
-        this.inProgress.splice(progressIndex, 1);
-        this.done.push(todo);
-      } else if(doneIndex > -1) {
-        this.done[doneIndex].done = !this.done[doneIndex].done;
-        this.done.splice(doneIndex, 1);
-        this.todos.push(todo);
+        this.todos.done.tasks.splice(doneIndex, 1);
       }
     },
   },
