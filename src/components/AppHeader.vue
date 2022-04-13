@@ -71,30 +71,4 @@ export default defineComponent({
     }
   }
 }
-.fadestay-enter-active,
-.fadestay-leave-active {
-  transition: opacity 100ms ease;
-  position: absolute;
-}
-
-.fadestay-enter-from,
-.fadestay-leave-to {
-  opacity: 0;
-}
-
-.fadeweather-move,
-.fadeweather-enter-active,
-.fadeweather-leave-active {
-  transition: all 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-.fadeweather-enter-from,
-.fadeweather-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-
-.fadeweather-leave-active {
-  position: absolute;
-}
 </style>

@@ -9,7 +9,6 @@ export interface ToDo {
     content: string;
     description: string;
     date: string;
-    done: boolean;
     due: string;
     key: number;
 }

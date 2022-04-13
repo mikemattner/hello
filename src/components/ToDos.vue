@@ -8,7 +8,15 @@
       </BaseButton>
     </div>
   </div>
-  <div class="todo-list-container">
+  <div v-if="getTotalCount < 1" class="empty-todo">
+    <p class="empty-emoji">🥳</p>
+    <p>You finished it all!</p>
+    <BaseButton @click="toggleForm()">
+      Add
+      <span class="material-icons-outlined bold"> add </span>
+    </BaseButton>
+  </div>
+  <div v-else class="todo-list-container">
     <section class="todo-list-todos">
       <div v-for="(column, index) in todoList" :key="`column-${column.name}-${index}`" class="todo-list-todos__col">
         <div class="headings">
@@ -23,15 +31,16 @@
             tag="div"
             item-key="key"
             group="tasks"
+            handle=".handle"
             class="todo-list-draggable"
-            :component-data="{ tag: 'div', name: !drag ? 'list' : null, type: 'transition' }"
+            :component-data="{ tag: 'div', name: 'flip-list', type: 'transition' }"
             key="draggable-list"
             v-bind="dragOptions"
             @start="drag = true"
             @end="drag = false"
           >
             <template #item="{ element }">
-              <ToDoItem :todo="element" @done="doneTodo(element)" @remove="removeTodo(element)" />
+              <ToDoItem :todo="element" @remove="removeTodo(element)" />
             </template>
           </VDraggable>
         </div>
@@ -54,6 +63,7 @@ import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
 import CurrentGreeting from './CurrentGreeting.vue';
+import { storeToRefs } from 'pinia';
 
 export default defineComponent({
   name: 'ToDos',
@@ -63,8 +73,7 @@ export default defineComponent({
     const drag = ref<boolean>(false);
     const dragOptions = computed(() => {
       return {
-        animation: 200,
-        group: 'description',
+        animation: 0,
         disabled: false,
         ghostClass: 'ghost',
       };
@@ -75,14 +84,11 @@ export default defineComponent({
       set: (value) => (todoStore.$state.todos = value),
     });
 
+    const { getTotalCount } = storeToRefs(todoStore);
+
     const addTodo = (value: NewToDo) => {
       todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
       toggleForm();
-    };
-
-    const doneTodo = (todo: ToDo) => {
-      console.log('Done');
-      todoStore.doneTodo(todo);
     };
 
     const removeTodo = (todo: ToDo) => {
@@ -95,13 +101,13 @@ export default defineComponent({
 
     return {
       addTodo,
-      doneTodo,
-      removeTodo,
-      todoList,
       addTodoForm,
-      toggleForm,
       drag,
       dragOptions,
+      removeTodo,
+      todoList,
+      toggleForm,
+      getTotalCount,
     };
   },
   components: {
@@ -227,15 +233,23 @@ export default defineComponent({
 
 .ghost {
   opacity: 0.5;
-}
-.list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  border: 1px solid var(--sky-400);
 }
 
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
+.flip-list-move {
+  transition: transform 0.5s;
 }
+.no-move {
+  transition: transform 0s;
+}
+// .list-move,
+// .list-enter-active,
+// .list-leave-active {
+//   transition: transform 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+// }
+
+// .list-enter-from,
+// .list-leave-to {
+//   opacity: 0;
+// }
 </style>

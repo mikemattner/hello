@@ -28,7 +28,7 @@
           <span class="todo-count-label">Done</span>
         </div>
         <div class="todo-counter">
-          <span class="todo-count total">{{ todoCount }}</span>
+          <span class="todo-count total">{{ getTotalCount }}</span>
           <span class="todo-count-label">Total Todos</span>
         </div>
       </div>
@@ -63,23 +63,15 @@ export default defineComponent({
     const { isInitialized, isError } = storeToRefs(weatherStore);
 
     const todoStore = useTodoStore();
-    const { getTodos, getInProgressTodos, getDoneTodos, getReadyTodos } = storeToRefs(todoStore);
-
-    const todoCount = computed<number>(() => {
-      const todoCount = getReadyTodos.value.tasks.length;
-      const inProgressCount = getInProgressTodos.value.tasks.length;
-      const doneTodoCount = getDoneTodos.value.tasks.length;
-      return todoCount + inProgressCount + doneTodoCount;
-    });
+    const { getInProgressTodos, getDoneTodos, getReadyTodos, getTotalCount } = storeToRefs(todoStore);
 
     return {
       isInitialized,
       isError,
-      todoCount,
-      getTodos,
       getInProgressTodos,
       getDoneTodos,
       getReadyTodos,
+      getTotalCount,
     };
   },
 });
@@ -174,17 +166,6 @@ export default defineComponent({
     }
   }
 }
-.fadestay-enter-active,
-.fadestay-leave-active {
-  transition: opacity 100ms ease;
-  position: absolute;
-}
-
-.fadestay-enter-from,
-.fadestay-leave-to {
-  opacity: 0;
-}
-
 .fadeweather-move,
 .fadeweather-enter-active,
 .fadeweather-leave-active {

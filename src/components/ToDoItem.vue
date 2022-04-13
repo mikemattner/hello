@@ -1,14 +1,8 @@
 <template>
   <div class="todo-list__item">
-    <div
-      :class="['todo-list__item-content', { done: todo.done }]"
-      @keyup.enter="finishTodo()"
-      @keyup.space="finishTodo()"
-      @click="finishTodo()"
-      tabindex="0"
-    >
-      <div class="checkmark-surround">
-        <div class="checkmark"></div>
+    <div class="todo-list__item-content">
+      <div class="drag-surround handle">
+        <span class="material-icons-outlined"> drag_indicator </span>
       </div>
       <div class="todo-content">
         <div class="todo-content__label">{{ todo.content }}</div>
@@ -29,7 +23,7 @@
         </div>
       </div>
     </div>
-    <div :class="['todo-done', { done: todo.done }]">
+    <div class="todo-actions">
       <BaseButton @click="removeTodo()" color="warning">
         <span class="material-icons-outlined"> delete_outline </span>
       </BaseButton>
@@ -56,14 +50,10 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['remove', 'done'],
+  emits: ['remove'],
   setup(props, { emit }) {
     const removeTodo = () => {
       emit('remove');
-    };
-
-    const finishTodo = () => {
-      emit('done');
     };
 
     const categoryClasses = computed(() => {
@@ -81,7 +71,6 @@ export default defineComponent({
     const dateSet = format(new Date(props.todo.due), dateFormat.value);
 
     return {
-      finishTodo,
       removeTodo,
       dateSet,
       categoryClasses,
@@ -148,15 +137,16 @@ export default defineComponent({
     }
   }
 
-  .checkmark-surround {
+  .drag-surround {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    padding: 1rem 0.5rem;
     background-color: rgba(0, 0, 0, 0.25);
+    cursor: grab;
   }
 
-  .todo-done {
+  .todo-actions {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,44 +161,40 @@ export default defineComponent({
     flex-grow: 1;
     line-height: 1.4;
 
-    &:focus {
-      box-shadow: var(--inner-focus-shadow);
-    }
+    // .checkmark {
+    //   height: 25px;
+    //   width: 25px;
+    //   flex-grow: 0;
+    //   border: 1px solid var(--input-border-color);
+    //   border-radius: 4px;
+    //   opacity: 0.5;
+    //   transition: all 0.25s ease-in-out;
+    //   flex: 0 0 25px;
 
-    .checkmark {
-      height: 25px;
-      width: 25px;
-      flex-grow: 0;
-      border: 1px solid var(--input-border-color);
-      border-radius: 4px;
-      opacity: 0.5;
-      transition: all 0.25s ease-in-out;
-      flex: 0 0 25px;
+    //   &:after {
+    //     content: '';
+    //     position: absolute;
+    //     opacity: 0;
+    //     transition: all 0.25s ease-in-out;
+    //     left: 9px;
+    //     top: 4px;
+    //     width: 6px;
+    //     height: 13px;
+    //     border: solid var(--card-bg);
+    //     border-width: 0 2px 2px 0;
+    //     transform: rotate(45deg) scale(0.5);
+    //     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    //   }
+    // }
 
-      &:after {
-        content: '';
-        position: absolute;
-        opacity: 0;
-        transition: all 0.25s ease-in-out;
-        left: 9px;
-        top: 4px;
-        width: 6px;
-        height: 13px;
-        border: solid var(--card-bg);
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg) scale(0.5);
-        transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      }
-    }
+    // &:hover {
+    //   cursor: pointer;
 
-    &:hover {
-      cursor: pointer;
-
-      .checkmark {
-        opacity: 1;
-        border-color: var(--input-border-focus);
-      }
-    }
+    //   .checkmark {
+    //     opacity: 1;
+    //     border-color: var(--input-border-focus);
+    //   }
+    // }
 
     .todo-content {
       position: relative;
@@ -267,15 +253,15 @@ export default defineComponent({
         }
       }
 
-      .checkmark {
-        opacity: 1;
-        background-color: var(--input-border-focus);
-        border-color: var(--input-border-focus);
-        &:after {
-          opacity: 1;
-          transform: rotate(45deg) scale(1);
-        }
-      }
+      // .checkmark {
+      //   opacity: 1;
+      //   background-color: var(--input-border-focus);
+      //   border-color: var(--input-border-focus);
+      //   &:after {
+      //     opacity: 1;
+      //     transform: rotate(45deg) scale(1);
+      //   }
+      // }
     }
   }
 }
