@@ -13,7 +13,7 @@
           <div v-if="title" class="drawer-header-title" id="drawer-title">
             {{ title }}
           </div>
-          <BaseButton @click="close()" simple-button>
+          <BaseButton @click="close()" button-type="tertiary">
             <span class="visually-hidden">Close</span>
             <span class="material-icons-outlined">close</span>
           </BaseButton>

@@ -37,10 +37,12 @@
           </v-date-picker>
         </div>
         <div class="row">
-          <BaseButton type="submit" class="add-todo-button" primary>
+          <BaseButton type="submit" class="add-todo-button" color="success" button-type="secondary">
             Add <span class="material-icons-outlined bold"> add </span>
           </BaseButton>
-          <BaseButton class="add-todo-button" color="warning" @click="toggleForm()"> Cancel </BaseButton>
+          <BaseButton class="add-todo-button" @click="toggleForm()" color="warning" button-type="secondary">
+            Cancel
+          </BaseButton>
         </div>
       </form>
     </template>
@@ -53,8 +55,9 @@ import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import BaseTextArea from './BaseTextArea.vue';
-import type { NewToDo } from '@/types/types';
+import type { NewToDo, ToDo } from '@/types/types';
 import BaseModal from './BaseModal.vue';
+import type { PropType } from 'vue';
 
 export default defineComponent({
   components: {

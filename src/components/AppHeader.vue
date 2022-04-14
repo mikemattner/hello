@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
     <div class="logo">
-      <BaseButton @click="toggleDrawer()" simple-button>
+      <BaseButton @click="toggleDrawer()" button-type="tertiary">
         <span class="material-icons-outlined"> more_vert </span>
       </BaseButton>
-      <BaseButton to="/" simple-button>
+      <BaseButton to="/" button-type="tertiary">
         <span class="material-icons-outlined logo-icon"> task_alt </span>
         <span class="logo-title">MyTodos</span>
       </BaseButton>

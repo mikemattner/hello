@@ -10,7 +10,7 @@ export interface ToDo {
     description: string;
     date: string;
     due: string;
-    key: number;
+    key: number | string;
 }
 
 export interface NewToDo {
@@ -51,4 +51,8 @@ interface Location {
   country: string;
 }
 
-type Colors = 'highlight' | 'warning';
+type Colors = 'default' | 'warning' | 'success';
+
+type ButtonType = 'primary' | 'secondary' | 'tertiary';
+
+type Size = 'small' | 'medium';

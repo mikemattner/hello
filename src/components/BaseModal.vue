@@ -13,7 +13,7 @@
           <div class="modal-header-title" id="modal-title">
             {{ title }}
           </div>
-          <BaseButton @click="close()">
+          <BaseButton @click="close()" button-type="tertiary">
             <span class="visually-hidden">Close</span>
             <span class="material-icons-outlined">close</span>
           </BaseButton>

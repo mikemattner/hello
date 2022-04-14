@@ -1,5 +1,6 @@
 import type { ToDo, TodoState } from '@/types/types';
 import { defineStore } from 'pinia'
+import { v4 as uuidv4 } from 'uuid';
 
 export const useTodoStore = defineStore({
   id: 'todos',
@@ -22,7 +23,7 @@ export const useTodoStore = defineStore({
   actions: {
     addTodo(newTodo: string, due: Date, category: string, description: string) {
       this.todos.ready.tasks.unshift({
-        key: this.todos.ready.tasks.length + 1,
+        key: uuidv4(),
         category: category,
         content: newTodo,
         description: description,
