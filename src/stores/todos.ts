@@ -38,12 +38,14 @@ export const useTodoStore = defineStore({
       const index = this.todos[value.column].tasks.map(t => t.key).indexOf(value.key);
       console.log(index)
       if(index != -1) {
-        // TODO: let's fix how this get's passed
-        // Object.assign(this.todos[value.column].tasks, user) 
-        this.todos[value.column].tasks[index].content = value.todo.todoTitle;
-        this.todos[value.column].tasks[index].description = value.todo.todoDescription;
-        this.todos[value.column].tasks[index].category = value.todo.todoCategory;
-        this.todos[value.column].tasks[index].due = value.todo.dueDate.toString();
+        const updatedTodo: ToDo = {
+          key: value.key,
+          category: value.todo.todoCategory,
+          content: value.todo.todoTitle,
+          description: value.todo.todoDescription,
+          due: value.todo.dueDate.toString(),
+        };
+        Object.assign(this.todos[value.column].tasks[index], updatedTodo); 
       }
     },
   },

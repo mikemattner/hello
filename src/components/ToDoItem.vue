@@ -70,7 +70,7 @@ export default defineComponent({
     });
 
     const dateFormat = ref<string>('MMM d, y');
-    const dateSet = format(new Date(props.todo.due), dateFormat.value);
+    const dateSet = computed(() => format(new Date(props.todo.due), dateFormat.value));
 
     return {
       editToDo,
@@ -123,10 +123,20 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 5px;
-    padding: 0 0.5rem;
+    padding: 1rem 0.5rem;
     background-color: rgba(0, 0, 0, 0.25);
+    transform: translateX(20px);
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  &:hover {
+    .todo-actions {
+      transform: translateX(0);
+      opacity: 1;
+    }
   }
 
   &-content {
