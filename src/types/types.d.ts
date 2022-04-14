@@ -4,13 +4,18 @@ export interface Messages {
     morning: string;
 }
 
+export interface SaveToDo {
+    column: number;
+    todo: NewToDo;
+    key: number | string;
+}
+
 export interface ToDo {
     category: string;
     content: string;
     description: string;
-    date: string;
     due: string;
-    key: number;
+    key: number | string;
 }
 
 export interface NewToDo {
@@ -21,13 +26,7 @@ export interface NewToDo {
 }
 
 interface TodoState {
-    todos: ToDoColumns;
-}
-
-export interface ToDoColumns {
-    done: ToDoColumn;
-    inProgress: ToDoColumn;
-    ready: ToDoColumn;
+    todos: ToDoColumn[];
 }
 
 export interface ToDoColumn {
@@ -51,4 +50,8 @@ interface Location {
   country: string;
 }
 
-type Colors = 'highlight' | 'warning';
+type Colors = 'default' | 'warning' | 'success';
+
+type ButtonType = 'primary' | 'secondary' | 'tertiary';
+
+type Size = 'small' | 'medium';

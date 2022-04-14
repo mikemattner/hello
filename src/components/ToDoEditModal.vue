@@ -1,7 +1,7 @@
 <template>
-  <BaseModal :is-open="open" title="Add New Task" @close="toggleForm()">
+  <BaseModal :is-open="open" title="Edit Task" @close="toggleForm()">
     <template v-slot:body>
-      <form key="todo-form" class="todo-form" @submit.prevent="addTodo()">
+      <form key="todo-form" class="todo-form" @submit.prevent="saveToDo()">
         <div class="row">
           <BaseInput
             v-model="todoModel.todoTitle"
@@ -37,8 +37,14 @@
           </v-date-picker>
         </div>
         <div class="row">
-          <BaseButton type="submit" class="add-todo-button" color="success" button-type="secondary">
-            Add <span class="material-icons-outlined bold"> add </span>
+          <BaseButton
+            type="submit"
+            class="add-todo-button"
+            color="success"
+            button-type="secondary"
+            :disabled="isDisabled"
+          >
+            Save
           </BaseButton>
           <BaseButton class="add-todo-button" @click="toggleForm()" color="warning" button-type="secondary">
             Cancel
@@ -50,13 +56,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import BaseTextArea from './BaseTextArea.vue';
-import type { NewToDo, ToDo } from '@/types/types';
+import type { NewToDo, ToDo, SaveToDo } from '@/types/types';
 import BaseModal from './BaseModal.vue';
+import { useTodoStore } from '@/stores/todos';
 import type { PropType } from 'vue';
 
 export default defineComponent({
@@ -72,27 +79,57 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    todoItem: {
+      type: Object as PropType<ToDo>,
+      required: false,
+    },
+    todoItemKey: {
+      type: [String, Number],
+      required: true,
+    },
+    column: {
+      type: Number,
+      required: true,
+    },
   },
-  emits: ['addTodo', 'toggle'],
+  emits: ['saveToDo', 'toggle'],
   setup(props, { emit }) {
     const options: String[] = ['Work', 'Personal', 'Home'];
     const todoModel = ref<NewToDo>({
       todoTitle: '',
       todoDescription: '',
-      todoCategory: 'Work',
+      todoCategory: '',
       dueDate: new Date(),
     });
 
-    const addTodo = () => {
-      if (todoModel.value.todoTitle) {
-        emit('addTodo', todoModel.value);
-        todoModel.value = {
-          todoTitle: '',
-          todoDescription: '',
-          todoCategory: 'Work',
-          dueDate: new Date(),
-        };
-      }
+    const todoStore = useTodoStore().$state.todos;
+
+    if (props.todoItem) {
+      todoModel.value.todoTitle = props.todoItem.content;
+      todoModel.value.todoDescription = props.todoItem.description;
+      todoModel.value.todoCategory = props.todoItem.category;
+      todoModel.value.dueDate = new Date(props.todoItem.due);
+    }
+
+    const toDoInitial = JSON.stringify(todoModel.value);
+    const isDisabled = computed<boolean>(() => {
+      return toDoInitial === JSON.stringify(todoModel.value);
+    });
+
+    const saveToDo = () => {
+      const saveItem: SaveToDo = {
+        column: props.column,
+        todo: todoModel.value,
+        key: props.todoItemKey,
+      };
+      emit('saveToDo', saveItem);
+      todoModel.value = {
+        todoTitle: '',
+        todoDescription: '',
+        todoCategory: 'Work',
+        dueDate: new Date(),
+      };
+      toggleForm();
     };
 
     const toggleForm = () => {
@@ -106,10 +143,11 @@ export default defineComponent({
     };
 
     return {
-      addTodo,
+      saveToDo,
       toggleForm,
       options,
       todoModel,
+      isDisabled,
     };
   },
 });

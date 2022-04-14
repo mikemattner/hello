@@ -19,6 +19,7 @@
     "node-fetch": "^3.2.3",
     "pinia": "^2.0.11",
     "pinia-plugin-persistedstate": "^1.5.1",
+    "uuid": "^8.3.2",
     "v-calendar": "^3.0.0-alpha.8",
     "vue": "^3.2.31",
     "vue-router": "^4.0.12",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/node": "^16.11.25",
+    "@types/uuid": "^8.3.4",
     "@vitejs/plugin-vue": "^2.2.2",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",

@@ -1,45 +1,49 @@
-import type { ToDo, TodoState } from '@/types/types';
+import type { ToDo, TodoState, NewToDo, SaveToDo } from '@/types/types';
 import { defineStore } from 'pinia'
+import { v4 as uuidv4 } from 'uuid';
 
 export const useTodoStore = defineStore({
   id: 'todos',
   state: () => ({
-    todos: {
-      ready: { name: 'Ready', tasks: []},
-      inProgress: { name: 'In Progress', tasks: []},
-      done: { name: 'Done', tasks: []},
-    },
+    todos: [
+      { name: 'Ready', tasks: []},
+      { name: 'In Progress', tasks: []},
+      { name: 'Done', tasks: []},
+    ],
   }) as TodoState,
   getters: {
     getTodos: (state) => state.todos,
-    getReadyTodos: (state) => state.todos.ready,
-    getInProgressTodos: (state) => state.todos.inProgress,
-    getDoneTodos: (state) => state.todos.done,
+    getReadyTodos: (state) => state.todos[0],
+    getInProgressTodos: (state) => state.todos[1],
+    getDoneTodos: (state) => state.todos[2],
     getTotalCount: (state) => {
-       return state.todos.ready.tasks.length + state.todos.inProgress.tasks.length + state.todos.done.tasks.length;
+       return state.todos[0].tasks.length + state.todos[1].tasks.length + state.todos[2].tasks.length;
     },
   },
   actions: {
-    addTodo(newTodo: string, due: Date, category: string, description: string) {
-      this.todos.ready.tasks.unshift({
-        key: this.todos.ready.tasks.length + 1,
-        category: category,
-        content: newTodo,
-        description: description,
-        date: new Date().toString(),
-        due: due.toString(),
+    addTodo(value: NewToDo) {
+      this.todos[0].tasks.unshift({
+        key: uuidv4(),
+        category: value.todoCategory,
+        content: value.todoTitle,
+        description: value.todoDescription,
+        due: value.dueDate.toString(),
       });
     },
-    removeTodo(todo: ToDo) {
-      const index = this.todos.ready.tasks.indexOf(todo);
-      const progressIndex = this.todos.inProgress.tasks.indexOf(todo);
-      const doneIndex = this.todos.done.tasks.indexOf(todo);
-      if(index > -1) {
-        this.todos.ready.tasks.splice(index, 1);
-      } else if(progressIndex > -1) {
-        this.todos.inProgress.tasks.splice(progressIndex, 1);
-      } else if(doneIndex > -1) {
-        this.todos.done.tasks.splice(doneIndex, 1);
+    removeTodo(todo: ToDo, column: number) {
+      const index = this.todos[column].tasks.indexOf(todo);
+      this.todos[column].tasks.splice(index, 1);
+    },
+    saveTodo(value: SaveToDo) {
+      const index = this.todos[value.column].tasks.map(t => t.key).indexOf(value.key);
+      console.log(index)
+      if(index != -1) {
+        // TODO: let's fix how this get's passed
+        // Object.assign(this.todos[value.column].tasks, user) 
+        this.todos[value.column].tasks[index].content = value.todo.todoTitle;
+        this.todos[value.column].tasks[index].description = value.todo.todoDescription;
+        this.todos[value.column].tasks[index].category = value.todo.todoCategory;
+        this.todos[value.column].tasks[index].due = value.todo.dueDate.toString();
       }
     },
   },

@@ -2,52 +2,69 @@
   <div class="todo-list-header">
     <CurrentGreeting />
     <div class="add-task-button-container">
-      <BaseButton @click="toggleForm()" primary>
+      <Transition name="fade">
+        <BaseButton v-if="getTotalCount > 0" @click="toggleForm()">
+          Add
+          <span class="material-icons-outlined bold"> add </span>
+        </BaseButton>
+      </Transition>
+    </div>
+  </div>
+  <TransitionGroup name="todo">
+    <div v-if="getTotalCount < 1" class="empty-todo" key="empty-todos-state">
+      <p class="empty-emoji">🥳</p>
+      <p>You finished it all!</p>
+      <BaseButton @click="toggleForm()" button-type="secondary">
         Add
         <span class="material-icons-outlined bold"> add </span>
       </BaseButton>
     </div>
-  </div>
-  <div v-if="getTotalCount < 1" class="empty-todo">
-    <p class="empty-emoji">🥳</p>
-    <p>You finished it all!</p>
-    <BaseButton @click="toggleForm()">
-      Add
-      <span class="material-icons-outlined bold"> add </span>
-    </BaseButton>
-  </div>
-  <div v-else class="todo-list-container">
-    <section class="todo-list-todos">
-      <div v-for="(column, index) in todoList" :key="`column-${column.name}-${index}`" class="todo-list-todos__col">
-        <div class="headings">
-          <div class="flex-content">
-            <span class="content">{{ column.name }}</span>
+    <div v-else class="todo-list-container" key="active-todos-state">
+      <section class="todo-list-todos">
+        <div v-for="(column, index) in todoList" :key="`column-${column.name}-${index}`" class="todo-list-todos__col">
+          <div class="headings">
+            <div class="flex-content">
+              <span class="content">{{ column.name }}</span>
+            </div>
+            <span class="count">{{ column.tasks.length }}</span>
           </div>
-          <span class="count">{{ column.tasks.length }}</span>
+          <div class="todo-list">
+            <VDraggable
+              v-model="column.tasks"
+              tag="div"
+              item-key="key"
+              group="tasks"
+              handle=".handle"
+              class="todo-list-draggable"
+              :component-data="{ tag: 'div', name: 'flip-list', type: 'transition' }"
+              key="draggable-list"
+              v-bind="dragOptions"
+              @start="drag = true"
+              @end="drag = false"
+            >
+              <template #item="{ element }">
+                <ToDoItem
+                  :todo="element"
+                  @edit="openEditForm(element.key, index, element)"
+                  @remove="removeTodo(element, index)"
+                />
+              </template>
+            </VDraggable>
+          </div>
         </div>
-        <div class="todo-list">
-          <VDraggable
-            v-model="column.tasks"
-            tag="div"
-            item-key="key"
-            group="tasks"
-            handle=".handle"
-            class="todo-list-draggable"
-            :component-data="{ tag: 'div', name: 'flip-list', type: 'transition' }"
-            key="draggable-list"
-            v-bind="dragOptions"
-            @start="drag = true"
-            @end="drag = false"
-          >
-            <template #item="{ element }">
-              <ToDoItem :todo="element" @remove="removeTodo(element)" />
-            </template>
-          </VDraggable>
-        </div>
-      </div>
-    </section>
-  </div>
+      </section>
+    </div>
+  </TransitionGroup>
   <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
+  <ToDoEditModal
+    v-if="editModalForm"
+    @toggle="closeEditForm()"
+    @saveToDo="saveToDo($event)"
+    :todo-item="editTodoItem"
+    :todo-item-key="editTodoItemKey"
+    :column="editToDoColumn"
+    :open="editModalForm"
+  />
 </template>
 
 <script lang="ts">
@@ -58,18 +75,20 @@ import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import ToDoItem from './ToDoItem.vue';
 import { useTodoStore } from '@/stores/todos';
-import type { NewToDo, ToDo, ToDoColumns } from '@/types/types';
+import type { NewToDo, ToDo, ToDoColumn, SaveToDo } from '@/types/types';
 import BaseTextArea from './BaseTextArea.vue';
 import ToDoNewModal from './ToDoNewModal.vue';
 import VDraggable from 'vuedraggable';
 import CurrentGreeting from './CurrentGreeting.vue';
 import { storeToRefs } from 'pinia';
+import ToDoEditModal from './ToDoEditModal.vue';
 
 export default defineComponent({
   name: 'ToDos',
   setup() {
     const todoStore = useTodoStore();
     const addTodoForm = ref<boolean>(false);
+    const editModalForm = ref<boolean>(false);
     const drag = ref<boolean>(false);
     const dragOptions = computed(() => {
       return {
@@ -79,7 +98,7 @@ export default defineComponent({
       };
     });
 
-    const todoList = computed<ToDoColumns>({
+    const todoList = computed<ToDoColumn[]>({
       get: () => todoStore.$state.todos,
       set: (value) => (todoStore.$state.todos = value),
     });
@@ -87,16 +106,34 @@ export default defineComponent({
     const { getTotalCount } = storeToRefs(todoStore);
 
     const addTodo = (value: NewToDo) => {
-      todoStore.addTodo(value.todoTitle, value.dueDate, value.todoCategory, value.todoDescription);
+      todoStore.addTodo(value);
       toggleForm();
     };
 
-    const removeTodo = (todo: ToDo) => {
-      todoStore.removeTodo(todo);
+    const removeTodo = (todo: ToDo, column: number) => {
+      todoStore.removeTodo(todo, column);
     };
 
     const toggleForm = () => {
       addTodoForm.value = !addTodoForm.value;
+    };
+
+    const editToDoColumn = ref<number>(0);
+    const editTodoItem = ref<ToDo | undefined>();
+    const editTodoItemKey = ref<string | number>('');
+
+    const openEditForm = (itemKey: string | number, column: number, todo: ToDo) => {
+      editTodoItemKey.value = itemKey;
+      editToDoColumn.value = column;
+      editTodoItem.value = todo;
+      editModalForm.value = !editModalForm.value;
+    };
+    const closeEditForm = () => {
+      editModalForm.value = !editModalForm.value;
+    };
+
+    const saveToDo = (value: SaveToDo) => {
+      todoStore.saveTodo(value);
     };
 
     return {
@@ -108,6 +145,13 @@ export default defineComponent({
       todoList,
       toggleForm,
       getTotalCount,
+      editModalForm,
+      closeEditForm,
+      openEditForm,
+      editToDoColumn,
+      editTodoItem,
+      saveToDo,
+      editTodoItemKey,
     };
   },
   components: {
@@ -120,6 +164,7 @@ export default defineComponent({
     ToDoNewModal,
     VDraggable,
     CurrentGreeting,
+    ToDoEditModal,
   },
 });
 </script>
@@ -149,7 +194,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 400px;
 
   .empty-emoji {
     font-size: 1.75rem;
@@ -242,14 +287,18 @@ export default defineComponent({
 .no-move {
   transition: transform 0s;
 }
-// .list-move,
-// .list-enter-active,
-// .list-leave-active {
-//   transition: transform 0.375s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-// }
+.todo-move,
+.todo-enter-active,
+.todo-leave-active {
+  transition: all 0.375s ease-in-out;
+}
 
-// .list-enter-from,
-// .list-leave-to {
-//   opacity: 0;
-// }
+.todo-enter-from,
+.todo-leave-to {
+  opacity: 0;
+}
+
+.todo-leave-active {
+  position: absolute;
+}
 </style>

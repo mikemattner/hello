@@ -9,7 +9,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import type { PropType } from 'vue';
-import type { Colors } from '@/types/types';
+import type { ButtonType, Colors, Size } from '@/types/types';
 import { RouterLink } from 'vue-router';
 
 export default defineComponent({
@@ -26,21 +26,17 @@ export default defineComponent({
       type: String,
       default: null,
     },
-    primary: {
-      type: Boolean,
-      default: false,
-    },
-    actionButton: {
-      type: Boolean,
-      default: false,
-    },
-    simpleButton: {
-      type: Boolean,
-      default: false,
-    },
     color: {
       type: String as PropType<Colors>,
-      default: 'highlight',
+      default: 'default',
+    },
+    size: {
+      type: String as PropType<Size>,
+      default: 'medium',
+    },
+    buttonType: {
+      type: String as PropType<ButtonType>,
+      default: 'primary',
     },
     disabled: {
       type: Boolean,
@@ -60,11 +56,14 @@ export default defineComponent({
       return [
         'button',
         {
-          button__primary: props.primary,
-          button__action: props.actionButton,
-          button__simple: props.simpleButton,
-          button__highlight: props.color === 'highlight',
+          button__primary: props.buttonType === 'primary',
+          button__secondary: props.buttonType === 'secondary',
+          button__tertiary: props.buttonType === 'tertiary',
+          button__default: props.color === 'default',
           button__warning: props.color === 'warning',
+          button__success: props.color === 'success',
+          button__medium: props.size === 'medium',
+          button__small: props.size === 'small',
           button__disabled: props.disabled,
         },
       ];
@@ -93,58 +92,16 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .button {
-  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
-  border: none;
   background-color: unset;
-  padding: 0.25rem 0.5rem;
-  color: var(--color);
-  border: 1px solid rgba(#dcebf6, 0.125);
-  transition: all 0.25s ease-in-out;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
   text-decoration: none;
-
-  &.button__action {
-    position: fixed;
-    bottom: 40px;
-    right: 20px;
-    border-radius: 30px;
-    padding: 0.5rem 0.75rem;
-    z-index: 99;
-    box-shadow: 2px 10px 20px var(--card-shadow);
-
-    :deep(.material-icons-outlined) {
-      font-size: 1.25rem;
-    }
-  }
-  &.button__highlight {
-    color: var(--color);
-    &:hover:not(:disabled) {
-      background-color: rgba(#0ea5e9, 0.125);
-      border-color: var(--contrast-color);
-    }
-  }
-
-  &.button__simple {
-    color: var(--color);
-    border-color: transparent;
-    &:hover:not(:disabled) {
-      background-color: rgba(#0ea5e9, 0.125);
-      border-color: rgba(#0ea5e9, 0.125);
-    }
-  }
-
-  &.button__warning {
-    color: var(--red-color);
-    border: 1px solid var(--red-color);
-    &:hover:not(:disabled) {
-      background-color: rgba(#f56565, 0.125);
-      border-color: var(--red-color);
-    }
-  }
+  transition: all 0.25s ease-in-out;
 
   &:hover:not(:disabled) {
     cursor: pointer;
@@ -152,7 +109,6 @@ export default defineComponent({
   &:focus,
   &:active {
     outline: 0;
-    box-shadow: var(--button-focus-shadow);
   }
 
   &--disabled,
@@ -168,44 +124,148 @@ export default defineComponent({
     justify-content: center;
     text-align: center;
     gap: 10px;
-    font-size: 0.75rem;
     font-weight: 900;
   }
 
-  :deep(svg) {
-    fill: var(--contrast-color);
+  &.button__small {
+    padding: 0.25rem 0.25rem;
+
+    .button--content {
+      font-size: 0.675rem;
+
+      :deep(.material-icons-outlined) {
+        font-size: 0.75rem;
+      }
+    }
+  }
+
+  &.button__medium {
+    padding: 0.25rem 0.5rem;
+
+    .button--content {
+      font-size: 0.75rem;
+    }
   }
 
   &__primary {
-    &.button__highlight {
-      color: var(--contrast-text-color);
-      background-color: var(--contrast-color);
-      &:hover:not(:disabled) {
-        color: var(--contrast-text-color-hover);
-        background-color: var(--contrast-color-hover);
-        border-color: var(--contrast-color-hover);
-      }
-    }
+    color: var(--button-primary-text-color);
+    background-color: var(--button-primary-background-color);
 
-    &.button__warning {
-      color: #fff;
-      background-color: var(--color--red);
-      &:hover:not(:disabled) {
-        background-color: var(--color--red);
-        border-color: var(--color--red);
-      }
-    }
-
-    :deep(svg) {
-      fill: var(--card-bg);
-    }
     &:hover:not(:disabled) {
-      box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0.25);
+      color: var(--button-primary-text-hover-color);
+      background-color: var(--button-primary-background-hover-color);
     }
+
+    &:active,
     &:focus {
       outline: 0;
-      box-shadow: inset 0 0 0 40px rgba(0, 0, 0, 0), var(--button-focus-shadow);
+      box-shadow: var(--button-focus-shadow);
     }
+  }
+
+  &__secondary {
+    color: var(--button-secondary-text-color);
+    background-color: var(--button-secondary-background-color);
+    box-shadow: inset 0 0 0 1px var(--button-secondary-border-color);
+
+    &:hover:not(:disabled) {
+      color: var(--button-secondary-text-hover-color);
+      background-color: var(--button-secondary-background-hover-color);
+      box-shadow: inset 0 0 0 1px var(--button-secondary-border-hover-color);
+    }
+
+    &:active,
+    &:focus {
+      outline: 0;
+      box-shadow: inset 0 0 0 1px var(--button-secondary-border-hover-color), var(--button-focus-shadow);
+    }
+  }
+
+  &__tertiary {
+    color: var(--button-tertiary-text-color);
+    background-color: var(--button-tertiary-background-color);
+    box-shadow: inset 0 0 0 1px var(--button-tertiary-border-color);
+
+    &:hover:not(:disabled) {
+      color: var(--button-tertiary-text-color-hover);
+      background-color: var(--button-tertiary-background-hover-color);
+      box-shadow: inset 0 0 0 1px var(--button-tertiary-border-hover-color);
+    }
+
+    &:active,
+    &:focus {
+      outline: 0;
+      box-shadow: inset 0 0 0 1px var(--button-tertiary-border-hover-color), var(--button-focus-shadow);
+    }
+  }
+
+  &__default {
+    --button-primary-text-color: var(--slate-900);
+    --button-primary-text-hover-color: var(--slate-900);
+    --button-primary-background-color: var(--sky-400);
+    --button-primary-background-hover-color: var(--sky-300);
+    --button-primary-border-color: var(--sky-800);
+    --button-primary-border-hover-color: var(--sky-400);
+
+    --button-secondary-text-color: var(--sky-400);
+    --button-secondary-text-hover-color: var(--slate-900);
+    --button-secondary-background-color: rgba(56, 189, 248, 0.1);
+    --button-secondary-background-hover-color: rgba(56, 189, 248, 1);
+    --button-secondary-border-color: var(--sky-800);
+    --button-secondary-border-hover-color: var(--sky-400);
+
+    --button-tertiary-text-color: var(--color);
+    --button-tertiary-text-hover-color: var(--color);
+    --button-tertiary-background-color: rgba(56, 189, 248, 0);
+    --button-tertiary-background-hover-color: rgba(56, 189, 248, 0.1);
+    --button-tertiary-border-color: rgba(56, 189, 248, 0);
+    --button-tertiary-border-hover-color: var(--sky-800);
+  }
+
+  &__success {
+    --button-primary-text-color: var(--ocean-green-900);
+    --button-primary-text-hover-color: var(--ocean-green-900);
+    --button-primary-background-color: var(--ocean-green-400);
+    --button-primary-background-hover-color: var(--ocean-green-300);
+    --button-primary-border-color: var(--ocean-green-800);
+    --button-primary-border-hover-color: var(--ocean-green-400);
+
+    --button-secondary-text-color: var(--ocean-green-400);
+    --button-secondary-text-hover-color: var(--ocean-green-900);
+    --button-secondary-background-color: rgba(72, 187, 120, 0.1);
+    --button-secondary-background-hover-color: rgba(72, 187, 120, 1);
+    --button-secondary-border-color: var(--ocean-green-800);
+    --button-secondary-border-hover-color: var(--ocean-green-400);
+
+    --button-tertiary-text-color: var(--ocean-green-200);
+    --button-tertiary-text-hover-color: var(--ocean-green-200);
+    --button-tertiary-background-color: rgba(72, 187, 120, 0);
+    --button-tertiary-background-hover-color: rgba(72, 187, 120, 0.1);
+    --button-tertiary-border-color: rgba(72, 187, 120, 0);
+    --button-tertiary-border-hover-color: var(--ocean-green-800);
+  }
+
+  &__warning {
+    --button-primary-text-color: var(--carnation-900);
+    --button-primary-text-hover-color: var(--carnation-900);
+    --button-primary-background-color: var(--carnation-400);
+    --button-primary-background-hover-color: var(--carnation-300);
+    --button-primary-border-color: var(--carnation-800);
+    --button-primary-border-hover-color: var(--carnation-400);
+
+    --button-secondary-text-color: var(--carnation-100);
+    --button-secondary-text-hover-color: var(--carnation-100);
+    --button-secondary-background-color: rgba(125, 31, 31, 0.1);
+    --button-secondary-background-hover-color: rgba(125, 31, 31, 1);
+    --button-secondary-border-color: var(--carnation-800);
+    --button-secondary-border-hover-color: var(--carnation-400);
+
+    --button-tertiary-text-color: var(--carnation-200);
+    --button-tertiary-text-hover-color: var(--carnation-200);
+    --button-tertiary-background-color: rgba(125, 31, 31, 0);
+    --button-tertiary-background-hover-color: rgba(125, 31, 31, 0.1);
+    --button-tertiary-border-color: rgba(125, 31, 31, 0);
+    --button-tertiary-border-hover-color: var(--carnation-800);
   }
 }
 </style>

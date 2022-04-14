@@ -1,5 +1,5 @@
 <template>
-  <div class="todo-list__item">
+  <div :class="['todo-list__item', categoryClasses]">
     <div class="todo-list__item-content">
       <div class="drag-surround handle">
         <span class="material-icons-outlined"> drag_indicator </span>
@@ -20,7 +20,10 @@
       </div>
     </div>
     <div class="todo-actions">
-      <BaseButton @click="removeTodo()" color="warning">
+      <BaseButton @click="editToDo()" button-type="secondary" color="success" size="small">
+        <span class="material-icons-outlined"> edit </span>
+      </BaseButton>
+      <BaseButton @click="removeTodo()" button-type="secondary" color="warning" size="small">
         <span class="material-icons-outlined"> delete_outline </span>
       </BaseButton>
     </div>
@@ -46,8 +49,11 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['remove'],
+  emits: ['edit', 'remove'],
   setup(props, { emit }) {
+    const editToDo = () => {
+      emit('edit');
+    };
     const removeTodo = () => {
       emit('remove');
     };
@@ -67,6 +73,7 @@ export default defineComponent({
     const dateSet = format(new Date(props.todo.due), dateFormat.value);
 
     return {
+      editToDo,
       removeTodo,
       dateSet,
       categoryClasses,
@@ -87,66 +94,38 @@ export default defineComponent({
   overflow: hidden;
   box-shadow: 2px 10px 20px var(--card-shadow);
 
-  .category-label {
-    padding: 4px 8px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
+  // &.category-home {
+  //   border-left: 3px solid var(--ocean-green-400);
+  // }
 
-    span {
-      font-weight: 900;
-    }
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      display: block;
-    }
+  // &.category-work {
+  //   border-left: 3px solid var(--jaffa-400);
+  // }
 
-    &.category-home {
-      color: var(--ocean-green-900);
-      background-color: var(--ocean-green-400);
-
-      .dot {
-        background-color: var(--ocean-green-900);
-      }
-    }
-
-    &.category-work {
-      color: var(--jaffa-900);
-      background-color: var(--jaffa-400);
-
-      .dot {
-        background-color: var(--jaffa-900);
-      }
-    }
-
-    &.category-personal {
-      color: var(--carnation-900);
-      background-color: var(--carnation-400);
-
-      .dot {
-        background-color: var(--carnation-900);
-      }
-    }
-  }
+  // &.category-personal {
+  //   border-left: 3px solid var(--carnation-400);
+  // }
 
   .drag-surround {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1rem 0.5rem;
+    padding: 1rem 0.25rem;
     background-color: rgba(0, 0, 0, 0.25);
     cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
   }
 
   .todo-actions {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 1rem;
+    gap: 5px;
+    padding: 0 0.5rem;
     background-color: rgba(0, 0, 0, 0.25);
   }
 
@@ -236,29 +215,74 @@ export default defineComponent({
         font-size: 0.675rem;
         color: var(--slate-400);
       }
-    }
+      .category-label {
+        padding: 4px 8px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
 
-    &.done {
-      .todo-content {
-        &__label {
-          text-decoration-line: line-through;
-          text-decoration-style: wavy;
-          text-decoration-color: var(--input-border-focus);
-          text-decoration-thickness: 1px;
-          color: rgba(255, 255, 255, 0.5);
+        span {
+          font-weight: 900;
+        }
+        .dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          display: block;
+        }
+
+        &.category-home {
+          color: var(--ocean-green-900);
+          background-color: var(--ocean-green-400);
+
+          .dot {
+            background-color: var(--ocean-green-900);
+          }
+        }
+
+        &.category-work {
+          color: var(--jaffa-900);
+          background-color: var(--jaffa-400);
+
+          .dot {
+            background-color: var(--jaffa-900);
+          }
+        }
+
+        &.category-personal {
+          color: var(--carnation-900);
+          background-color: var(--carnation-400);
+
+          .dot {
+            background-color: var(--carnation-900);
+          }
         }
       }
-
-      // .checkmark {
-      //   opacity: 1;
-      //   background-color: var(--input-border-focus);
-      //   border-color: var(--input-border-focus);
-      //   &:after {
-      //     opacity: 1;
-      //     transform: rotate(45deg) scale(1);
-      //   }
-      // }
     }
+
+    // &.done {
+    //   .todo-content {
+    //     &__label {
+    //       text-decoration-line: line-through;
+    //       text-decoration-style: wavy;
+    //       text-decoration-color: var(--input-border-focus);
+    //       text-decoration-thickness: 1px;
+    //       color: rgba(255, 255, 255, 0.5);
+    //     }
+    //   }
+
+    //   // .checkmark {
+    //   //   opacity: 1;
+    //   //   background-color: var(--input-border-focus);
+    //   //   border-color: var(--input-border-focus);
+    //   //   &:after {
+    //   //     opacity: 1;
+    //   //     transform: rotate(45deg) scale(1);
+    //   //   }
+    //   // }
+    // }
   }
 }
 </style>

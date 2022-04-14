@@ -13,7 +13,7 @@
           <div class="modal-header-title" id="modal-title">
             {{ title }}
           </div>
-          <BaseButton @click="close()">
+          <BaseButton @click="close()" button-type="tertiary">
             <span class="visually-hidden">Close</span>
             <span class="material-icons-outlined">close</span>
           </BaseButton>
@@ -142,7 +142,7 @@ export default defineComponent({
       font-size: 1rem;
       text-align: center;
       padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.25);
       display: flex;
       align-items: center;
       justify-content: space-between;
