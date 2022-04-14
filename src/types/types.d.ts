@@ -4,11 +4,16 @@ export interface Messages {
     morning: string;
 }
 
+export interface SaveToDo {
+    column: number;
+    todo: NewToDo;
+    key: number | string;
+}
+
 export interface ToDo {
     category: string;
     content: string;
     description: string;
-    date: string;
     due: string;
     key: number | string;
 }
@@ -21,13 +26,7 @@ export interface NewToDo {
 }
 
 interface TodoState {
-    todos: ToDoColumns;
-}
-
-export interface ToDoColumns {
-    done: ToDoColumn;
-    inProgress: ToDoColumn;
-    ready: ToDoColumn;
+    todos: ToDoColumn[];
 }
 
 export interface ToDoColumn {

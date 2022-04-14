@@ -142,7 +142,7 @@ export default defineComponent({
       font-size: 1rem;
       text-align: center;
       padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.1);
+      background-color: rgba(0, 0, 0, 0.25);
       display: flex;
       align-items: center;
       justify-content: space-between;
