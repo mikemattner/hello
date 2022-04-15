@@ -3,8 +3,8 @@
     <CurrentGreeting />
     <div class="add-task-button-container">
       <Transition name="fade">
-        <BaseButton v-if="getTotalCount > 0" @click="toggleForm()">
-          Add
+        <BaseButton v-if="getTotalCount > 0" @click="toggleForm()" button-type="secondary" size="small">
+          Add Task
           <span class="material-icons-outlined bold"> add </span>
         </BaseButton>
       </Transition>
@@ -57,7 +57,7 @@
   </TransitionGroup>
   <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
   <ToDoEditModal
-    @toggle="toggleEditForm()"
+    @close="toggleEditForm()"
     @saveToDo="saveToDo($event)"
     :todo-item="editTodoItem"
     :todo-item-key="editTodoItemKey"
@@ -91,7 +91,7 @@ export default defineComponent({
     const drag = ref<boolean>(false);
     const dragOptions = computed(() => {
       return {
-        animation: 0,
+        animation: 200,
         disabled: false,
         ghostClass: 'ghost',
       };
@@ -140,6 +140,7 @@ export default defineComponent({
 
     const saveToDo = (value: SaveToDo) => {
       todoStore.saveTodo(value);
+      toggleEditForm();
     };
 
     return {
@@ -177,14 +178,17 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .todo-list-header {
-  display: grid;
-  align-items: flex-end;
-  grid-template-columns: 1fr 1fr;
-  padding: 1.5rem 20px 1.25rem;
+  // display: grid;
+  // align-items: flex-end;
+  // grid-template-columns: 1fr 1fr;
+  padding: 1.5rem 10px 1.25rem 20px;
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
 
   .add-task-button-container {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-end;
   }
 }

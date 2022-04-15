@@ -24,7 +24,7 @@
         <span class="material-icons-outlined"> edit </span>
       </BaseButton>
       <BaseButton @click="removeTodo()" button-type="secondary" color="warning" size="small">
-        <span class="material-icons-outlined"> delete_outline </span>
+        <span class="material-icons-outlined"> remove_circle_outline </span>
       </BaseButton>
     </div>
   </div>
@@ -114,7 +114,7 @@ export default defineComponent({
     justify-content: flex-start;
     gap: 5px;
     padding: 1rem 0.5rem;
-    background-color: rgba(0, 0, 0, 0.25);
+    // background-color: rgba(0, 0, 0, 0.25);
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     @media (min-width: 1024px) {
@@ -139,7 +139,6 @@ export default defineComponent({
 
     .todo-content {
       position: relative;
-      font-size: 0.75rem;
       padding: 1rem;
       width: 100%;
 
@@ -175,6 +174,7 @@ export default defineComponent({
       &__label {
         font-weight: 700;
         font-size: 0.75rem;
+        color: var(--header-color);
       }
       &__description {
         margin: 0.25rem 0 1rem;

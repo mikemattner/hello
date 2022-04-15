@@ -57,7 +57,8 @@
 
   --background-color: var(--slate-900);
   --background-image: radial-gradient(circle, var(--slate-800) 0%, var(--slate-900) 50%);
-  --color: var(--slate-200);
+  --color: var(--slate-400);
+  --header-color: var(--slate-100);
 
   --tooltip-bg: var(--slate-700);
   --tooltip-color: var(--slate-200);
@@ -83,4 +84,6 @@
   --contrast-color: var(--sky-400);
   --contrast-color-hover: var(--sky-500);
   --contrast-text-color-hover: var(--sky-200);
+
+  --font-family: 'Space Grotesk', sans-serif;
 }

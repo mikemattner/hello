@@ -95,7 +95,7 @@ export default defineComponent({
     border: 1px solid var(--input-border-color);
     border-radius: 4px;
     background: none;
-    color: var(--color);
+    color: var(--header-color);
     font-weight: 300;
     font-size: 0.75rem;
     padding: 0.5rem;
@@ -103,6 +103,7 @@ export default defineComponent({
     outline: none;
     transition: all 0.25s ease-in-out;
     margin: 0;
+    font-family: var(----font-family);
 
     &:hover {
       border-color: var(--input-border-focus);

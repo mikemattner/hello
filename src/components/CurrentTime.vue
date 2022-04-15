@@ -33,6 +33,7 @@ export default defineComponent({
   flex-direction: column;
   text-align: center;
   height: 100%;
+  color: var(--header-color);
 
   &__display {
     display: flex;
