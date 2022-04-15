@@ -102,6 +102,7 @@ export default defineComponent({
   overflow: hidden;
   text-decoration: none;
   transition: all 0.25s ease-in-out;
+  font-family: var(----font-family);
 
   &:hover:not(:disabled) {
     cursor: pointer;
@@ -131,8 +132,6 @@ export default defineComponent({
     padding: 0.25rem 0.25rem;
 
     .button--content {
-      font-size: 0.675rem;
-
       :deep(.material-icons-outlined) {
         font-size: 0.75rem;
       }
@@ -187,7 +186,7 @@ export default defineComponent({
     box-shadow: inset 0 0 0 1px var(--button-tertiary-border-color);
 
     &:hover:not(:disabled) {
-      color: var(--button-tertiary-text-color-hover);
+      color: var(--button-tertiary-text-hover-color);
       background-color: var(--button-tertiary-background-hover-color);
       box-shadow: inset 0 0 0 1px var(--button-tertiary-border-hover-color);
     }
@@ -214,8 +213,8 @@ export default defineComponent({
     --button-secondary-border-color: var(--sky-800);
     --button-secondary-border-hover-color: var(--sky-400);
 
-    --button-tertiary-text-color: var(--color);
-    --button-tertiary-text-hover-color: var(--color);
+    --button-tertiary-text-color: var(--header-color);
+    --button-tertiary-text-hover-color: var(--header-color);
     --button-tertiary-background-color: rgba(56, 189, 248, 0);
     --button-tertiary-background-hover-color: rgba(56, 189, 248, 0.1);
     --button-tertiary-border-color: rgba(56, 189, 248, 0);
@@ -237,7 +236,7 @@ export default defineComponent({
     --button-secondary-border-color: var(--ocean-green-800);
     --button-secondary-border-hover-color: var(--ocean-green-400);
 
-    --button-tertiary-text-color: var(--ocean-green-200);
+    --button-tertiary-text-color: var(--ocean-green-400);
     --button-tertiary-text-hover-color: var(--ocean-green-200);
     --button-tertiary-background-color: rgba(72, 187, 120, 0);
     --button-tertiary-background-hover-color: rgba(72, 187, 120, 0.1);
@@ -260,7 +259,7 @@ export default defineComponent({
     --button-secondary-border-color: var(--carnation-800);
     --button-secondary-border-hover-color: var(--carnation-400);
 
-    --button-tertiary-text-color: var(--carnation-200);
+    --button-tertiary-text-color: var(--carnation-400);
     --button-tertiary-text-hover-color: var(--carnation-200);
     --button-tertiary-background-color: rgba(125, 31, 31, 0);
     --button-tertiary-background-hover-color: rgba(125, 31, 31, 0.1);

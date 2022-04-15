@@ -123,6 +123,8 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Inter', sans-serif;
+    color: var(--header-color);
   }
   &__left,
   &__right {

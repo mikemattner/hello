@@ -50,7 +50,7 @@ export default defineComponent({
   font-size: 0.75rem;
 
   .container {
-    max-width: 800px;
+    max-width: 650px;
     padding: 1.5rem 20px 0;
   }
 }

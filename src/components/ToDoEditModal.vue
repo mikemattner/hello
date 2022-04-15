@@ -41,12 +41,18 @@
             type="submit"
             class="add-todo-button"
             color="success"
-            button-type="secondary"
+            button-type="primary"
             :disabled="isDisabled"
           >
             Save
           </BaseButton>
-          <BaseButton class="add-todo-button" @click="toggleForm()" color="warning" button-type="secondary">
+          <BaseButton
+            class="add-todo-button"
+            type="button"
+            @click="toggleForm()"
+            color="warning"
+            button-type="secondary"
+          >
             Cancel
           </BaseButton>
         </div>
@@ -91,7 +97,7 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['saveToDo', 'toggle'],
+  emits: ['saveToDo', 'close'],
   setup(props, { emit }) {
     const options: String[] = ['Work', 'Personal', 'Home'];
     const todoModel = ref<NewToDo>({
@@ -131,11 +137,10 @@ export default defineComponent({
         key: props.todoItemKey,
       };
       emit('saveToDo', saveItem);
-      toggleForm();
     };
 
     const toggleForm = () => {
-      emit('toggle');
+      emit('close');
     };
 
     return {

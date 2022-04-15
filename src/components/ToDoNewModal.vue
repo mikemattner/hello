@@ -37,10 +37,16 @@
           </v-date-picker>
         </div>
         <div class="row">
-          <BaseButton type="submit" class="add-todo-button" color="success" button-type="secondary">
+          <BaseButton type="submit" class="add-todo-button" color="success" button-type="primary">
             Add <span class="material-icons-outlined bold"> add </span>
           </BaseButton>
-          <BaseButton class="add-todo-button" @click="toggleForm()" color="warning" button-type="secondary">
+          <BaseButton
+            class="add-todo-button"
+            type="button"
+            @click="toggleForm()"
+            color="warning"
+            button-type="secondary"
+          >
             Cancel
           </BaseButton>
         </div>

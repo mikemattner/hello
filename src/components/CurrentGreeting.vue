@@ -1,8 +1,8 @@
 <template>
   <div class="current-greeting">
     <div class="current-greeting__message">
-      <strong>{{ greeting }}</strong>
       <span class="date">{{ currentDate }}</span>
+      <h4>{{ greeting }}</h4>
     </div>
   </div>
 </template>
@@ -59,10 +59,6 @@ export default defineComponent({
     color: var(--bunker-400);
     display: flex;
     flex-direction: column;
-
-    strong {
-      font-weight: 700;
-    }
 
     .date {
       font-size: 0.675rem;
