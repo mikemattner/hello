@@ -57,8 +57,7 @@
   </TransitionGroup>
   <ToDoNewModal @addTodo="addTodo($event)" @toggle="toggleForm()" :open="addTodoForm" />
   <ToDoEditModal
-    v-if="editModalForm"
-    @toggle="closeEditForm()"
+    @toggle="toggleEditForm()"
     @saveToDo="saveToDo($event)"
     :todo-item="editTodoItem"
     :todo-item-key="editTodoItemKey"
@@ -119,16 +118,23 @@ export default defineComponent({
     };
 
     const editToDoColumn = ref<number>(0);
-    const editTodoItem = ref<ToDo | undefined>();
     const editTodoItemKey = ref<string | number>('');
+    const editTodoItem = ref<ToDo>({
+      category: '',
+      content: '',
+      description: '',
+      due: new Date().toString(),
+      key: '',
+    });
 
     const openEditForm = (itemKey: string | number, column: number, todo: ToDo) => {
       editTodoItemKey.value = itemKey;
       editToDoColumn.value = column;
       editTodoItem.value = todo;
-      editModalForm.value = !editModalForm.value;
+      toggleEditForm();
     };
-    const closeEditForm = () => {
+
+    const toggleEditForm = () => {
       editModalForm.value = !editModalForm.value;
     };
 
@@ -146,7 +152,7 @@ export default defineComponent({
       toggleForm,
       getTotalCount,
       editModalForm,
-      closeEditForm,
+      toggleEditForm,
       openEditForm,
       editToDoColumn,
       editTodoItem,

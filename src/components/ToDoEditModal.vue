@@ -56,14 +56,13 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 import BaseButton from './BaseButton.vue';
 import BaseInput from './BaseInput.vue';
 import BaseSelect from './BaseSelect.vue';
 import BaseTextArea from './BaseTextArea.vue';
 import type { NewToDo, ToDo, SaveToDo } from '@/types/types';
 import BaseModal from './BaseModal.vue';
-import { useTodoStore } from '@/stores/todos';
 import type { PropType } from 'vue';
 
 export default defineComponent({
@@ -81,7 +80,7 @@ export default defineComponent({
     },
     todoItem: {
       type: Object as PropType<ToDo>,
-      required: false,
+      required: true,
     },
     todoItemKey: {
       type: [String, Number],
@@ -96,24 +95,33 @@ export default defineComponent({
   setup(props, { emit }) {
     const options: String[] = ['Work', 'Personal', 'Home'];
     const todoModel = ref<NewToDo>({
-      todoTitle: '',
-      todoDescription: '',
-      todoCategory: '',
-      dueDate: new Date(),
+      todoTitle: props.todoItem.content,
+      todoDescription: props.todoItem.description,
+      todoCategory: props.todoItem.category,
+      dueDate: new Date(props.todoItem.due),
     });
 
-    const todoStore = useTodoStore().$state.todos;
+    const toDoInitial = ref<string>('');
 
-    if (props.todoItem) {
-      todoModel.value.todoTitle = props.todoItem.content;
-      todoModel.value.todoDescription = props.todoItem.description;
-      todoModel.value.todoCategory = props.todoItem.category;
-      todoModel.value.dueDate = new Date(props.todoItem.due);
-    }
+    watch(
+      () => props.todoItem,
+      (value) => {
+        todoModel.value.todoTitle = value.content;
+        todoModel.value.todoDescription = value.description;
+        todoModel.value.todoCategory = value.category;
+        todoModel.value.dueDate = new Date(value.due);
+      },
+    );
 
-    const toDoInitial = JSON.stringify(todoModel.value);
+    watch(
+      () => props.open,
+      () => {
+        toDoInitial.value = JSON.stringify(todoModel.value);
+      },
+    );
+
     const isDisabled = computed<boolean>(() => {
-      return toDoInitial === JSON.stringify(todoModel.value);
+      return toDoInitial.value === JSON.stringify(todoModel.value);
     });
 
     const saveToDo = () => {
@@ -123,23 +131,11 @@ export default defineComponent({
         key: props.todoItemKey,
       };
       emit('saveToDo', saveItem);
-      todoModel.value = {
-        todoTitle: '',
-        todoDescription: '',
-        todoCategory: 'Work',
-        dueDate: new Date(),
-      };
       toggleForm();
     };
 
     const toggleForm = () => {
       emit('toggle');
-      todoModel.value = {
-        todoTitle: '',
-        todoDescription: '',
-        todoCategory: 'Work',
-        dueDate: new Date(),
-      };
     };
 
     return {
