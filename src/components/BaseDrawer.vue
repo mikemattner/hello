@@ -144,7 +144,7 @@ export default defineComponent({
 
     .drawer-header {
       font-size: 0.75rem;
-      text-align: center;
+      text-align: left;
       padding: 1rem;
       display: flex;
       align-items: center;

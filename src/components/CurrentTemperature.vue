@@ -123,7 +123,7 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Inter', sans-serif;
+    // font-family: 'Inter', sans-serif;
     color: var(--header-color);
   }
   &__left,
@@ -166,6 +166,7 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     max-height: 12px;
+    gap: 2px;
     img {
       width: 15px;
       opacity: 0.45;
