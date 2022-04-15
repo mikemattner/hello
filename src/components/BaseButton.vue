@@ -156,7 +156,7 @@ export default defineComponent({
     }
 
     &:active,
-    &:focus {
+    &:focus-visible {
       outline: 0;
       box-shadow: var(--button-focus-shadow);
     }
@@ -174,7 +174,7 @@ export default defineComponent({
     }
 
     &:active,
-    &:focus {
+    &:focus-visible {
       outline: 0;
       box-shadow: inset 0 0 0 1px var(--button-secondary-border-hover-color), var(--button-focus-shadow);
     }
@@ -192,7 +192,7 @@ export default defineComponent({
     }
 
     &:active,
-    &:focus {
+    &:focus-visible {
       outline: 0;
       box-shadow: inset 0 0 0 1px var(--button-tertiary-border-hover-color), var(--button-focus-shadow);
     }
