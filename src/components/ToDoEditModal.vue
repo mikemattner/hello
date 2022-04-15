@@ -45,13 +45,14 @@
             :disabled="isDisabled"
           >
             Save
+            <span class="material-icons-outlined"> check_circle_outline </span>
           </BaseButton>
           <BaseButton
             class="add-todo-button"
             type="button"
             @click="toggleForm()"
             color="warning"
-            button-type="secondary"
+            button-type="tertiary"
           >
             Cancel
           </BaseButton>
