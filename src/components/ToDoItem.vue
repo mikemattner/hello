@@ -113,7 +113,7 @@ export default defineComponent({
     align-items: center;
     justify-content: flex-start;
     gap: 5px;
-    padding: 1rem 0.5rem;
+    padding: 0.5rem;
     // background-color: rgba(0, 0, 0, 0.25);
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 

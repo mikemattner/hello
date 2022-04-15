@@ -38,7 +38,7 @@
         </div>
         <div class="row">
           <BaseButton type="submit" class="add-todo-button" color="success" button-type="primary">
-            Add <span class="material-icons-outlined bold"> add </span>
+            Add <span class="material-icons-outlined bold"> add_circle_outline </span>
           </BaseButton>
           <BaseButton
             class="add-todo-button"

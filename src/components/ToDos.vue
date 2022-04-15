@@ -5,7 +5,7 @@
       <Transition name="fade">
         <BaseButton v-if="getTotalCount > 0" @click="toggleForm()" button-type="secondary" size="small">
           Add Task
-          <span class="material-icons-outlined bold"> add </span>
+          <span class="material-icons-outlined bold"> add_circle_outline </span>
         </BaseButton>
       </Transition>
     </div>
@@ -16,7 +16,7 @@
       <p>You finished it all!</p>
       <BaseButton @click="toggleForm()" button-type="secondary">
         Add
-        <span class="material-icons-outlined bold"> add </span>
+        <span class="material-icons-outlined bold"> add_circle_outline </span>
       </BaseButton>
     </div>
     <div v-else class="todo-list-container" key="active-todos-state">

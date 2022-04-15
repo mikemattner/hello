@@ -140,7 +140,7 @@ export default defineComponent({
 
     .modal-header {
       font-size: 1rem;
-      text-align: center;
+      text-align: left;
       padding: 1rem;
       background-color: rgba(0, 0, 0, 0.25);
       display: flex;
@@ -149,6 +149,7 @@ export default defineComponent({
 
       &-title {
         font-weight: 900;
+        color: var(--header-color);
       }
     }
     .modal-body {

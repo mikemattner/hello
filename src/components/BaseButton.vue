@@ -124,7 +124,7 @@ export default defineComponent({
     align-items: center;
     justify-content: center;
     text-align: center;
-    gap: 10px;
+    gap: 5px;
     font-weight: 900;
   }
 
