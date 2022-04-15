@@ -94,18 +94,6 @@ export default defineComponent({
   overflow: hidden;
   box-shadow: 2px 10px 20px var(--card-shadow);
 
-  // &.category-home {
-  //   border-left: 3px solid var(--ocean-green-400);
-  // }
-
-  // &.category-work {
-  //   border-left: 3px solid var(--jaffa-400);
-  // }
-
-  // &.category-personal {
-  //   border-left: 3px solid var(--carnation-400);
-  // }
-
   .drag-surround {
     display: flex;
     align-items: center;
@@ -127,9 +115,12 @@ export default defineComponent({
     gap: 5px;
     padding: 1rem 0.5rem;
     background-color: rgba(0, 0, 0, 0.25);
-    transform: translateX(20px);
-    opacity: 0;
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    @media (min-width: 1024px) {
+      transform: translateX(20px);
+      opacity: 0;
+    }
   }
 
   &:hover {
@@ -145,41 +136,6 @@ export default defineComponent({
     transition: all 0.25s ease-in-out;
     flex-grow: 1;
     line-height: 1.4;
-
-    // .checkmark {
-    //   height: 25px;
-    //   width: 25px;
-    //   flex-grow: 0;
-    //   border: 1px solid var(--input-border-color);
-    //   border-radius: 4px;
-    //   opacity: 0.5;
-    //   transition: all 0.25s ease-in-out;
-    //   flex: 0 0 25px;
-
-    //   &:after {
-    //     content: '';
-    //     position: absolute;
-    //     opacity: 0;
-    //     transition: all 0.25s ease-in-out;
-    //     left: 9px;
-    //     top: 4px;
-    //     width: 6px;
-    //     height: 13px;
-    //     border: solid var(--card-bg);
-    //     border-width: 0 2px 2px 0;
-    //     transform: rotate(45deg) scale(0.5);
-    //     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    //   }
-    // }
-
-    // &:hover {
-    //   cursor: pointer;
-
-    //   .checkmark {
-    //     opacity: 1;
-    //     border-color: var(--input-border-focus);
-    //   }
-    // }
 
     .todo-content {
       position: relative;

@@ -230,7 +230,7 @@ export default defineComponent({
     --button-primary-border-color: var(--ocean-green-800);
     --button-primary-border-hover-color: var(--ocean-green-400);
 
-    --button-secondary-text-color: var(--ocean-green-400);
+    --button-secondary-text-color: var(--ocean-green-100);
     --button-secondary-text-hover-color: var(--ocean-green-900);
     --button-secondary-background-color: rgba(72, 187, 120, 0.1);
     --button-secondary-background-hover-color: rgba(72, 187, 120, 1);

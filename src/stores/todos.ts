@@ -36,7 +36,6 @@ export const useTodoStore = defineStore({
     },
     saveTodo(value: SaveToDo) {
       const index = this.todos[value.column].tasks.map(t => t.key).indexOf(value.key);
-      console.log(index)
       if(index != -1) {
         const updatedTodo: ToDo = {
           key: value.key,

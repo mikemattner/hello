@@ -110,6 +110,12 @@ export default defineComponent({
         todoModel.value.todoDescription = value.description;
         todoModel.value.todoCategory = value.category;
         todoModel.value.dueDate = new Date(value.due);
+      },
+    );
+
+    watch(
+      () => props.open,
+      () => {
         toDoInitial.value = JSON.stringify(todoModel.value);
       },
     );
