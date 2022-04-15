@@ -45,7 +45,7 @@
             type="button"
             @click="toggleForm()"
             color="warning"
-            button-type="secondary"
+            button-type="tertiary"
           >
             Cancel
           </BaseButton>

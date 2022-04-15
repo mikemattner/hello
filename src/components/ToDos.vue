@@ -12,10 +12,10 @@
   </div>
   <TransitionGroup name="todo">
     <div v-if="getTotalCount < 1" class="empty-todo" key="empty-todos-state">
-      <p class="empty-emoji">🥳</p>
+      <div class="empty-emoji">🥳</div>
       <p>You finished it all!</p>
       <BaseButton @click="toggleForm()" button-type="secondary">
-        Add
+        Add Task
         <span class="material-icons-outlined bold"> add_circle_outline </span>
       </BaseButton>
     </div>
@@ -207,7 +207,8 @@ export default defineComponent({
   height: 400px;
 
   .empty-emoji {
-    font-size: 1.75rem;
+    font-size: 2.5rem;
+    line-height: 1.2;
   }
 }
 .todo-list-container {

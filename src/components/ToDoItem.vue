@@ -101,9 +101,13 @@ export default defineComponent({
     padding: 1rem 0.25rem;
     background-color: rgba(0, 0, 0, 0.25);
     cursor: grab;
+    transition: color 0.25s ease-in-out;
 
     &:active {
       cursor: grabbing;
+    }
+    &:hover {
+      color: var(--header-color);
     }
   }
 
@@ -114,7 +118,6 @@ export default defineComponent({
     justify-content: flex-start;
     gap: 5px;
     padding: 0.5rem;
-    // background-color: rgba(0, 0, 0, 0.25);
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     @media (min-width: 1024px) {

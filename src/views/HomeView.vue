@@ -163,6 +163,7 @@ export default defineComponent({
     color: var(--contrast-color);
     p {
       font-size: 0.75rem;
+      margin: 0;
     }
   }
 }
