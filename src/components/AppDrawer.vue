@@ -61,7 +61,6 @@ export default defineComponent({
   gap: 5px;
 
   a {
-    font-size: 0.675rem;
     display: block;
     color: var(--slate-200);
     text-decoration: none;

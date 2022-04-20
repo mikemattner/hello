@@ -60,6 +60,10 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
 
+    h4 {
+      margin: 0;
+    }
+
     .date {
       font-size: 0.675rem;
       color: var(--slate-400);

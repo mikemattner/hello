@@ -133,7 +133,7 @@ export default defineComponent({
     max-width: 300px;
     height: 100%;
     border-radius: 0;
-    background-color: var(--card-bg);
+    background-color: var(--slate-900);
     box-shadow: 2px 10px 20px var(--card-shadow);
     transform: translateX(-50px);
     transition: all 0.375s ease;

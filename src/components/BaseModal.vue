@@ -126,7 +126,7 @@ export default defineComponent({
   .modal-container {
     width: 500px;
     border-radius: 4px;
-    background-color: var(--card-bg);
+    background-color: var(--slate-900);
     box-shadow: 2px 10px 20px var(--card-shadow);
     opacity: 0;
     transform: translate(0, 50px);

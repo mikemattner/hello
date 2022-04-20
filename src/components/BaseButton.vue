@@ -132,6 +132,7 @@ export default defineComponent({
     padding: 0.25rem 0.25rem;
 
     .button--content {
+      font-size: 0.75rem;
       :deep(.material-icons-outlined) {
         font-size: 0.75rem;
       }
