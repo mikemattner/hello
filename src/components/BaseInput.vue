@@ -76,7 +76,7 @@ export default defineComponent({
   position: relative;
 
   &__label {
-    background-color: var(--card-bg);
+    background-color: var(--slate-900);
     padding: 0 2px;
     opacity: 1;
     transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);

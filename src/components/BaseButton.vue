@@ -126,6 +126,7 @@ export default defineComponent({
     text-align: center;
     gap: 5px;
     font-weight: 900;
+    line-height: 1;
   }
 
   &.button__small {
@@ -134,7 +135,7 @@ export default defineComponent({
     .button--content {
       font-size: 0.75rem;
       :deep(.material-icons-outlined) {
-        font-size: 0.75rem;
+        font-size: 1rem;
       }
     }
   }
@@ -144,6 +145,10 @@ export default defineComponent({
 
     .button--content {
       font-size: 0.75rem;
+
+      :deep(.material-icons-outlined) {
+        font-size: 1rem;
+      }
     }
   }
 
