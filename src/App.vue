@@ -6,6 +6,7 @@
         <component :is="Component" />
       </Transition>
     </RouterView>
+    <AppFooter />
   </div>
 </template>
 
@@ -13,10 +14,12 @@
 import { defineComponent, onBeforeMount } from 'vue';
 import { useWeatherStore } from '@/stores/weather';
 import AppHeader from '@/components/AppHeader.vue';
+import AppFooter from './components/AppFooter.vue';
 
 export default defineComponent({
   components: {
     AppHeader,
+    AppFooter,
   },
   name: 'DashboardApp',
   setup() {
@@ -31,6 +34,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '@/assets/styles/normalize.scss';
 @import '@/assets/styles/open-weather-icons.scss';
 @import '@/assets/styles/custom-properties.scss';
 @import '@/assets/styles/base.scss';
@@ -43,7 +47,7 @@ export default defineComponent({
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.375s ease;
+  transition: opacity 0.125s ease;
 }
 
 .fade-enter-from,

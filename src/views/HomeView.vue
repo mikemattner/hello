@@ -81,7 +81,7 @@ export default defineComponent({
 .home {
   width: 100%;
   height: 100%;
-  padding: 20px;
+  padding: 3.5rem 20px 20px;
 
   .home-grid {
     @media (min-width: 1200px) {

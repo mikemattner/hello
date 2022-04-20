@@ -51,6 +51,12 @@ export default defineComponent({
   align-items: center;
   justify-content: space-between;
   background-color: var(--background-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+
   .logo {
     display: flex;
     align-items: center;
@@ -66,7 +72,6 @@ export default defineComponent({
     }
 
     &-title {
-      font-size: 0.675rem;
       font-weight: 900;
     }
   }

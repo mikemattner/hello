@@ -241,7 +241,7 @@ export default defineComponent({
 
     &__col {
       padding: 20px 10px;
-      background-color: rgba(#1e293b, 0.25);
+      background-color: rgba(#000, 0.125);
       border-radius: 4px;
 
       @media (max-width: 1022px) {
