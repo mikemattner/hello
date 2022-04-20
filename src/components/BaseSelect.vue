@@ -84,7 +84,7 @@ export default defineComponent({
   position: relative;
 
   &__label {
-    background-color: var(--card-bg);
+    background-color: var(--slate-900);
     // padding-left: 0.5rem;
     padding: 0 2px;
     opacity: 1;
