@@ -2,7 +2,7 @@
   <section class="weather-icon-container">
     <div class="icon-container">
       <span :class="['weather__icon', 'owi', `owi-${icon}`]"></span>
-      <span class="material-icons-outlined refresh">refresh</span>
+      <span class="material-icons-outlined refresh">sync</span>
     </div>
   </section>
 </template>

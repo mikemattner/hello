@@ -48,7 +48,7 @@ export default defineComponent({
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  padding: 1rem 20px;
+  padding: 2rem 20px 4rem;
 
   .container {
     max-width: 650px;

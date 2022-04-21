@@ -3,7 +3,7 @@
     <CurrentGreeting />
     <div class="add-task-button-container">
       <Transition name="fade">
-        <BaseButton v-if="getTotalCount > 0" @click="toggleForm()" button-type="secondary" size="small">
+        <BaseButton v-if="getTotalCount > 0" @click="toggleForm()" color="success" button-type="secondary" size="small">
           Add Task
           <span class="material-icons-outlined bold"> add_circle_outline </span>
         </BaseButton>
@@ -14,7 +14,7 @@
     <div v-if="getTotalCount < 1" class="empty-todo" key="empty-todos-state">
       <div class="empty-emoji">🥳</div>
       <p>You finished it all!</p>
-      <BaseButton @click="toggleForm()" button-type="secondary">
+      <BaseButton @click="toggleForm()" color="success" button-type="secondary">
         Add Task
         <span class="material-icons-outlined bold"> add_circle_outline </span>
       </BaseButton>

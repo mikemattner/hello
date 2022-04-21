@@ -18,7 +18,7 @@
             name="todoDescription"
             id="todoDescription"
             label="Task description"
-            rows="2"
+            rows="4"
           />
         </div>
         <div class="row">
@@ -81,11 +81,11 @@ export default defineComponent({
   },
   emits: ['addTodo', 'toggle'],
   setup(props, { emit }) {
-    const options: String[] = ['Work', 'Personal', 'Home'];
+    const options: String[] = ['Other', 'Work', 'Personal', 'Home'];
     const todoModel = ref<NewToDo>({
       todoTitle: '',
       todoDescription: '',
-      todoCategory: 'Work',
+      todoCategory: 'Other',
       dueDate: new Date(),
     });
 
@@ -95,7 +95,7 @@ export default defineComponent({
         todoModel.value = {
           todoTitle: '',
           todoDescription: '',
-          todoCategory: 'Work',
+          todoCategory: 'Other',
           dueDate: new Date(),
         };
       }
