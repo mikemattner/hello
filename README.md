@@ -9,6 +9,10 @@ uses Netlify serverless functions. Setup your own API Key for [OpenWeather](http
 - [x] Create models/services for grabbing weather data
 - [x] Add Todos!!!
 - [x] Create Netlify serverless function to grab weather data
+- [ ] Use [TipTap](https://tiptap.dev/) for task descriptions
+- [ ] Auth?
+- [ ] Database?
+- [ ] Electron?
 
 ## Project Setup
 
