@@ -45,12 +45,11 @@ export default defineComponent({
 <style lang="scss">
 .navbar {
   width: 100%;
-  padding: 0.25rem 1rem;
-  border-bottom: 1px solid rgba(#263966, 0.25);
+  padding: 0.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--background-color);
+  background-color: #0d1321;
   position: fixed;
   top: 0;
   left: 0;

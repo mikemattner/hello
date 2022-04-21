@@ -161,6 +161,11 @@ export default defineComponent({
   .error-state {
     text-align: center;
     color: var(--contrast-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     p {
       font-size: 0.75rem;
       margin: 0;

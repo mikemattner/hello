@@ -65,6 +65,7 @@ export default defineComponent({
           'category-home': props.todo.category === 'Home',
           'category-personal': props.todo.category === 'Personal',
           'category-work': props.todo.category === 'Work',
+          'category-other': props.todo.category === 'Other',
         },
       ];
     });
@@ -228,30 +229,17 @@ export default defineComponent({
             background-color: var(--carnation-900);
           }
         }
+
+        &.category-other {
+          color: var(--sky-900);
+          background-color: var(--sky-400);
+
+          .dot {
+            background-color: var(--sky-900);
+          }
+        }
       }
     }
-
-    // &.done {
-    //   .todo-content {
-    //     &__label {
-    //       text-decoration-line: line-through;
-    //       text-decoration-style: wavy;
-    //       text-decoration-color: var(--input-border-focus);
-    //       text-decoration-thickness: 1px;
-    //       color: rgba(255, 255, 255, 0.5);
-    //     }
-    //   }
-
-    //   // .checkmark {
-    //   //   opacity: 1;
-    //   //   background-color: var(--input-border-focus);
-    //   //   border-color: var(--input-border-focus);
-    //   //   &:after {
-    //   //     opacity: 1;
-    //   //     transform: rotate(45deg) scale(1);
-    //   //   }
-    //   // }
-    // }
   }
 }
 </style>

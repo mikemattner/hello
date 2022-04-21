@@ -18,7 +18,7 @@
             name="todoDescription"
             id="todoDescription"
             label="Task description"
-            rows="2"
+            rows="4"
           />
         </div>
         <div class="row">
@@ -100,7 +100,7 @@ export default defineComponent({
   },
   emits: ['saveToDo', 'close'],
   setup(props, { emit }) {
-    const options: String[] = ['Work', 'Personal', 'Home'];
+    const options: String[] = ['Other', 'Work', 'Personal', 'Home'];
     const todoModel = ref<NewToDo>({
       todoTitle: props.todoItem.content,
       todoDescription: props.todoItem.description,
